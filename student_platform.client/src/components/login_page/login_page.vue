@@ -18,6 +18,7 @@
 </template>
 
 <script>
+    import axios from "axios"
 export default {
   data() {
     return {
@@ -41,7 +42,16 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('提交登录信息!');
+            alert('提交登录信息!');
+
+            //测试登录,先别管
+            axios.get("./Student_platform.Server/Handler_1.ashx")
+                .then(response => {
+                    alert(response.data);
+                })
+                .catch(error => {
+                    alert('登录失败！');
+                })
           // 这里可以添加登录的逻辑
         } else {
           console.log('error submit!!');
