@@ -45,7 +45,7 @@ export default {
             alert('提交登录信息!');
 
             //测试登录,先别管
-            axios.get("./Student_platform.Server/Handler_1.ashx")
+            axios.get("api/LoginController")
                 .then(response => {
                     alert(response.data);
                 })
