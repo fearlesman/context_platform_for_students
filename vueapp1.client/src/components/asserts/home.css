@@ -1,0 +1,94 @@
+.home-page {
+    padding: 20px;
+  }
+  
+  .navbar {
+    background-color: #545c64;
+    color: #fff;
+  }
+  
+  .competition-recommend {
+    margin: 20px 0;
+  }
+  
+  .competition-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .competition-time {
+    background-color: #409eff;
+    color: #fff;
+    padding: 5px 10px;
+  }
+  
+  .excellent-teams {
+    margin: 20px 0;
+  }
+  
+  .team-card {
+    margin-bottom: 10px;
+  }
+  
+  .team-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .headlines {
+    margin-top: 20px;
+  }
+.calendar{
+  height: 500px;
+}
+.calendar {
+  width: 480px;
+  height: 430px;
+  top: 100px;
+  position: absolute;
+}
+
+.el-calendar__header{
+  width: 400px;
+  height: 25px;
+  border: 1px red solid;
+  background-color: #ffffff5b;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 2px 2px 10px #dadada;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 0;
+}
+
+.el-calendar{
+  border-radius: 10px;
+}
+
+.el-calendar__body {
+  background-color: #ffffff5b;
+  box-shadow: 5px 5px 10px #dadada;
+  border-radius: 0 0 20px 20px;
+  width: 400px;
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  z-index: 1;
+}
+
+.el-calendar-table .el-calendar-day {
+  height: 40px;
+}
+
+.el-button-group >.el-button:first-child{
+  text-align: center;
+}
+.cal-title{
+  position: absolute;
+  top: -12px;
+  left: 35px;
+  font-size: 18px;
+  color: #979797;
+  cursor: default;
+}
