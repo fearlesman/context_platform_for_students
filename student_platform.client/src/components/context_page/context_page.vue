@@ -1,9 +1,12 @@
 <template>
   <div class='context-page'>
+    <br>
     <el-row :gutter="20">
       <el-col :span="6">
         <el-input v-model="searchText" placeholder="搜索队伍名、队长名或标签" clearable @input="filterTeams">
-          <i slot="prefix" class="el-input__icon el-icon-search"></i>
+          <template v-slot:prefix>
+              <i  class="el-input__icon el-icon-search"></i>
+          </template>
         </el-input>
       </el-col>
       <el-col :span="6">
@@ -25,7 +28,7 @@
     <el-row :gutter="20" style="margin-top: 20px;">
       <el-col :span="24">
         <el-table :data="filteredTeams" stripe>
-          <el-table-column prop="name" label="队伍名" width="200">
+          <el-table-column prop="name" label="队伍名" width="150">
             <template v-slot="scope">
               <span>{{ scope.row.name }}</span>
             </template>
@@ -35,12 +38,12 @@
               <el-avatar :src="scope.row.leaderAvatar" @click="showLeaderProfile(scope.row.leaderName)"></el-avatar>
             </template>
           </el-table-column>
-          <el-table-column prop="description" label="队伍简介" width="300">
+          <el-table-column prop="description" label="比赛介绍" width="200">
             <template v-slot="scope">
               <span>{{ scope.row.description }}</span>
             </template>
           </el-table-column>
-          <el-table-column prop="currentMembers" label="队伍人数" width="150">
+          <el-table-column prop="currentMembers" label="队伍人数" width="100">
             <template v-slot="scope">
               <span>{{ scope.row.currentMembers }}/{{ scope.row.totalMembers }}</span>
             </template>
