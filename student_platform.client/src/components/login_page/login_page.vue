@@ -48,6 +48,7 @@ export default {
             axios.get("api/LoginController")
                 .then(response => {
                     alert(response.data);
+                 
                 })
                 .catch(error => {
                     alert('登录失败！');

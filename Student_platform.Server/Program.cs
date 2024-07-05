@@ -32,15 +32,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-// 配置 Vue.js 的静态文件
-app.UseSpa(spa =>
-{
-    spa.Options.SourcePath = "clientapp";
-
-    if (app.Environment.IsDevelopment())
-    {
-        spa.UseProxyToSpaDevelopmentServer("http://localhost:5176");
-    }
-});
+app.MapFallbackToFile("index.html"); // 将所有未匹配的路由重定向到 index.html
 
 app.Run();
