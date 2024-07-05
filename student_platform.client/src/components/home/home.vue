@@ -56,7 +56,9 @@ export default {
                   width="300"
                 >
                   <p>详细信息: {{ selectedDateInfo }}</p>
-                  <div class="trigger-area" slot="reference"></div>
+                  <template v-slot:reference>
+                    <div class="trigger-area" ></div>
+                  </template>
                 </el-popover>
               </div>
         </el-col>

@@ -3,6 +3,8 @@ import { ElCalendar, ElCard, ElCarousel, textProps } from 'element-plus';
 import context_page from "./components/context_page/context_page.vue"
 import login_page from "./components/login_page/login_page.vue"
 import home from "./components/home/home.vue"
+import register_page from "./components/login_page/register.vue"
+import personal_page from "./components/personal_page/person.vue"
 </script>
 
 <template>
@@ -38,13 +40,32 @@ import home from "./components/home/home.vue"
   </el-menu>
   <div class="main" v-if="loginstatus==false">
     <el-button type="primary" @click="jumpToSection('login_page')" class="login-button" >
-      注册/登录
+      登录
     </el-button>
+    <el-button type="primary" @click="jumpToSection('register_page')" class="login-button" >
+      注册
+    </el-button>
+  </div>
+  <el-button type="primary" @click="jumpToSection('personal_page')" class="login-button" >
+    主页
+  </el-button>
+  <div class="main" v-if="loginstatus==true">
+    <el-card>
+      <el-carousel height="200px" :interval="5000">
+        <el-carousel-item v-for="item in 4" :key="item">
+          <img
+            src="https://element.eleme.cn/uploads/element-ui/poster.png"
+            alt="poster"
+          />
+        </el-carousel-item>
+      </el-carousel>
+    </el-card>
   </div>
   </header>
   <context_page v-if="nowpage =='context_page'" />
   <home v-if="nowpage =='front_page'" />
   <login_page v-if="nowpage =='login_page'" />
+  <register_page v-if="nowpage =='register_page'" />
 </template>
 <script>
 export default {
