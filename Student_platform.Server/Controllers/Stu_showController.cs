@@ -45,10 +45,33 @@ namespace Student_platform.Server.Controllers
        
         }
 
-        // POST api/<Stu_showController>
+        // POST api/Stu_show
         [HttpPost]
-        public void Post([FromBody] Stu stu)
+        public IActionResult Post([FromBody] Stu stu)
         {
+            DB dB = new DB();
+            string com = "insert into user_show values(@id,@name,@major,@skill,@character,@team,@identity);";
+            dB.Connection(com);
+            dB.cmd.Parameters.AddWithValue("@id",stu.user_id);
+            dB.cmd.Parameters.AddWithValue("@name",stu.stu_name);
+            dB.cmd.Parameters.AddWithValue("@major",stu.stu_major);
+            dB.cmd.Parameters.AddWithValue("@skill",stu.stu_skill);
+            dB.cmd.Parameters.AddWithValue("@character",stu.stu_character);
+            dB.cmd.Parameters.AddWithValue("@team",stu.has_team);
+            dB.cmd.Parameters.AddWithValue("@identity",stu.team_identity);
+
+            int rowsAffected = dB.cmd.ExecuteNonQuery();
+
+            // 检查受影响的行数
+            if (rowsAffected > 0)
+            {
+                return Ok("保存成功");
+            }
+            else
+            {
+                return BadRequest("保存失败");
+            }
+
 
 
 
