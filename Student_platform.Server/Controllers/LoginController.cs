@@ -66,8 +66,15 @@ namespace Student_platform.Server.Controllers
 
         // POST api/<LoginController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                return BadRequest("Value cannot be null or empty");
+            }
+
+            // 处理接收到的值
+            return Ok($"Received value: {value}");
         }
 
         // PUT api/<LoginController>/5
@@ -83,3 +90,24 @@ namespace Student_platform.Server.Controllers
         }
     }
 }
+
+
+//// 执行命令并获取受影响的行数
+//int rowsAffected = command.ExecuteNonQuery();
+
+//// 检查受影响的行数
+//if (rowsAffected > 0)
+//{
+//    Console.WriteLine("插入成功");
+//}
+//else
+//{
+//    Console.WriteLine("插入失败");
+//}
+//                }
+//            }
+//            catch (SqlException ex)
+//            {
+//                // 捕获SQL异常
+//                Console.WriteLine($"插入失败: {ex.Message}");
+//            }
