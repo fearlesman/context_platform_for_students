@@ -23,6 +23,8 @@ namespace Student_platform.Server.Controllers
             return "value";
         }
 
+
+
         // POST api/<RegisterController>
         [HttpPost]
         public IActionResult Post([FromBody] Register reg)
