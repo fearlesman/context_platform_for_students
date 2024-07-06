@@ -25,19 +25,41 @@ namespace Student_platform.Server.Controllers
 
         // POST api/<RegisterController>
         [HttpPost]
-        public void Post([FromBody] Register reg)
+        public IActionResult Post([FromBody] Register reg)
         {
             //接收一个json字符串
-            DB dB = new DB();
-            dB.conn.Open();
-            if (reg.reg_paw == reg.reg_confirm_paw) {
-                string com = "insert into user_info(user_name,user)";
+            DB db = new DB();
+            db.conn.Open();
+               
+            string com = "insert into user_info(user_id,user_paw,user_email) values(@id,@paw,@email);";
+            db.Connection(com);
+            using (db.cmd)
+            {
+                db.cmd.Parameters.AddWithValue("@id", reg.reg_name);
+                db.cmd.Parameters.AddWithValue("@paw", reg.reg_paw);
+                db.cmd.Parameters.AddWithValue("@email", reg.reg_email);
             }
+            // 执行命令并获取受影响的行数
+            int rowsAffected = db.cmd.ExecuteNonQuery();
 
-
-
-
+            // 检查受影响的行数
+            if (rowsAffected > 0)
+            {
+                return Ok("注册成功");
+            }
+            else
+            {
+                return BadRequest("注册失败");
+            }
+          
         }
+                         
+
+
+
+
+
+        
 
         // PUT api/<RegisterController>/5
         [HttpPut("{id}")]

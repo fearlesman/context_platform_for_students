@@ -16,6 +16,7 @@ namespace Student_platform.Server
         public DB() {
              this.con = "data source=.;initial catalog=smallterm;integrated security=True;";
              this.conn = new SqlConnection(con);
+             this.conn.Open();
         }
 
 

@@ -17,7 +17,6 @@ namespace Student_platform.Server.Controllers
         {
             
             DB db = new DB();
-            db.conn.Open();
             string com = "select * from user_info;";
             db.Connection(com);
             SqlDataReader reader = db.cmd.ExecuteReader();
@@ -46,14 +45,26 @@ namespace Student_platform.Server.Controllers
             return jsonData;
         }
 
-        [HttpGet("{name}")]
-        public List<string> Get(string name)
+
+        //  api/Login/{user_name}
+        [HttpGet("{user_name}")]
+        public string Get(string user_name)
         {
-            List<string> list = new List<string>();
-
-
-
-            return list;
+            DB db = new DB();
+            
+            string com = "select user_paw from user_info where user_id = @name;";
+            db.Connection(com);
+            using (db.cmd)
+            {
+                db.cmd.Parameters.AddWithValue("@name", user_name);
+                SqlDataReader reader = db.cmd.ExecuteReader();
+                string paw = reader["user_paw"].ToString();
+                string json = JsonSerializer.Serialize(paw);
+                reader.Close();
+                return json;
+            }
+            
+      
 
         }
 

@@ -61,7 +61,7 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
               alert('提交注册信息!');
-              axios.post("https://localhost:7201/api/Login", data.registerForm)
+              axios.post("https://localhost:7201/api/Register", data.registerForm)
                   .then(response => {
 
                   })
