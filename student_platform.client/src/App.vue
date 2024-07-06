@@ -5,6 +5,7 @@ import login_page from "./components/login_page/login_page.vue"
 import home from "./components/home/home.vue"
 import register_page from "./components/login_page/register.vue"
 import personal_page from "./components/personal_page/person.vue"
+import markdown_page from "./components/personal_page/markdown.vue"
 </script>
 
 <template>
@@ -49,6 +50,9 @@ import personal_page from "./components/personal_page/person.vue"
   <el-button type="primary" @click="jumpToSection('personal_page')" class="login-button" >
     主页
   </el-button>
+  <el-button type="primary" @click="jumpToSection('markdown_page')" class="login-button" >
+    编辑您的个性化内容
+  </el-button>
   <div class="main" v-if="loginstatus==true">
     <el-card>
       <el-carousel height="200px" :interval="5000">
@@ -66,6 +70,8 @@ import personal_page from "./components/personal_page/person.vue"
   <home v-if="nowpage =='front_page'" />
   <login_page v-if="nowpage =='login_page'" />
   <register_page v-if="nowpage =='register_page'" />
+  <personal_page v-if="nowpage =='personal_page'" />
+  <markdown_page v-if="nowpage =='markdown_page'" />
 </template>
 <script>
 export default {

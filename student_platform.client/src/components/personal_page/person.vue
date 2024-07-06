@@ -16,13 +16,6 @@
           <h2>个人简介</h2>
           <div class="markdown-content" v-html="compiledMarkdown"></div>
         </div>
-  
-        <div class="customization">
-          <h2>个性化界面</h2>
-          <div class="markdown-editor">
-            <textarea v-model="customizationContent" placeholder="使用 Markdown 编辑您的个性化内容"></textarea>
-          </div>
-        </div>
       </div>
     </div>
   </template>
