@@ -15,15 +15,12 @@ namespace Student_platform.Server.Controllers
         [HttpGet]
         public string Get()
         {
-
-            string con = "data source=.;initial catalog=smallterm;integrated security=True;";
-            SqlConnection conn = new SqlConnection(con);
-            conn.Open();
+            
+            DB db = new DB();
+            db.conn.Open();
             string com = "select * from user_info;";
-            SqlCommand cmd = new SqlCommand(com, conn);
-
-
-            SqlDataReader reader = cmd.ExecuteReader();
+            db.Connection(com);
+            SqlDataReader reader = db.cmd.ExecuteReader();
             Dictionary<string, string> user_info = new Dictionary<string, string>();
             while (reader.Read())
             {
@@ -42,7 +39,7 @@ namespace Student_platform.Server.Controllers
             }
 
             reader.Close();
-            conn.Close();
+            db.conn.Close();
 
             // 将数据转换为 JSON 字符串
               string jsonData = JsonSerializer.Serialize(user_info);
