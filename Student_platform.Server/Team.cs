@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Text.Json;
+using Student_platform.Server.Modelclass;
 
 
 namespace Student_platform.Server

@@ -15,15 +15,11 @@ namespace Student_platform.Server.Controllers
         [HttpGet]
         public string Get()
         {
-
-            string con = "data source=.;initial catalog=smallterm;integrated security=True;";
-            SqlConnection conn = new SqlConnection(con);
-            conn.Open();
+            
+            DB db = new DB();
             string com = "select * from user_info;";
-            SqlCommand cmd = new SqlCommand(com, conn);
-
-
-            SqlDataReader reader = cmd.ExecuteReader();
+            db.Connection(com);
+            SqlDataReader reader = db.cmd.ExecuteReader();
             Dictionary<string, string> user_info = new Dictionary<string, string>();
             while (reader.Read())
             {
@@ -42,21 +38,33 @@ namespace Student_platform.Server.Controllers
             }
 
             reader.Close();
-            conn.Close();
+            db.conn.Close();
 
             // 将数据转换为 JSON 字符串
               string jsonData = JsonSerializer.Serialize(user_info);
             return jsonData;
         }
 
-        [HttpGet("{name}")]
-        public List<string> Get(string name)
+
+        //  api/Login/{user_name}
+        [HttpGet("{user_name}")]
+        public string Get(string user_name)
         {
-            List<string> list = new List<string>();
-
-
-
-            return list;
+            DB db = new DB();
+            
+            string com = "select user_paw from user_info where user_id = @name;";
+            db.Connection(com);
+            using (db.cmd)
+            {
+                db.cmd.Parameters.AddWithValue("@name", user_name);
+                SqlDataReader reader = db.cmd.ExecuteReader();
+                string paw = reader["user_paw"].ToString();
+                string json = JsonSerializer.Serialize(paw);
+                reader.Close();
+                return json;
+            }
+            
+      
 
         }
 
@@ -69,8 +77,15 @@ namespace Student_platform.Server.Controllers
 
         // POST api/<LoginController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                return BadRequest("Value cannot be null or empty");
+            }
+
+            // 处理接收到的值
+            return Ok($"Received value: {value}");
         }
 
         // PUT api/<LoginController>/5
@@ -86,3 +101,24 @@ namespace Student_platform.Server.Controllers
         }
     }
 }
+
+
+//// 执行命令并获取受影响的行数
+//int rowsAffected = command.ExecuteNonQuery();
+
+//// 检查受影响的行数
+//if (rowsAffected > 0)
+//{
+//    Console.WriteLine("插入成功");
+//}
+//else
+//{
+//    Console.WriteLine("插入失败");
+//}
+//                }
+//            }
+//            catch (SqlException ex)
+//            {
+//                // 捕获SQL异常
+//                Console.WriteLine($"插入失败: {ex.Message}");
+//            }
