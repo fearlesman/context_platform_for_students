@@ -46,7 +46,6 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$router.push(this.url);
           alert('提交登录信息!');
             //测试登录,成功了，返回的是string类型json的字符串，不过axios好像可以直接解析成json对象，就是response.data
             axios.get('https://localhost:7201/api/Login')

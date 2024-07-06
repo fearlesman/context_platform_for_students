@@ -26,9 +26,7 @@
   </template>
   
   <script>
-      import axios from "axios"
   export default {
-         
     data() {
       return {
         registerForm: {
@@ -57,20 +55,11 @@
         }
       };
     },
-     methods: {
-       
+    methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              alert('提交注册信息!');
-              axios.post("https://localhost:7201/api/Register", data.registerForm)
-                  .then(response => {
-
-                  })
-                  .catch(error => {
-                      alert('登录失败！');
-                  })
-
+            alert('提交注册信息!');
             // 在这里添加注册的逻辑
           } else {
             console.log('error submit!!');
