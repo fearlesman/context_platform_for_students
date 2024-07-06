@@ -17,16 +17,16 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
-          <el-button @click="goToLoginPage">返回登录</el-button>
+          <el-button type="primary" @click="submitForm('registerForm')">
+            <router-link class="nav-link" to="/login">返回登录</router-link>
+          </el-button>
         </el-form-item>
       </el-form>
     </el-card>
   </template>
   
   <script>
-      import axios from "axios"
   export default {
-         
     data() {
       return {
         registerForm: {
@@ -55,20 +55,11 @@
         }
       };
     },
-     methods: {
-       
+    methods: {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              alert('提交注册信息!');
-              axios.post("https://localhost:7201/api/Register", data.registerForm)
-                  .then(response => {
-
-                  })
-                  .catch(error => {
-                      alert('登录失败！');
-                  })
-
+            alert('提交注册信息!');
             // 在这里添加注册的逻辑
           } else {
             console.log('error submit!!');

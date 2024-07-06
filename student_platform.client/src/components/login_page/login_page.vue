@@ -11,7 +11,11 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
-              <el-button @click="getRegisterPage()">注册</el-button>
+              <el-button type="primary">
+                <router-link class="nav-link" to="/register">
+                  <p>注册</p>
+                </router-link>
+              </el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -34,7 +38,8 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, message: '密码长度不能少于6位', trigger: 'blur' }
         ]
-      }
+      },
+      url:'personal_page'
     };
   },
   methods: {
