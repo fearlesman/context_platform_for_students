@@ -29,9 +29,9 @@ namespace Student_platform.Server.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Register reg)
         {
-            //接收一个json字符串
+            
             DB db = new DB();
-            db.conn.Open();
+     
                
             string com = "insert into user_info(user_id,user_paw,user_email) values(@id,@paw,@email);";
             db.Connection(com);
