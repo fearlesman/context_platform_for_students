@@ -1,3 +1,36 @@
+
+<script>
+import { marked } from 'marked'
+import 'element-plus/dist/index.css'
+
+export default {
+  data() {
+    return {
+      content: '# 欢迎来到我的个性化页面!\n\n这里是您可以自定义的内容区域。您可以使用 Markdown 格式进行编辑。',
+      previewMode: false
+    }
+  },
+  computed: {
+    compiledMarkdown() {
+      return marked(this.content)
+    }
+  },
+  methods: {
+    previewContent() {
+      this.previewMode = true
+    },
+    saveContent() {
+      // 在此处添加保存内容的逻辑
+      console.log('保存内容:', this.content)
+    },
+    submitContent() {
+      // 在此处添加提交内容的逻辑
+      console.log('提交内容:', this.content)
+    }
+  }
+}
+</script>
+
 <template>
     <div class="container">
       <div class="editor-container">
@@ -23,38 +56,6 @@
       </div>
     </div>
   </template>
-  
-  <script>
-  import { marked } from 'marked'
-  import 'element-plus/dist/index.css'
-  
-  export default {
-    data() {
-      return {
-        content: '# 欢迎来到我的个性化页面!\n\n这里是您可以自定义的内容区域。您可以使用 Markdown 格式进行编辑。',
-        previewMode: false
-      }
-    },
-    computed: {
-      compiledMarkdown() {
-        return marked(this.content)
-      }
-    },
-    methods: {
-      previewContent() {
-        this.previewMode = true
-      },
-      saveContent() {
-        // 在此处添加保存内容的逻辑
-        console.log('保存内容:', this.content)
-      },
-      submitContent() {
-        // 在此处添加提交内容的逻辑
-        console.log('提交内容:', this.content)
-      }
-    }
-  }
-  </script>
   
   <style scoped>
   .container {

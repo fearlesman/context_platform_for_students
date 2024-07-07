@@ -1,70 +1,52 @@
 <template>
   <el-menu
     :default-active="activeIndex"
+    class="el-menu-demo"
     mode="horizontal"
+    :ellipsis="false"
     @select="handleSelect"
-    width=100%
   >
-    <el-row>
-      <el-col :span="6">
-        <el-menu-item index="1" class="menu-item">
-          <router-link class="nav-link" to="/">
-            <p>首页</p>
-          </router-link>
-        </el-menu-item>
-      </el-col>
-  <el-col :span="6">
-    <el-menu-item index="2" class="menu-item">
-      <router-link class="nav-link" to="/contest">
-        <p>比赛组队</p>
-      </router-link>
+    <el-menu-item index="0">
+      <img
+        style="width: 100px"
+        src=""
+        alt="logo"
+      />
     </el-menu-item>
-  </el-col>
-  <el-col :span="6" v-if="loginstatus==0">
-    <el-menu-item index="3" class="menu-item">
-      <router-link class="nav-link" to="/register">
-        <p>注册</p>
-      </router-link>
+    <el-menu-item index="1" >
+      <router-link to="/">首页</router-link>
+    </el-menu-item>
+    <el-menu-item index="2">
+      <router-link to="/contest">竞赛组队</router-link>
+    </el-menu-item>
+    <div class="flex-grow" />
+    <el-menu-item index="3">
+      <router-link to="/login">登录</router-link>
       /
-      <router-link class="nav-link" to="/login">
-        <p>登录</p>
-      </router-link>
+      <router-link to="/register">注册</router-link>
     </el-menu-item>
-  </el-col>
-  </el-row>
+    
+    <el-menu-item index="4">
+      <router-link to="/personal">个人中心</router-link>
+    </el-menu-item>
+    <el-menu-item index="5">
+      <router-link to="/markdown">主页编辑</router-link>
+    </el-menu-item>
   </el-menu>
-  <div v-if="loginstatus==1" class="user-info">
-    <span>欢迎，{{username}}</span>
-    <el-button type="text" @click="logout()">退出</el-button>
-  </div>
-
 </template>
 
-<script>
+<script lang="ts" setup>
+import router from '@/rounter';
 import { ref } from 'vue'
 
-export default {
-  setup() {
-    const activeIndex = ref('1')
-
-    const handleSelect = (key, keyPath) => {
-      activeIndex.value = key
-    }
-    return {
-      activeIndex,
-      handleSelect
-    }
-  }
+const activeIndex = ref('1')
+const handleSelect = (key: string, keyPath: string[]) => {
+  console.log(key, keyPath)
 }
 </script>
+
 <style>
-.user-info {
-  position: absolute;
-  top: 123px;
-  right: 123px;
-  font-size: 14px;
-  color: #fff;
-  padding: 10px;
-  z-index: 999;
+.flex-grow {
+  flex-grow: 1;
 }
 </style>

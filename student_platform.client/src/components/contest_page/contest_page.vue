@@ -10,14 +10,14 @@
         </el-input>
       </el-col>
       <el-col :span="6">
-        <el-select v-model="selectedStatus" placeholder="选择状态" @change="filterTeams">
+        <el-select v-model="selectedStatus" placeholder="选择状态" @change="$forceUpdate(),searchData()">
           <el-option label="所有状态" value=""></el-option>
           <el-option label="招募中" value="招募中"></el-option>
           <el-option label="招募完成" value="招募完成"></el-option>
         </el-select>
       </el-col>
       <el-col :span="6">
-        <el-select v-model="selectedTags" multiple placeholder="选择标签" @change="filterTeams">
+        <el-select v-model="selectedTags" multiple placeholder="选择标签" @change="searchData()">
           <el-option v-for="tag in allTags" :key="tag" :label="tag" :value="tag"></el-option>
         </el-select>
       </el-col>
@@ -25,6 +25,7 @@
         <el-button type="primary" @click="resetFilters">重置</el-button>
       </el-col>
     </el-row>
+    <el-divider />
     <el-row :gutter="20" style="margin-top: 20px;">
       <el-col :span="24">
         <el-table :data="filteredTeams" stripe>
@@ -56,6 +57,11 @@
           <el-table-column prop="tags" label="标签" width="300">
             <template v-slot="scope">
               <el-tag v-for="tag in scope.row.tags" :key="tag" style="margin-right: 5px;">{{ tag }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="150">
+            <template v-slot="scope">
+              <el-button type="text" @click="showLeaderProfile(scope.row.leaderName)">查看详情</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -92,7 +98,19 @@ export default {
         // 添加更多队伍数据
       ],
       searchText: '',
-      filteredTeams: []
+      selectedStatus: '',
+      selectedTags: [],
+      filteredTeams: [],
+      searchResults: []
+    }
+  },
+  computed: {
+    allTags() {
+      const allTags = new Set();
+      this.teams.forEach(team => {
+        team.tags.forEach(tag => allTags.add(tag));
+      });
+      return Array.from(allTags);
     }
   },
   created() {
@@ -100,15 +118,52 @@ export default {
   },
   methods: {
     filterTeams() {
-      this.filteredTeams = this.teams.filter(team => {
-        const searchText = this.searchText.toLowerCase();
-        return team.name.toLowerCase().includes(searchText)
-          || team.leaderName.toLowerCase().includes(searchText)
-          || team.tags.some(tag => tag.toLowerCase().includes(searchText));
+        this.filteredTeams = this.teams.filter(team => {
+          // 根据搜索框内容、状态、标签筛选条件
+          const searchText = this.searchText.toLowerCase();
+          const matchesSearchText = team.name.toLowerCase().includes(searchText)
+            || team.leaderName.toLowerCase().includes(searchText)
+            || team.tags.some(tag => tag.toLowerCase().includes(searchText));
+          const matchesStatus = this.selectedStatus ? team.status === this.selectedStatus : true;
+          const matchesTags = this.selectedTags.length
+            ? this.selectedTags.every(tag => team.tags.includes(tag))
+            : true;
+          return matchesSearchText && matchesStatus && matchesTags;
       });
     },
+    
     showLeaderProfile(leaderName) {
       alert(`查看${leaderName}的个人简介`);
+    },
+    resetFilters() {
+      this.searchText = '';
+      this.selectedStatus = '';
+      this.selectedTags = [];
+      this.filterTeams();
+    },
+    // 实时显示
+    searchData() {
+      let data = this.teams; 
+      // 根据状态筛选
+      if (this.selectedStatus) {
+        data = data.filter(item => item.status === this.selectedStatus);
+      }
+      // 根据搜索框内容筛选
+      if (this.searchText) {
+        const searchText = this.searchText.toLowerCase();
+        data = data.filter(team => {
+          return team.name.toLowerCase().includes(searchText)
+            || team.leaderName.toLowerCase().includes(searchText)
+            || team.tags.some(tag => tag.toLowerCase().includes(searchText));
+        });
+      }
+      // 根据标签筛选
+      if (this.selectedTags.length) {
+        data = data.filter(team => {
+          return this.selectedTags.every(tag => team.tags.includes(tag));
+        });
+      }
+      this.filteredTeams = data;
     }
   }
 }
