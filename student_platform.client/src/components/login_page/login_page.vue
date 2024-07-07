@@ -11,17 +11,15 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
-              <el-button type="primary">
-                <router-link class="nav-link" to="/register">
-                  <p>注册</p>
-                </router-link>
-              </el-button>
+              <el-button type="primary" @click="navigateTo('/register')">注册</el-button>
             </el-form-item>
           </el-form>
         </el-card>
 </template>
 
 <script>
+import router from '@/rounter';
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -43,6 +41,11 @@ export default {
     };
   },
   methods: {
+    // 路由跳转
+    navigateTo(path) {
+      router.push(path);
+    },
+    // 登录表单提交
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

@@ -56,7 +56,11 @@
           </el-table-column>
           <el-table-column prop="tags" label="标签" width="300">
             <template v-slot="scope">
-              <el-tag v-for="tag in scope.row.tags" :key="tag" style="margin-right: 5px;">{{ tag }}</el-tag>
+              <el-tag v-for="tag in scope.row.tags" 
+                      :key="tag" 
+                      style="margin-right: 5px;"
+                      @click="addTags(tag), searchData()"
+                      >{{ tag }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column label="操作" width="150">
@@ -134,6 +138,10 @@ export default {
     
     showLeaderProfile(leaderName) {
       alert(`查看${leaderName}的个人简介`);
+    },
+
+    addTags(tag) {
+      this.selectedTags.push(tag);
     },
     resetFilters() {
       this.searchText = '';

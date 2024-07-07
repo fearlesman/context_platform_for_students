@@ -6,7 +6,7 @@
           <div class="username">{{ user.username }}</div>
           <div class="user-id">ID: {{ user.id }}</div>
           <div class="tags">
-            <span v-for="tag in user.tags" :key="tag" class="tag">{{ tag }}</span>
+            <el-tag v-for="tag in user.tags" :key="tag" class="tag" >{{ tag }}</el-tag>
           </div>
         </div>
       </div>

@@ -1,4 +1,30 @@
 
+<template>
+    <div class="container">
+      <div class="editor-container">
+        <div class="editor-header">
+          <h2>个性化界面编辑器</h2>
+          <div class="editor-actions">
+            <el-button @click="previewContent" type="primary">预览</el-button>
+            <el-button @click="saveContent" type="success">保存</el-button>
+            <el-button @click="submitContent" type="warning">提交</el-button>
+          </div>
+        </div>
+        <div class="editor-content">
+          <textarea v-model="content" placeholder="使用 Markdown 编辑您的个性化内容"></textarea>
+        </div>
+      </div>
+  
+      <div class="preview-container" v-if="previewMode">
+        <div class="preview-header">
+          <h2>预览</h2>
+          <el-button @click="previewMode = false" type="danger">关闭预览</el-button>
+        </div>
+        <el-divider/>
+        <div class="preview-content" v-html="compiledMarkdown"></div>
+      </div>
+    </div>
+  </template>
 <script>
 import { marked } from 'marked'
 import 'element-plus/dist/index.css'
@@ -7,7 +33,7 @@ export default {
   data() {
     return {
       content: '# 欢迎来到我的个性化页面!\n\n这里是您可以自定义的内容区域。您可以使用 Markdown 格式进行编辑。',
-      previewMode: false
+      previewMode: true
     }
   },
   computed: {
@@ -31,32 +57,6 @@ export default {
 }
 </script>
 
-<template>
-    <div class="container">
-      <div class="editor-container">
-        <div class="editor-header">
-          <h2>个性化界面编辑器</h2>
-          <div class="editor-actions">
-            <el-button @click="previewContent" type="primary">预览</el-button>
-            <el-button @click="saveContent" type="success">保存</el-button>
-            <el-button @click="submitContent" type="warning">提交</el-button>
-          </div>
-        </div>
-        <div class="editor-content">
-          <textarea v-model="content" placeholder="使用 Markdown 编辑您的个性化内容"></textarea>
-        </div>
-      </div>
-  
-      <div class="preview-container" v-if="previewMode">
-        <div class="preview-header">
-          <h2>预览</h2>
-          <el-button @click="previewMode = false" type="danger">关闭预览</el-button>
-        </div>
-        <div class="preview-content" v-html="compiledMarkdown"></div>
-      </div>
-    </div>
-  </template>
-  
   <style scoped>
   .container {
     display: flex;

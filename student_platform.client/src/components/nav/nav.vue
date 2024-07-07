@@ -13,36 +13,43 @@
         alt="logo"
       />
     </el-menu-item>
-    <el-menu-item index="1" >
-      <router-link to="/">首页</router-link>
+    <el-menu-item index="1" @click="navigateTo('/')">
+      首页
     </el-menu-item>
-    <el-menu-item index="2">
-      <router-link to="/contest">竞赛组队</router-link>
+    <el-menu-item index="2" @click="navigateTo('/contest')">
+      竞赛组队
     </el-menu-item>
     <div class="flex-grow" />
-    <el-menu-item index="3">
-      <router-link to="/login">登录</router-link>
-      /
-      <router-link to="/register">注册</router-link>
+    <el-menu-item index="3" @click="navigateTo('/login')">
+      登录
     </el-menu-item>
-    
-    <el-menu-item index="4">
-      <router-link to="/personal">个人中心</router-link>
+    <el-menu-item index="4" @click="navigateTo('/personal')">
+      个人中心
     </el-menu-item>
-    <el-menu-item index="5">
-      <router-link to="/markdown">主页编辑</router-link>
+    <el-menu-item index="5" @click="navigateTo('/markdown')">
+      主页编辑
     </el-menu-item>
   </el-menu>
 </template>
 
-<script lang="ts" setup>
+<script>
 import router from '@/rounter';
-import { ref } from 'vue'
 
-const activeIndex = ref('1')
-const handleSelect = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
+export default {
+  data() {
+    return {
+      activeIndex: '1'
+    };
+  },
+  methods: {
+    // handleSelect(key, keyPath) {
+    //   console.log(key, keyPath);
+    // },
+    navigateTo(path) {
+      router.push(path);
+    }
+  }
+};
 </script>
 
 <style>
