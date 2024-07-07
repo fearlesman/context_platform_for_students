@@ -2,12 +2,12 @@
 {
     public class Register
     {
-        public string reg_name {  get; set; }
+        public string username {  get; set; }
         
-        public string reg_paw {  get; set; }
+        public string password {  get; set; }
 
-        public string reg_confirm_paw { get; set; }
+        public string confirmPassword { get; set; }
 
-        public string reg_email {  get; set; }
+        public string email {  get; set; }
     }
 }

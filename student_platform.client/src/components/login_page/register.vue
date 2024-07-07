@@ -28,13 +28,14 @@
   import axios from 'axios';
   export default {
     data() {
-      return {
-        registerForm: {
-          username: '',
-          password: '',
-          confirmPassword: '',
-          email: ''
-        },
+          return {
+           Result: null,
+              registerForm: {
+                  username: 'nnn',
+                  password: '12345678',
+                  confirmPassword: '12345678',
+                  email: '123@qq.com'
+              },
         rules: {
           username: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -62,8 +63,17 @@
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('提交注册信息!');
+            if (valid) {
+
+                alert('提交注册信息!');
+                axios.post('https://localhost:7201/api/Register',this.registerForm)
+                    .then(response => {
+                       
+                      alert(response.data);
+                  })
+                  .catch(error => {
+                      alert("注册失败");
+                  })
             // 在这里添加注册的逻辑
           } else {
             console.log('error submit!!');
