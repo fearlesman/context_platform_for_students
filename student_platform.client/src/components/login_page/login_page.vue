@@ -23,6 +23,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      error: null,
       loginForm: {
         username: '',
         password: ''
@@ -37,7 +38,7 @@ export default {
           { min: 6, message: '密码长度不能少于6位', trigger: 'blur' }
         ]
       },
-      url:'personal_page'
+      url:'personal_page',
     };
   },
   methods: {
@@ -55,7 +56,6 @@ export default {
                 .then(response => {
                     const a = JSON.stringify(response.data);
                     alert(a);
-
                 })
                 .catch(error => {
                     alert('登录失败！');

@@ -63,6 +63,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-grow :1;
   }
   
   .avatar {
