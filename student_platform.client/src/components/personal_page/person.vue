@@ -4,7 +4,7 @@
         <div class="user-info">
           <img class="avatar" :src="user.avatar" alt="Avatar">
           <div class="username">{{ user.username }}</div>
-          <div class="user-id">ID: {{ user.id }}</div>
+          <p>User ID: {{ $route.params.id }}</p> <!-- 使用$route访问动态参数 -->
           <div class="tags">
             <el-tag v-for="tag in user.tags" :key="tag" class="tag" >{{ tag }}</el-tag>
           </div>

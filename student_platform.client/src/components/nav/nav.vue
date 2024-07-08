@@ -6,6 +6,7 @@
     return {
       activeIndex: '1',
       loginstatus: false,
+      userid:'123',
       // url='/api/loginstatus/'+account,
     };
   },
@@ -18,6 +19,7 @@
     },
     changestatus(){
       this.loginstatus = this.loginstatus === false? true : false;
+      router.push({ params: { id: this.userid } });
     },
     getloginstatus(){ return this.loginstatus; },
   // axios.get(url)
@@ -65,11 +67,14 @@
         创建队伍
       </el-menu-item>
     </el-sub-menu>
+    <el-menu-item index="3" @click="navigateTo('/team')">
+      我的团队
+    </el-menu-item>
     <div class="flex-grow" />
     <el-menu-item index="3" @click="navigateTo('/login')" v-if="getloginstatus() === false">
       登录
     </el-menu-item>
-    <el-menu-item index="4" @click="navigateTo('/personal')" v-if="getloginstatus() === true">
+    <el-menu-item index="4" @click="navigateTo('/user/'+userid)" v-if="getloginstatus() === true">
       个人中心
     </el-menu-item>
     <el-menu-item index="5" @click="changestatus()" v-if="getloginstatus() === true">

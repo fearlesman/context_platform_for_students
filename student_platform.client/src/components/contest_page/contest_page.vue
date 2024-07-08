@@ -116,6 +116,7 @@
                       {{ tag }}
                     </el-tag>
                   </p>
+                  <el-button type="primary" @click="JoinTeam()">加入</el-button>
                 </div>
               </el-popover>
 
@@ -290,6 +291,9 @@ export default {
         data = data.filter(item => item.type === this.selectedType);
       }
       this.filteredTeams = data;
+    },
+    JoinTeam() {
+      alert('加入队伍成功!');
     }
   }
 }
