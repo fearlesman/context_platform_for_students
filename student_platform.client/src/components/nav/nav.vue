@@ -56,9 +56,17 @@
     <el-menu-item index="1" @click="navigateTo('/')">
       首页
     </el-menu-item>
-    <el-menu-item index="2" @click="navigateTo('/contest')">
-      竞赛组队
-    </el-menu-item>
+    <el-sub-menu index="2" >
+      <template #title>竞赛组队</template>
+      <el-menu-item index="2-1" @click="navigateTo('/create')">
+        <div>
+          创建队伍
+        </div>
+      </el-menu-item>
+      <el-menu-item index="2-2" @click="navigateTo('/join')">
+        加入队伍
+      </el-menu-item>
+    </el-sub-menu>
     <div class="flex-grow" />
     <el-menu-item index="3" @click="navigateTo('/login')" v-if="getloginstatus() === false">
       登录
