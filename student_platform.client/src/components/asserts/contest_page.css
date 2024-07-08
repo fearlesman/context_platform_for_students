@@ -49,3 +49,16 @@
   .el-button {
     margin-top: 10px;
   }
+  .member-images {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  
+  .member-images > div {
+    margin-right: 10px; /* 添加图片之间的间距 */
+  }
+  
+  .member-images img {
+    display: inline-block; /* 将图片设置为行内块级元素 */
+    vertical-align: middle; /* 垂直居中对齐 */
+  }

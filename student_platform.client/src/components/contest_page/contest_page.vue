@@ -48,7 +48,7 @@
           </el-table-column>
           <el-table-column label="队长" width="100">
             <template v-slot="scope">
-              <el-avatar :src="scope.row.leaderAvatar" @click="showLeaderProfile(scope.row.leaderName)"></el-avatar>
+              <el-avatar :src="scope.row.leaderAvatar" @click="showleaderProfile(scope.row.leaderName)"></el-avatar>
             </template>
           </el-table-column>
           <el-table-column prop="race" label="比赛名称" width="200">
@@ -82,7 +82,7 @@
           </el-table-column>
           <el-table-column label="操作" width="150">
             <template v-slot="scope">
-              <el-popover placement="right" :width="400" trigger="click">
+              <el-popover placement="right" :width="500" trigger="click">
                 <template #reference>
                   <el-button style="margin-right: 16px" type="primary">查看详情</el-button>
                 </template>
@@ -92,6 +92,16 @@
                   <p>比赛类型: {{ scope.row.type }}</p>
                   <p>队长: {{ scope.row.leaderName }}</p>
                   <p>当前人数: {{ scope.row.currentMembers }}/{{ scope.row.totalMembers }}</p>
+                  <span>成员信息: </span>
+                  <img :src="leaderAvatar">
+                  <div class="member-images">
+                    <div v-for="member in scope.row.members.slice(0,6)" :key="member.name">
+                      <img :src="member.avatar" @click="showMemberProfile(member.id)">
+                    </div>
+                    <el-button v-if="scope.row.members.length > 5" @click="showMoreMembers">
+                      查看更多
+                    </el-button>
+                  </div>
                   <p>状态: 
                     <el-tag :type="scope.row.status === '招募中' ? 'success' : 'danger'">
                       {{ scope.row.status }}
@@ -124,8 +134,20 @@ export default {
       teams: [
         {
           name: 'see you again',
+          leaderid:52,
           leaderName: '牢大',
           leaderAvatar: 'https://via.placeholder.com/150',
+          members: [
+            { name: '牢二', id : 1, avatar: 'https://via.placeholder.com/50' },
+            { name: '牢三', id : 2, avatar: 'https://via.placeholder.com/50' },
+            { name: '牢四', id : 3, avatar: 'https://via.placeholder.com/50' },
+            { name: '牢五', id : 4, avatar: 'https://via.placeholder.com/50' },
+            { name: '牢六', id : 5, avatar: 'https://via.placeholder.com/50' },
+            { name: '牢七', id : 6, avatar: 'https://via.placeholder.com/50' },
+            { name: '牢八', id : 7, avatar: 'https://via.placeholder.com/50' },
+            { name: '牢九', id : 8, avatar: 'https://via.placeholder.com/50' },
+            { name: '牢十', id : 9, avatar: 'https://via.placeholder.com/50' }
+          ],
           race: '直升机赛',
           description: '孩子们，我回来了',
           type: '国赛',
@@ -133,11 +155,27 @@ export default {
           totalMembers: 200,
           status: '招募中',
           tags: ['直升机', '篮球', '冰红茶']
-        },
-        {
+        },{
           name: '姬霓太美',
+          leaderid:114514,
           leaderName: '坤坤',
           leaderAvatar: 'https://via.placeholder.com/150',
+          members: [
+            { name: '姬霓一', id : 10, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓二', id : 11, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓三', id : 12, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓四', id : 13, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓五', id : 14, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓六', id : 15, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓七', id : 16, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓八', id : 17, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓九', id : 18, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓十', id : 19, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓十一', id : 20, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓十二', id : 21, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓十三', id : 22, avatar: 'https://via.placeholder.com/50' },
+            { name: '姬霓十四', id : 23, avatar: 'https://via.placeholder.com/50' },
+          ],
           race:'篮球赛',
           description: '迎面而来的你让我如此蠢蠢欲动',
           type: '校内赛',
@@ -148,8 +186,14 @@ export default {
         },
         {
           name: '双料高级特工',
+          leaderid:4,
           leaderName: '催逝员',
           leaderAvatar: 'https://via.placeholder.com/150',
+          members: [
+            { name: '特工一', id : 19, avatar: 'https://via.placeholder.com/50' },
+            { name: '特工二', id : 20, avatar: 'https://via.placeholder.com/50' },
+            { name: '特工三', id : 21, avatar: 'https://via.placeholder.com/50' },
+          ],
           race:'厨艺比赛',
           description: '诶嘿嘿，鸡汤来喽。这菜都上齐了，大家怎么都不吃啊',
           type:'校内赛',
@@ -158,7 +202,6 @@ export default {
           status: '招募结束',
           tags: ['厨艺', '鸡汤']
         }
-        // 其他队伍数据按照上面的格式对齐
       ],
       searchText: '',
       selectedStatus: '',
@@ -202,7 +245,11 @@ export default {
       });
     },
     
-    showTeamProfile(leaderName) {
+    showMemberProfile(memberId) {
+      alert(`查看${memberId}的个人信息`);
+    },
+
+    showleaderProfile(leaderName) {
       alert(`查看${leaderName}的个人简介`);
     },
 
@@ -213,6 +260,7 @@ export default {
       this.searchText = '';
       this.selectedStatus = '';
       this.selectedTags = [];
+      this.selectedType = '';
       this.filterTeams();
     },
     // 实时显示
