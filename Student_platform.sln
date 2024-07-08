@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Student_platform.Server", "
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "student_platform.client", "student_platform.client\student_platform.client.esproj", "{22EE9868-D3D2-46D8-BD0C-A492229E76BA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{5DD59107-F821-48CC-96D1-A3865D67E059}"
+	ProjectSection(SolutionItems) = preProject
+		question_and_distribution.txt = question_and_distribution.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
