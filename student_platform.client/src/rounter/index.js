@@ -6,6 +6,7 @@ import register_page from "@/components/login_page/register.vue"
 import personal_page from "@/components/personal_page/person.vue"
 import markdown_page from "@/components/personal_page/markdown.vue"
 import create_page from "@/components/contest_page/create.vue"
+import myteam_page from "@/components/personal_page/myteam.vue"
 const routes = [
   { path: '/', component: home },
   { path: '/join', component: contest_page },
@@ -14,6 +15,7 @@ const routes = [
   { path: '/markdown', component: markdown_page },
   { path: '/create', component: create_page },
   { path: '/user/:id', component: personal_page},
+  { path: '/myteam', component: myteam_page},
 ]
 
 const router = createRouter({

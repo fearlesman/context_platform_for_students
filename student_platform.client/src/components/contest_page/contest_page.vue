@@ -128,7 +128,7 @@
   </div>
 </template>
 
-<script>
+<script >
 export default {
   data() {
     return {
@@ -255,6 +255,7 @@ export default {
     },
 
     addTags(tag) {
+      if(!this.selectedTags.includes(tag))
       this.selectedTags.push(tag);
     },
     resetFilters() {
