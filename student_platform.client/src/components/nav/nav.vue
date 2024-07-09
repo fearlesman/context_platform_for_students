@@ -19,9 +19,11 @@
     },
     changestatus(){
       this.loginstatus = this.loginstatus === false? true : false;
-      router.push({ params: { id: this.userid } });
     },
     getloginstatus(){ return this.loginstatus; },
+    pushrouter(){
+      router.push(router.push({ params: { id: this.userid } }));
+    },
   // axios.get(url)
   //               .then(response => {
   //                   const a = response.data;
@@ -74,7 +76,7 @@
     <el-menu-item index="3" @click="navigateTo('/login')" v-if="getloginstatus() === false">
       登录
     </el-menu-item>
-    <el-menu-item index="4" @click="navigateTo('/user/'+userid)" v-if="getloginstatus() === true">
+    <el-menu-item index="4" @click="pushrouter(),navigateTo('/user/'+userid)" v-if="getloginstatus() === true">
       个人中心
     </el-menu-item>
     <el-menu-item index="5" @click="changestatus()" v-if="getloginstatus() === true">
