@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using System.Text.Json;
+using System.Data;
+using Student_platform.Server.Modelclass;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -48,7 +50,7 @@ namespace Student_platform.Server.Controllers
 
         //  api/Login/{user_name}
         [HttpGet("{user_name}")]
-        public string Get(string user_name)
+        public bool Get(Login user )
         {
             DB db = new DB();
             
@@ -56,12 +58,16 @@ namespace Student_platform.Server.Controllers
             db.Connection(com);
             using (db.cmd)
             {
-                db.cmd.Parameters.AddWithValue("@name", user_name);
+                db.cmd.Parameters.AddWithValue("@name", user.user_id);
                 SqlDataReader reader = db.cmd.ExecuteReader();
                 string paw = reader["user_paw"].ToString();
-                string json = JsonSerializer.Serialize(paw);
                 reader.Close();
-                return json;
+                if (paw == user.password)
+                {
+                    return true;
+                }
+             
+                return false;
             }
             
       
