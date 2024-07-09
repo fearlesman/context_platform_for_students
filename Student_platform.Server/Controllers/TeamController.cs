@@ -18,10 +18,17 @@ namespace Student_platform.Server.Controllers
         }
 
         // GET api/<TeamController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{team_name}")]
+        public string Get(string team_name)
         {
-            return "value";
+            
+
+
+
+
+
+            string json = null;
+            return json;
         }
 
         // POST api/<TeamController>
