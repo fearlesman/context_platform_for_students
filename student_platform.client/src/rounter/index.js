@@ -9,13 +9,14 @@ import create_page from "@/components/contest_page/create.vue"
 import myteam_page from "@/components/personal_page/myteam.vue"
 const routes = [
   { path: '/', component: home },
-  { path: '/join', component: contest_page },
-  { path: '/login', component: login_page },
-  { path: '/register', component: register_page },
-  { path: '/markdown', component: markdown_page },
-  { path: '/create', component: create_page },
-  { path: '/user/:id', component: personal_page},
-  { path: '/myteam', component: myteam_page},
+  { path: '/join', component: contest_page ,name:'join'},
+  { path: '/login', component: login_page ,name:'login'},
+  { path: '/register', component: register_page,name:'register'},
+  { path: '/user/:id/markdown', component: markdown_page,name:'markdown'},
+  { path: '/user/:id/create', component: create_page,name:'create'},
+  { path: '/user/:id/home', component: personal_page,name:'home'},
+  { path: '/user/:id/myteam', component: myteam_page,name:'myteam'},
+  { path: '/home', redirect: '/user/:id/home'}
 ]
 
 const router = createRouter({

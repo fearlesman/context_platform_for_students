@@ -17,13 +17,21 @@
     navigateTo(path) {
       router.push(path);
     },
+    navigate(path,thisname) {
+      if (this.loginstatus === true){
+        router.push({ params: { id: this.userid } , name: thisname });
+        router.push(path);
+      }
+      else{
+        alert('请先登录！');
+        router.push('/login');
+      }
+    },
     changestatus(){
       this.loginstatus = this.loginstatus === false? true : false;
     },
     getloginstatus(){ return this.loginstatus; },
-    pushrouter(){
-      router.push(router.push({ params: { id: this.userid } }));
-    },
+
   // axios.get(url)
   //               .then(response => {
   //                   const a = response.data;
@@ -62,27 +70,27 @@
     </el-menu-item>
     <el-sub-menu index="2" >
       <template #title>竞赛组队</template>
-      <el-menu-item index="2-1" @click="navigateTo('/join')">
+      <el-menu-item index="2-1" @click="navigate('/join','')">
         加入队伍
       </el-menu-item>
-      <el-menu-item index="2-2" @click="navigateTo('/create')">
+      <el-menu-item index="2-2" @click="navigate('/create','create')">
         创建队伍
       </el-menu-item>
     </el-sub-menu>
-    <el-menu-item index="3" @click="navigateTo('/team')">
+    <el-menu-item index="3" @click="navigate('/myteam','myteam')">
       我的团队
     </el-menu-item>
     <div class="flex-grow" />
-    <el-menu-item index="3" @click="navigateTo('/login')" v-if="getloginstatus() === false">
+    <el-menu-item index="4" @click="navigateTo('/login')" v-if="getloginstatus() === false">
       登录
     </el-menu-item>
-    <el-menu-item index="4" @click="pushrouter(),navigateTo('/user/'+userid)" v-if="getloginstatus() === true">
+    <el-menu-item index="5" @click="navigate('/home', 'home')" v-if="getloginstatus() === true">
       个人中心
     </el-menu-item>
-    <el-menu-item index="5" @click="changestatus()" v-if="getloginstatus() === true">
+    <el-menu-item index="6" @click="changestatus()" v-if="getloginstatus() === true">
       退出登录
     </el-menu-item>
-    <el-menu-item index="6" @click="changestatus()">
+    <el-menu-item index="7" @click="changestatus()">
       状态切换
     </el-menu-item>
   </el-menu>

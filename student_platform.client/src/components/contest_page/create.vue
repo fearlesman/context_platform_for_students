@@ -1,17 +1,17 @@
 <template>
     <el-card class="create-card">
       <el-form ref="teamForm" :model="teamData" :rules="rules" label-width="120px">
-        <el-form-item label="团队名称" prop="teamName">
-          <el-input v-model="teamData.teamName" />
+        <el-form-item label="团队名称" prop="name">
+          <el-input v-model="teamData.name" />
         </el-form-item>
-        <el-form-item label="参加的竞赛" prop="competitionName">
-          <el-input v-model="teamData.competitionName" />
+        <el-form-item label="参加的竞赛" prop="race">
+          <el-input v-model="teamData.race" />
         </el-form-item>
-        <el-form-item label="队伍介绍" prop="teamIntro">
-          <el-input type="textarea" v-model="teamData.teamIntro" />
+        <el-form-item label="队伍介绍" prop="description">
+          <el-input type="textarea" v-model="teamData.description" />
         </el-form-item>
-        <el-form-item label="需要的人员数" prop="memberCount">
-          <el-input-number v-model="teamData.memberCount" :min="1" />
+        <el-form-item label="需要的人员数" prop=" totalMembers">
+          <el-input-number v-model="teamData. totalMembers" :min="1" />
         </el-form-item>
         <el-row>
           <el-col :span="12">
@@ -41,7 +41,7 @@
                 class="baseInput"
                 type="date"
                 placeholder="选择日期"
-                format="YYYY 年 MM 月 DD 日"
+                format="YYYY - MM - DD "
                 :picker-options="pickerOptionsEnd"
               ></el-date-picker>
             </el-form-item>
@@ -77,20 +77,23 @@
     data() {
       return {
         teamData: {
-          teamName: '',
-          competitionName: '',
-          teamIntro: '',
-          memberCount: 1,
+          name: '',
+          race: '',
+          type: '',
+          description: '',
+          totalMembers: null,
+          currentMembers: 1,
           startTime: currentTime,
           endTime: currentTime,
-          tags: []
+          tags: [],
+          members: []
         },
         newTag: '',
         rules: {
-          teamName: [{ required: true, message: '请输入团队名称', trigger: 'blur' }],
-          competitionName: [{ required: true, message: '请输入参加的竞赛名称', trigger: 'blur' }],
-          teamIntro: [{ required: true, message: '请输入队伍介绍', trigger: 'blur' }],
-          memberCount: [{ required: true, message: '请输入需要的人员数量', trigger: 'blur' }],
+          name: [{ required: true, message: '请输入团队名称', trigger: 'blur' }],
+          race: [{ required: true, message: '请输入参加的竞赛名称', trigger: 'blur' }],
+          description: [{ required: true, message: '请输入队伍介绍', trigger: 'blur' }],
+          totalMembers: [{ required: true, message: '请输入需要的人员数量', trigger: 'blur' }],
           startTime: [{ required: true, message: '请选择演练开始日期', trigger: 'change' }],
           endTime: [{ required: true, message: '请选择演练结束日期', trigger: 'change' }]
         },

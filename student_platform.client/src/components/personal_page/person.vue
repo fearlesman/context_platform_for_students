@@ -4,6 +4,8 @@
         <div class="user-info">
           <img class="avatar" :src="user.avatar" alt="Avatar">
           <div class="username">{{ user.username }}</div>
+          <br>
+          <div class="University">{{ user.university }}</div>
           <p>User ID: {{ $route.params.id }}</p> <!-- 使用$route访问动态参数 -->
           <div class="tags">
             <el-tag v-for="tag in user.tags" :key="tag" class="tag" >{{ tag }}</el-tag>
@@ -13,24 +15,31 @@
   
       <div class="content">
         <div class="profile">
-          <h2>个人简介</h2>
+            <h2>个人简介</h2>
+            <el-button @click="navigateTo('/user/'+$route.params.id+'/markdown')">编辑简介</el-button>
+            
           <div class="markdown-content" v-html="compiledMarkdown"></div>
         </div>
       </div>
     </div>
-  </template>
+</template>
   
-  <script>
+<script>
   import { marked } from 'marked';
+  import { useRouter } from 'vue-router';
+  
   export default {
     data() {
       return {
+        router : useRouter(),
         user: {
           username: 'John Doe',
           avatar: 'https://via.placeholder.com/150',
           id: 'ABC123',
-          tags: ['JavaScript', 'Vue.js', 'Web Development']
+          tags: ['JavaScript', 'Vue.js', 'Web Development'],
+          university: '清华大学'
         },
+        vistor: 123,
         customizationContent: '# 欢迎来到我的个人主页!\n\n这里是您可以自定义的个性化内容区域。您可以使用 Markdown 格式进行编辑。'
       }
     },
@@ -38,13 +47,18 @@
       compiledMarkdown() {
         return marked(this.customizationContent)
       }
-    }
+    },
+    methods: {
+      navigateTo(path) {
+      this.router.push(path);
+    },
   }
+}
   </script>
   
   <style>
   .container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
   }

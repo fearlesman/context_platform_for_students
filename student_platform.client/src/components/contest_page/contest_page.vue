@@ -51,6 +51,12 @@
               <el-avatar :src="scope.row.leaderAvatar" @click="showleaderProfile(scope.row.leaderName)"></el-avatar>
             </template>
           </el-table-column>
+          <el-table-column label="所在学校" width="200">
+            <template v-slot="scope">
+              {{scope.row.University
+              }}
+            </template>
+          </el-table-column>
           <el-table-column prop="race" label="比赛名称" width="200">
             <template v-slot="scope">
               <span>{{ scope.row.race }}</span>
@@ -119,7 +125,6 @@
                   <el-button type="primary" @click="JoinTeam()">加入</el-button>
                 </div>
               </el-popover>
-
             </template>
           </el-table-column>
         </el-table>
@@ -147,8 +152,9 @@ export default {
             { name: '牢七', id : 6, avatar: 'https://via.placeholder.com/50' },
             { name: '牢八', id : 7, avatar: 'https://via.placeholder.com/50' },
             { name: '牢九', id : 8, avatar: 'https://via.placeholder.com/50' },
-            { name: '牢十', id : 9, avatar: 'https://via.placeholder.com/50' }
+            { name: '牢十', id : 9, avatar: 'https://via.placeholder.com/50' },
           ],
+          University: '清华大学',
           race: '直升机赛',
           description: '孩子们，我回来了',
           type: '国赛',
@@ -177,6 +183,7 @@ export default {
             { name: '姬霓十三', id : 22, avatar: 'https://via.placeholder.com/50' },
             { name: '姬霓十四', id : 23, avatar: 'https://via.placeholder.com/50' },
           ],
+          University: '北京大学',
           race:'篮球赛',
           description: '迎面而来的你让我如此蠢蠢欲动',
           type: '校内赛',
@@ -195,6 +202,7 @@ export default {
             { name: '特工二', id : 20, avatar: 'https://via.placeholder.com/50' },
             { name: '特工三', id : 21, avatar: 'https://via.placeholder.com/50' },
           ],
+          University: '北京航空航天大学',
           race:'厨艺比赛',
           description: '诶嘿嘿，鸡汤来喽。这菜都上齐了，大家怎么都不吃啊',
           type:'校内赛',
@@ -238,7 +246,9 @@ export default {
         const searchText = this.searchText.toLowerCase();
         const matchesSearchText = team.name.toLowerCase().includes(searchText) ||
                                   team.leaderName.toLowerCase().includes(searchText) ||
-                                  team.tags.some(tag => tag.toLowerCase().includes(searchText));
+                                  team.race.toLowerCase().includes(searchText)
+                                  //||
+                                  //team.tags.some(tag => tag.toLowerCase().includes(searchText));
         const matchesStatus = this.selectedStatus ? team.status === this.selectedStatus : true;
         const matchesTags = this.selectedTags.length ? this.selectedTags.every(tag => team.tags.includes(tag)) : true;
         const matchesType = this.selectedType ? team.type === this.selectedType : true;
