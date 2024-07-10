@@ -1,6 +1,5 @@
 <script>
   import axios from 'axios';
-  import router from '@/rounter';
   export default {
   data() {
     return {
@@ -15,16 +14,15 @@
     //   console.log(key, keyPath);
     // },
     navigateTo(path) {
-      router.push(path);
+      this.$router.push(path);
     },
     navigate(path,thisname) {
       if (this.loginstatus === true){
-        router.push({ params: { id: this.userid } , name: thisname });
-        router.push(path);
+        this.$router.push({ name: thisname, params: { id: this.userid } });
       }
       else{
         alert('请先登录！');
-        router.push('/login');
+        this.$router.push('/login');
       }
     },
     changestatus(){

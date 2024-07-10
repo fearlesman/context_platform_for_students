@@ -11,6 +11,9 @@
             <el-tag v-for="tag in user.tags" :key="tag" class="tag" >{{ tag }}</el-tag>
           </div>
         </div>
+        <div class="profile" >
+          <el-button type="primary" @click="navigateTo('/user/'+$route.params.id+'/profile')">我的简介</el-button>
+        </div>
       </div>
   
       <div class="content">
@@ -26,12 +29,10 @@
   
 <script>
   import { marked } from 'marked';
-  import { useRouter } from 'vue-router';
   
   export default {
     data() {
       return {
-        router : useRouter(),
         user: {
           username: 'John Doe',
           avatar: 'https://via.placeholder.com/150',
@@ -50,11 +51,11 @@
     },
     methods: {
       navigateTo(path) {
-      this.router.push(path);
+        this.$router.push({ name: 'profile', params: { id: $route.params.id } });
+      }
     },
   }
-}
-  </script>
+</script>
   
   <style>
   .container {

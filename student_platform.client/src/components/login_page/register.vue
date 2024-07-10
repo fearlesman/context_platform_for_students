@@ -24,7 +24,6 @@
   </template>
   
   <script>
-  import router from '@/rounter';
   import axios from 'axios';
   export default {
     data() {
@@ -59,7 +58,7 @@
     methods: {
       // 路由跳转
       navigateTo(path) {
-        router.push(path);
+        this.$router.push(path);
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
@@ -87,8 +86,7 @@
         }
       },
       goToLoginPage() {
-        // 导航到登录页面的逻辑
-        console.log('Go to login page');
+        this.$router.push('/login');
       }
     }
   };

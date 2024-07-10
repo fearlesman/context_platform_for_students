@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import router from '@/rounter';
 import axios from 'axios';
 export default {
   data() {
@@ -44,7 +43,7 @@ export default {
   methods: {
     // 路由跳转
     navigateTo(path) {
-      router.push(path);
+      this.$router.push(path);
     },
     // 登录表单提交
     submitForm(formName) {
