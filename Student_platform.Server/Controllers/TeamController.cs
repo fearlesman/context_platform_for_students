@@ -31,7 +31,7 @@ namespace Student_platform.Server.Controllers
             return json;
         }
 
-        // POST api/<TeamController>
+        // POST api/Team
         [HttpPost]
         public IActionResult Post([FromBody] Team tm)
         {

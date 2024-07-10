@@ -18,7 +18,7 @@ namespace Student_platform.Server.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<RaceController>/race_name
+        // GET api/Race/race_name
         [HttpGet("{race_name}")]
         public string Get(string race_name)
         {
@@ -39,7 +39,7 @@ namespace Student_platform.Server.Controllers
 
 
                 //选出team_member
-                DB db1 = new DB();
+            DB db1 = new DB();
             string com1 = $"select name,id from team_member where team_name = {need_team_name};";
             db1.Connection(com1);
             int maxmem = 1000;
