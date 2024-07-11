@@ -72,6 +72,7 @@ namespace Student_platform.Server
                 { 
                         int i = 0;
                         t_tags.Add(new string(" "));
+
                         t_tags[i] = reader2[$"tag{i + 1}"].ToString();
                         i++;
                 }
