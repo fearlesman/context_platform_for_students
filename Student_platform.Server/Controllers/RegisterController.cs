@@ -36,13 +36,14 @@ namespace Student_platform.Server.Controllers
             DB db = new DB();
 
 
-            string com = "insert into user_info(user_id,user_paw,user_email) values(@id,@paw,@email);";
+            string com = "insert into user_info(user_id,user_paw,user_email,university) values(@id,@paw,@email,@university);";
             db.Connection(com);
             using (db.cmd)
             {
                 db.cmd.Parameters.AddWithValue("@id", reg.username);
                 db.cmd.Parameters.AddWithValue("@paw", reg.password);
                 db.cmd.Parameters.AddWithValue("@email", reg.email);
+                db.cmd.Parameters.AddWithValue("@university", reg.university);
             }
             // 执行命令并获取受影响的行数
             try { 

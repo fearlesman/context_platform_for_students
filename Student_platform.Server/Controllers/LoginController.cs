@@ -49,8 +49,8 @@ namespace Student_platform.Server.Controllers
 
         //登录
         //  api/Login/{user_info}
-        [HttpGet("{user_info}")]
-        public bool Get(Login user_info )
+        [HttpPost]
+        public bool Post(Login user_info )
         {
             DB db = new DB();
             
@@ -58,14 +58,18 @@ namespace Student_platform.Server.Controllers
             db.Connection(com);
             using (db.cmd)
             {
-                db.cmd.Parameters.AddWithValue("@name", user_info.user_id);
+                db.cmd.Parameters.AddWithValue("@name", user_info.username);
                 SqlDataReader reader = db.cmd.ExecuteReader();
-                string paw = reader["user_paw"].ToString();
-                reader.Close();
-                if (paw == user_info.password)
+                if (reader.Read())
                 {
-                    return true;
+                    string paw = reader["user_paw"].ToString();
+                    if (paw == user_info.password)
+                    {
+                        return true;
+                    }
                 }
+                reader.Close();
+                
              
                 return false;
             }
@@ -82,17 +86,17 @@ namespace Student_platform.Server.Controllers
         }
 
         // POST api/<LoginController>
-        [HttpPost]
-        public IActionResult Post([FromBody] string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return BadRequest("Value cannot be null or empty");
-            }
+        //[HttpPost]
+        //public IActionResult Post([FromBody] string value)
+        //{
+        //    if (string.IsNullOrEmpty(value))
+        //    {
+        //        return BadRequest("Value cannot be null or empty");
+        //    }
 
-            // 处理接收到的值
-            return Ok($"Received value: {value}");
-        }
+        //    // 处理接收到的值
+        //    return Ok($"Received value: {value}");
+        //}
 
         // PUT api/<LoginController>/5
         [HttpPut("{id}")]

@@ -32,6 +32,8 @@ namespace Student_platform.Server.Modelclass
 
         public List<Team_member> members { get; set; }
 
+        public string university {  get; set; }
+
         public string race { get; set; }
 
         public string description { get; set; }
@@ -45,6 +47,8 @@ namespace Student_platform.Server.Modelclass
         public int status { get; set; }
 
         public string[] tags { get; set; }
+
+        public string end_date { get; set; }
 
         
 
