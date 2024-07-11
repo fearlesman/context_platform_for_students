@@ -15,12 +15,10 @@ namespace Student_platform.Server
 
         public SqlCommand cmd;
         public DB() {
-             this.con = "data source=.;initial catalog=smallterm;integrated security=True;";
-             this.conn = new SqlConnection(con);
-            if (conn.State != ConnectionState.Open)
-            {
-                this.conn.Open();
-            }
+            this.con = "data source=.;initial catalog=smallterm;integrated security=True;";
+            this.conn = new SqlConnection(con);
+            this.conn.Open();
+           
 
         }
 
