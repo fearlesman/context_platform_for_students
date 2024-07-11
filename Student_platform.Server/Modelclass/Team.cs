@@ -42,7 +42,7 @@ namespace Student_platform.Server.Modelclass
 
         public int totalMembers { get; set; }
 
-        public string status { get; set; }
+        public int status { get; set; }
 
         public string[] tags { get; set; }
 

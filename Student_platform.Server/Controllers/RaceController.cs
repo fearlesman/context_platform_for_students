@@ -69,7 +69,7 @@ namespace Student_platform.Server.Controllers
                     string t_type = reader3["type"].ToString();
                     int t_currentMembers = reader3.GetInt32(reader3.GetOrdinal("currentMembers"));  
                     int t_totalMembers = reader3.GetInt32(reader3.GetOrdinal("totalMembers"));
-                    string t_status = reader3["status"].ToString();
+                    int t_status = reader3.GetInt32(reader3.GetOrdinal("status"));
                     teams.Add(new Team());
                     teams[i] = new Team
                     {
