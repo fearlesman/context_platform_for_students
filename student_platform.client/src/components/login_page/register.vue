@@ -30,10 +30,11 @@
           return {
            Result: null,
               registerForm: {
-                  username: 'nnn',
-                  password: '12345678',
-                  confirmPassword: '12345678',
-                  email: '123@qq.com'
+                  username: '',
+                  password: '',
+                  confirmPassword: '',
+                  email: '',
+                  university:''
               },
         rules: {
           username: [
