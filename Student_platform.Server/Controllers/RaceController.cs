@@ -45,7 +45,7 @@ namespace Student_platform.Server.Controllers
 
             string need_team_name = "  ";
             List<Team_member> tm = new List<Team_member>();
-            List<string> t_tags = new List<string>();
+            string[] t_tags = new string[5];
             //返回对应race-name下的队伍信息
             DB db3 = new DB();
             string com3 = "select * from team_show where race = @race_name;";
@@ -55,12 +55,13 @@ namespace Student_platform.Server.Controllers
             using (db3.cmd)
             {
                 SqlDataReader reader3 = db3.cmd.ExecuteReader();
+                int i = 0;
                 while (reader3.Read())
                 {
-                    int i = 0;
+                   
                     need_team_name = reader3["name"].ToString();
                     tm = db3.GetTeam_members(need_team_name);
-                    t_tags = db3.GetTags(race_name);
+                    t_tags = db3.GetTags(need_team_name);
                     string t_name = reader3["name"].ToString();
                     string t_leaderid = reader3["leaderid"].ToString();
                     string t_leaderName = reader3["leaderName"].ToString();
@@ -69,7 +70,7 @@ namespace Student_platform.Server.Controllers
                     int t_currentMembers = reader3.GetInt32(reader3.GetOrdinal("currentMembers"));  
                     int t_totalMembers = reader3.GetInt32(reader3.GetOrdinal("totalMembers"));
                     string t_status = reader3["status"].ToString();
-
+                    teams.Add(new Team());
                     teams[i] = new Team
                     {
                       
@@ -90,9 +91,12 @@ namespace Student_platform.Server.Controllers
 
                     
                 }
-                string json = JsonSerializer.Serialize(teams);
-                return json;
+                reader3.Close();
+            
             }
+            string json = JsonSerializer.Serialize(teams);
+            return json;
+
 
         }
 

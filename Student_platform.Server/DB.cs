@@ -17,7 +17,10 @@ namespace Student_platform.Server
         public DB() {
              this.con = "data source=.;initial catalog=smallterm;integrated security=True;";
              this.conn = new SqlConnection(con);
-            this.conn.Open();
+            if (conn.State != ConnectionState.Open)
+            {
+                this.conn.Open();
+            }
 
         }
 
@@ -40,17 +43,16 @@ namespace Student_platform.Server
             using (db1.cmd)
             {
                 SqlDataReader reader1 = db1.cmd.ExecuteReader();
+                int i = 0;
                 while (reader1.Read())
                 {
-
-
-                    int i = 0;
                     tm.Add(new Team_member());
                     tm[i].name = reader1["name"].ToString();
                     tm[i].id = reader1["id"].ToString();
                     i++;
 
                 }
+                reader1.Close();
             }
             return tm;
         }
@@ -58,24 +60,29 @@ namespace Student_platform.Server
 
         
         //选出tags
-        public List<string> GetTags(string need_team_name)
+        public string[] GetTags(string need_team_name)
         {
             DB db2 = new DB();
             string com2 = "select * from team_tags where team_name = @need_team_name;";
             db2.Connection(com2);
-            db2.cmd.Parameters.AddWithValue("@need_tace_name",need_team_name);
-            List<string> t_tags = new List<string>();
+            db2.cmd.Parameters.AddWithValue("@need_team_name",need_team_name);
+            string[] t_tags = new string[5];
             using (db2.cmd)
             {
+            
                 SqlDataReader reader2 = db2.cmd.ExecuteReader();
                 while (reader2.Read())
-                { 
-                        int i = 0;
-                        t_tags.Add(new string(" "));
-
-                        t_tags[i] = reader2[$"tag{i + 1}"].ToString();
-                        i++;
+                {
+                    
+                   
+                        t_tags[0] = reader2["tag1"].ToString();
+                        t_tags[1] = reader2["tag2"].ToString();
+                        t_tags[2] = reader2["tag3"].ToString();
+                        t_tags[3] = reader2["tag4"].ToString();
+                        t_tags[4] = reader2["tag5"].ToString();
+                       
                 }
+                reader2.Close();
 
             }
             return t_tags;

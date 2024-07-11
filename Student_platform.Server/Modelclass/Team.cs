@@ -44,7 +44,7 @@ namespace Student_platform.Server.Modelclass
 
         public string status { get; set; }
 
-        public List<string> tags { get; set; }
+        public string[] tags { get; set; }
 
         
 
