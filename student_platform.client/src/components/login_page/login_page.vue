@@ -60,11 +60,6 @@ export default {
             //        alert('登录失败！');
             //    })
           
-            axios.get("https://localhost:7201/api/Race/acm")
-                .then(response => {
-                    const b = JSON.stringify(response.data);
-                    alert(b);
-                })
         } else {
           console.log('error submit!!');
           return false;

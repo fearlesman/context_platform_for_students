@@ -9,7 +9,7 @@ import create_page from "@/components/contest_page/create.vue"
 import myteam_page from "@/components/personal_page/myteam.vue"
 const routes = [
   { path: '/', component: home },
-  { path: '/join', component: contest_page ,name:'join'},
+  { path: '/user/:id/join', component: contest_page ,name:'join'},
   { path: '/login', component: login_page ,name:'login'},
   { path: '/register', component: register_page,name:'register'},
   { path: '/user/:id/markdown', component: markdown_page,name:'markdown'},

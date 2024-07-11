@@ -28,8 +28,9 @@ namespace Student_platform.Server.Controllers
             //选出team_name
             string need_team_name = "  ";
             DB db = new DB();
-            string com = $"select name from team_show where date >= {date};";
+            string com =  "select name from team_show where date >= @date;";
             db.Connection(com);
+            db.cmd.Parameters.AddWithValue("@date", date);
             using (db.cmd)
             {
                 SqlDataReader reader = db.cmd.ExecuteReader();
@@ -138,8 +139,8 @@ namespace Student_platform.Server.Controllers
 
 
 
-
             */
+            
 
             string json = null;
             return json;

@@ -109,7 +109,7 @@
                     </el-button>
                   </div>
                   <p>状态: 
-                    <el-tag :type="scope.row.status === '招募中' ? 'success' : 'danger'">
+                    <el-tag :type="scope.row.status === 1 ? 'success' : 'danger'">
                       {{ scope.row.status }}
                     </el-tag>
                   </p>
@@ -134,84 +134,11 @@
 </template>
 
 <script >
+    import axios from "axios";
 export default {
   data() {
     return {
-      teams: [
-        {
-          name: 'see you again',
-          leaderid:52,
-          leaderName: '牢大',
-          leaderAvatar: 'https://via.placeholder.com/150',
-          members: [
-            { name: '牢二', id : 1, avatar: 'https://via.placeholder.com/50' },
-            { name: '牢三', id : 2, avatar: 'https://via.placeholder.com/50' },
-            { name: '牢四', id : 3, avatar: 'https://via.placeholder.com/50' },
-            { name: '牢五', id : 4, avatar: 'https://via.placeholder.com/50' },
-            { name: '牢六', id : 5, avatar: 'https://via.placeholder.com/50' },
-            { name: '牢七', id : 6, avatar: 'https://via.placeholder.com/50' },
-            { name: '牢八', id : 7, avatar: 'https://via.placeholder.com/50' },
-            { name: '牢九', id : 8, avatar: 'https://via.placeholder.com/50' },
-            { name: '牢十', id : 9, avatar: 'https://via.placeholder.com/50' },
-          ],
-          University: '清华大学',
-          race: '直升机赛',
-          description: '孩子们，我回来了',
-          type: '国赛',
-          currentMembers: 10,
-          totalMembers: 200,
-          status: '招募中',
-          tags: ['直升机', '篮球', '冰红茶']
-        },{
-          name: '姬霓太美',
-          leaderid:114514,
-          leaderName: '坤坤',
-          leaderAvatar: 'https://via.placeholder.com/150',
-          members: [
-            { name: '姬霓一', id : 10, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓二', id : 11, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓三', id : 12, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓四', id : 13, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓五', id : 14, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓六', id : 15, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓七', id : 16, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓八', id : 17, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓九', id : 18, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓十', id : 19, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓十一', id : 20, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓十二', id : 21, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓十三', id : 22, avatar: 'https://via.placeholder.com/50' },
-            { name: '姬霓十四', id : 23, avatar: 'https://via.placeholder.com/50' },
-          ],
-          University: '北京大学',
-          race:'篮球赛',
-          description: '迎面而来的你让我如此蠢蠢欲动',
-          type: '校内赛',
-          currentMembers: 15,
-          totalMembers: 20,
-          status: '招募中',
-          tags: ['小黑子', '坤坤', '篮球']
-        },
-        {
-          name: '双料高级特工',
-          leaderid:4,
-          leaderName: '催逝员',
-          leaderAvatar: 'https://via.placeholder.com/150',
-          members: [
-            { name: '特工一', id : 19, avatar: 'https://via.placeholder.com/50' },
-            { name: '特工二', id : 20, avatar: 'https://via.placeholder.com/50' },
-            { name: '特工三', id : 21, avatar: 'https://via.placeholder.com/50' },
-          ],
-          University: '北京航空航天大学',
-          race:'厨艺比赛',
-          description: '诶嘿嘿，鸡汤来喽。这菜都上齐了，大家怎么都不吃啊',
-          type:'校内赛',
-          currentMembers: 4,
-          totalMembers: 4,
-          status: '招募结束',
-          tags: ['厨艺', '鸡汤']
-        }
-      ],
+      teams: [],
       searchText: '',
       selectedStatus: '',
       selectedTags: [],
@@ -276,7 +203,14 @@ export default {
       this.filterTeams();
     },
     // 实时显示
-    searchData() {
+      searchData() {
+          axios.get('https://localhost:7201/api/Race/acm')
+              .then(response => {
+                  alert(response.data);
+                  const a = JSON.stringify(response.data);
+                  alert(a);
+                  this.teams = JSON.parse(a);
+              })
       let data = this.teams; 
       // 根据状态筛选
       if (this.selectedStatus) {

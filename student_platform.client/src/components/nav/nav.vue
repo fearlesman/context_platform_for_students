@@ -68,7 +68,7 @@
     </el-menu-item>
     <el-sub-menu index="2" >
       <template #title>竞赛组队</template>
-      <el-menu-item index="2-1" @click="navigate('/join','')">
+      <el-menu-item index="2-1" @click="navigate('/join','join')">
         加入队伍
       </el-menu-item>
       <el-menu-item index="2-2" @click="navigate('/create','create')">
