@@ -4,19 +4,24 @@
     const fill = ref(true)
     /*<!-- 留言板-->*/
     export default {
-  data() {
-    return {
-      message: "",
+        data() {
+            return {
+                message: "",
+                othersMessages: [
+                    { id: 1, content: "这是其他人的留言 1" },
+                    { id: 2, content: "这是其他人的留言 2" },
+                    { id: 3, content: "这是其他人的留言 3" },
+                ],
+            };
+        },
+        methods: {
+            submitMessage() {
+                // 在这里可以添加提交留言的逻辑
+                console.log("提交留言：", this.message);
+                this.message = ""; // 清空输入框
+            },
+        },
     };
-  },
-  methods: {
-    submitMessage() {
-      // 在这里可以添加提交留言的逻辑
-      console.log("提交留言：", this.message);
-      this.message = ""; // 清空输入框
-    },
-  },
-};
 /* <!-- 留言板-->*/
 </script>
 <!--填充表-->
@@ -73,6 +78,11 @@
 
             <div class="message-board">
                 <h2>交流区</h2>
+                <div class="others-messages" style="overflow-y: auto;height: 400px;padding: 10px;border: 1px solid #dee2e6;border-radius: 4px;background-color: #fff;">
+                    <div v-for="msg in othersMessages" :key="msg.id">
+                        {{ msg.content }}
+                    </div>
+                </div>
                 <textarea v-model="message" placeholder="输入您的想法或问题"></textarea>
                 <button @click="submitMessage">提交</button>
             </div>
