@@ -12,15 +12,53 @@
           </div>
         </div>
         <div class="profile" >
-          <el-button type="primary" @click="navigateTo('/user/'+$route.params.id+'/profile')">我的简介</el-button>
+        <div>
+          <el-button type="primary" @click="getpdf">查看简历</el-button>
+        </div>
+        <div>
+          <el-popover
+            v-model:visible="uploadPopoverVisible"
+            placement="bottom"
+            :width="500"
+            trigger="click"
+          >
+            <template #reference>
+              <el-button type="primary">上传简历</el-button>
+            </template>
+        
+            <el-upload
+              ref="upload"
+              accept=".pdf"
+              multiple
+              :action="uploadUrl"
+              :on-exceed="handleExceed"
+              :on-success="handleUploadSuccess"
+              :on-error="handleUploadError"
+              :file-list="fileList"
+              :limit="1"
+              
+            >
+              <el-button type="primary">选择文件</el-button>
+              <template #tip>
+                <div class="el-upload__tip">
+                  只能上传PDF文件,且不超过 5MB
+                </div>
+              </template>
+            </el-upload>
+        
+            <div class="dialog-footer">
+              <el-button @click="uploadPopoverVisible = false">取消</el-button>
+              <el-button type="primary" @click="submitUpload">上传</el-button>
+            </div>
+          </el-popover>
+        </div>
         </div>
       </div>
   
       <div class="content">
         <div class="profile">
             <h2>个人简介</h2>
-            <el-button @click="navigateTo('/user/'+$route.params.id+'/markdown')">编辑简介</el-button>
-            
+            <el-button @click="navigateTo()">编辑简介</el-button>
           <div class="markdown-content" v-html="compiledMarkdown"></div>
         </div>
       </div>
@@ -28,8 +66,10 @@
 </template>
   
 <script>
+import { ref } from 'vue'
+
+const upload = ref(null)
   import { marked } from 'marked';
-  
   export default {
     data() {
       return {
@@ -41,7 +81,10 @@
           university: '清华大学'
         },
         vistor: 123,
-        customizationContent: '# 欢迎来到我的个人主页!\n\n这里是您可以自定义的个性化内容区域。您可以使用 Markdown 格式进行编辑。'
+        customizationContent: '# 欢迎来到我的个人主页!\n\n这里是您可以自定义的个性化内容区域。您可以使用 Markdown 格式进行编辑。',
+        uploadPopoverVisible: false,
+        uploadUrl: '/api/upload',
+        fileList: []
       }
     },
     computed: {
@@ -50,9 +93,24 @@
       }
     },
     methods: {
-      navigateTo(path) {
-        this.$router.push({ name: 'profile', params: { id: $route.params.id } });
-      }
+      navigateTo(pid) {
+        this.$router.push({ name: 'profile', params: { id: pid } });
+      },
+      handleExceed(files, fileList) {
+      this.$message.warning(`只允许上传 1 个文件,当前已有 ${fileList.length} 个文件`);
+    },
+    handleUploadSuccess(response, file, fileList) {
+      this.$message.success('文件上传成功');
+      this.fileList = fileList;
+    },
+    handleUploadError(err, file, fileList) {
+      this.$message.error('文件上传失败');
+      this.fileList = fileList;
+    },
+    submitUpload() {
+      this.$refs.upload.submit();
+      this.uploadPopoverVisible = false;
+    }
     },
   }
 </script>
