@@ -47,10 +47,10 @@ namespace Student_platform.Server.Controllers
             return jsonData;
         }
 
-
-        //  api/Login/{user_name}
-        [HttpGet("{user_name}")]
-        public bool Get(Login user )
+        //登录
+        //  api/Login/{user_info}
+        [HttpGet("{user_info}")]
+        public bool Get(Login user_info )
         {
             DB db = new DB();
             
@@ -58,11 +58,11 @@ namespace Student_platform.Server.Controllers
             db.Connection(com);
             using (db.cmd)
             {
-                db.cmd.Parameters.AddWithValue("@name", user.user_id);
+                db.cmd.Parameters.AddWithValue("@name", user_info.user_id);
                 SqlDataReader reader = db.cmd.ExecuteReader();
                 string paw = reader["user_paw"].ToString();
                 reader.Close();
-                if (paw == user.password)
+                if (paw == user_info.password)
                 {
                     return true;
                 }

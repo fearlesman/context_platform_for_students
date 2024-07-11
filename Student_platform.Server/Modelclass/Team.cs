@@ -30,7 +30,7 @@ namespace Student_platform.Server.Modelclass
 
         //public string leaderAvatar { get; set; }
 
-        public Team_member[] members { get; set; }
+        public List<Team_member> members { get; set; }
 
         public string race { get; set; }
 
@@ -44,7 +44,7 @@ namespace Student_platform.Server.Modelclass
 
         public string status { get; set; }
 
-        public string[] tags { get; set; }
+        public List<string> tags { get; set; }
 
         
 

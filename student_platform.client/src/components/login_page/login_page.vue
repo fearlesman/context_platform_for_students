@@ -50,14 +50,20 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           alert('提交登录信息!');
-            //测试登录,成功了，返回的是string类型json的字符串，不过axios好像可以直接解析成json对象，就是response.data
-            axios.get('https://localhost:7201/api/Login')
+            ////测试登录,成功了，返回的是string类型json的字符串，不过axios好像可以直接解析成json对象，就是response.data
+            //axios.get('https://localhost:7201/api/Login')
+            //    .then(response => {
+            //        const a = JSON.stringify(response.data);
+            //        alert(a);
+            //    })
+            //    .catch(error => {
+            //        alert('登录失败！');
+            //    })
+          
+            axios.get("https://localhost:7201/api/Race/acm")
                 .then(response => {
-                    const a = JSON.stringify(response.data);
-                    alert(a);
-                })
-                .catch(error => {
-                    alert('登录失败！');
+                    const b = JSON.stringify(response.data);
+                    alert(b);
                 })
         } else {
           console.log('error submit!!');

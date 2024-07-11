@@ -27,7 +27,7 @@ namespace Student_platform.Server.Controllers
         }
 
 
-
+        //注册
         // POST api/Register
         [HttpPost]
         public IActionResult Post([FromBody] Register reg)
