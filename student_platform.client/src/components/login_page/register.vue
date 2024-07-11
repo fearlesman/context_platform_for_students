@@ -10,7 +10,7 @@
           <el-input type="password" v-model="registerForm.password"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="confirmPassword">
-          <el-input type="password" v-model="registerForm.confirmPassword"></el-input>
+          <el-input type="password" v-model="registerForm.confirmPassword" rules="confirmPasswordValidator"></el-input>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="registerForm.email"></el-input>
@@ -30,10 +30,11 @@
           return {
            Result: null,
               registerForm: {
-                  username: 'nnn',
-                  password: '12345678',
-                  confirmPassword: '12345678',
-                  email: '123@qq.com'
+                  username: '',
+                  password: '',
+                  confirmPassword: '',
+                  email: '',
+                  University: '',
               },
         rules: {
           username: [
@@ -57,6 +58,16 @@
     },
     methods: {
       // 路由跳转
+
+      // 表单验证
+      confirmPasswordValidator(rule, value, callback) {
+        if (value !== this.registerForm.password) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      },
+
       navigateTo(path) {
         this.$router.push(path);
       },

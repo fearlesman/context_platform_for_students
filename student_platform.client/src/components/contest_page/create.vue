@@ -89,6 +89,7 @@ export default {
         race: '',
         type: '',
         description: '',
+        University: this.$router.params.id,
         totalMembers: null,
         currentMembers: 1,
         startTime: currentTime,
