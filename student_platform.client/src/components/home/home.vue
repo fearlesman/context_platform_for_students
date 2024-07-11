@@ -1,8 +1,23 @@
 <!--填充表-->
-<script lang="ts" setup>
+<script>
     import { ref } from 'vue';
     const fill = ref(true)
-
+    /*<!-- 留言板-->*/
+    export default {
+  data() {
+    return {
+      message: "",
+    };
+  },
+  methods: {
+    submitMessage() {
+      // 在这里可以添加提交留言的逻辑
+      console.log("提交留言：", this.message);
+      this.message = ""; // 清空输入框
+    },
+  },
+};
+/* <!-- 留言板-->*/
 </script>
 <!--填充表-->
 
@@ -14,40 +29,60 @@
         </el-carousel-item>
     </el-carousel>
     <!--走马灯-->
-    <!--时间线-->
-    <el-timeline style="max-width: 600px">
-        <el-timeline-item timestamp="2018/4/12" placement="top">
-            <el-card>
-                <h4>Update Github template</h4>
-                <p>Tom committed 2018/4/12 20:46</p>
-            </el-card>
-        </el-timeline-item>
-        <el-timeline-item timestamp="2018/4/3" placement="top">
-            <el-card>
-                <h4>Update Github template</h4>
-                <p>Tom committed 2018/4/3 20:46</p>
-            </el-card>
-        </el-timeline-item>
-        <el-timeline-item timestamp="2018/4/2" placement="top">
-            <el-card>
-                <h4>Update Github template</h4>
-                <p>Tom committed 2018/4/2 20:46</p>
-            </el-card>
-        </el-timeline-item>
-        <el-timeline-item timestamp="2018/4/2" placement="top">
-            <el-card>
-                <h4>Update Github template</h4>
-                <p>Tom committed 2018/4/2 20:46</p>
-            </el-card>
-        </el-timeline-item>
-        <el-timeline-item timestamp="2018/4/2" placement="top">
-            <el-card>
-                <h4>Update Github template</h4>
-                <p>Tom committed 2018/4/2 20:46</p>
-            </el-card>
-        </el-timeline-item>
-    </el-timeline>
-    <!--时间线-->
+    <el-row>
+        <el-col :span="12">
+            <!--时间线-->
+            <el-timeline style="width: 400px">
+                <el-timeline-item timestamp="2018/4/12" placement="top">
+                    <el-card>
+                        <h4>Update Github template</h4>
+                        <p>Tom committed 2018/4/12 20:46</p>
+                    </el-card>
+                </el-timeline-item>
+                <el-timeline-item timestamp="2018/4/3" placement="top">
+                    <el-card>
+                        <h4>Update Github template</h4>
+                        <p>Tom committed 2018/4/3 20:46</p>
+                    </el-card>
+                </el-timeline-item>
+                <el-timeline-item timestamp="2018/4/2" placement="top">
+                    <el-card>
+                        <h4>Update Github template</h4>
+                        <p>Tom committed 2018/4/2 20:46</p>
+                    </el-card>
+                </el-timeline-item>
+                <el-timeline-item timestamp="2018/4/2" placement="top">
+                    <el-card>
+                        <h4>Update Github template</h4>
+                        <p>Tom committed 2018/4/2 20:46</p>
+                    </el-card>
+                </el-timeline-item>
+                <el-timeline-item timestamp="2018/4/2" placement="top">
+                    <el-card>
+                        <h4>Update Github template</h4>
+                        <p>Tom committed 2018/4/2 20:46</p>
+                    </el-card>
+                </el-timeline-item>
+            </el-timeline>
+
+        </el-col>
+
+        <!--时间线-->
+        <!--留言板-->
+        <el-col :span="12">
+
+            <div class="message-board">
+                <h2>交流区</h2>
+                <textarea v-model="message" placeholder="输入您的想法或问题"></textarea>
+                <button @click="submitMessage">提交</button>
+            </div>
+        </el-col>
+
+
+        <!--留言板-->
+    </el-row>
+
+   
     <!--填充表-->
     <div>
         <div style="margin-bottom: 15px">fill: <el-switch v-model="fill" /></div>
@@ -87,4 +122,60 @@
     }
     /* <!-- 走马灯-- >*/
 
+    .el-row {
+        margin-bottom: 20px;
+    }
+
+        .el-row:last-child {
+            margin-bottom: 0;
+        }
+
+    .el-col {
+        border-radius: 4px;
+    }
+
+    .grid-content {
+        border-radius: 4px;
+        min-height: 36px;
+    }
+   /*<!-- 留言板-->*/
+    /* 留言板样式 */
+    .message-board {
+        width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+    }
+        /* 标题样式 */
+        .message-board h2 {
+            margin-top: 0;
+        }
+        /* 文本区域样式 */
+        .message-board textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            resize: none;
+        }
+        /* 提交按钮样式 */
+        .message-board button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            /* 提交按钮悬停样式 */
+            .message-board button:hover {
+                background-color: #0056b3;
+            }
+   /* <!-- 留言板-->*/
 </style>
