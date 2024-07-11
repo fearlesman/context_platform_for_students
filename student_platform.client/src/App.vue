@@ -8,6 +8,9 @@ import nav_page from '@/components/nav/nav.vue'
     <div>
         <router-view />
     </div>
+
+
+
 </template>
 <script>
 </script>
