@@ -1,45 +1,72 @@
-<script>
-import { ref } from 'vue';
-export default {
+<!--填充表-->
+<script lang="ts" setup>
+    import { ref } from 'vue';
+    const fill = ref(true)
 
-  data() {
-    return {
-      value : ref(new Date()),
-      content_pages: [1,2,3,4], 
-      activeIndex: '1',
-      competitions: [
-        { name: '第六届“光威杯”中国复合材料学会', time: '2023年3月', field: '新材料' },
-        // ... 更多竞赛信息
-      ],
-      teams: [
-        { name: '不挂机队', leader: 'MZY123', status: '招新中', competitions: 1 },
-        // ... 更多队伍信息
-      ],
-      loading: false,
-      isPopoverVisible: false,
-      selectedDate: '',
-      selectedDateInfo: '',
-      methods: {
-    handleMouseEnter(date) {
-      this.selectedDate = date;
-      this.isPopoverVisible = true;
-      this.selectedDateInfo = `这是 ${date} 的信息。`; // 这里可以设置具体的信息内容
-    },
-    handleMouseLeave() {
-      this.isPopoverVisible = false;
-    },
-  },
-    };
-  },
-};
 </script>
+<!--填充表-->
 
 <template>
-    <el-carousel :interval="4000" type="card" height="250px">
+    <!--走马灯-->
+    <el-carousel :interval="4000" type="card" height="300px">
         <el-carousel-item v-for="item in 6" :key="item">
             <h3 text="2xl" justify="center">{{ item }}</h3>
         </el-carousel-item>
     </el-carousel>
+    <!--走马灯-->
+    <!--时间线-->
+    <el-timeline style="max-width: 600px">
+        <el-timeline-item timestamp="2018/4/12" placement="top">
+            <el-card>
+                <h4>Update Github template</h4>
+                <p>Tom committed 2018/4/12 20:46</p>
+            </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="2018/4/3" placement="top">
+            <el-card>
+                <h4>Update Github template</h4>
+                <p>Tom committed 2018/4/3 20:46</p>
+            </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="2018/4/2" placement="top">
+            <el-card>
+                <h4>Update Github template</h4>
+                <p>Tom committed 2018/4/2 20:46</p>
+            </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="2018/4/2" placement="top">
+            <el-card>
+                <h4>Update Github template</h4>
+                <p>Tom committed 2018/4/2 20:46</p>
+            </el-card>
+        </el-timeline-item>
+        <el-timeline-item timestamp="2018/4/2" placement="top">
+            <el-card>
+                <h4>Update Github template</h4>
+                <p>Tom committed 2018/4/2 20:46</p>
+            </el-card>
+        </el-timeline-item>
+    </el-timeline>
+    <!--时间线-->
+    <!--填充表-->
+    <div>
+        <div style="margin-bottom: 15px">fill: <el-switch v-model="fill" /></div>
+        <el-space :fill="fill" wrap>
+            <el-card v-for="i in 3" :key="i" class="box-card">
+                <template #header>
+                    <div class="card-header">
+                        <span>Card name</span>
+                        <el-button class="button" text>find</el-button>
+                    </div>
+                </template>
+                <div v-for="o in 4" :key="o" class="text item">
+                    {{ 'List item ' + o }}
+                </div>
+            </el-card>
+        </el-space>
+    </div>
+    <!--填充表-->
+
 </template>
 
 <style scoped>
@@ -58,4 +85,6 @@ export default {
     .el-carousel__item:nth-child(2n + 1) {
         background-color: #d3dce6;
     }
+    /* <!-- 走马灯-- >*/
+
 </style>
