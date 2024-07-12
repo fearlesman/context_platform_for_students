@@ -137,8 +137,8 @@
     import axios from "axios";
 export default {
   data() {
-    return {
-      teams: [],
+      return {
+          teams:[],
       searchText: '',
       selectedStatus: '',
       selectedTags: [],

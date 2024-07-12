@@ -100,7 +100,7 @@ export default {
         leader: '',
         description: '',
         University: this.university,
-        totalMembers: null,
+        totalMembers: 1,
         currentMembers: 1,
         startTime: currentTime,
         endTime: currentTime,
@@ -164,11 +164,13 @@ export default {
         }
       });
     },
-    getu(){
-      //使用用户id获取大学的接口
+    getu(id){
+        //使用用户id获取大学的接口
+      return "清华·大学"
     },
-    getpid(){
-      //获取pid,pid是指当前最大的用户id
+      getpid() {
+          //获取pid,pid是指当前最大的用户id
+      return 1234
     }
   }
 };
