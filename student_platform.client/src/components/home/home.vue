@@ -1,17 +1,31 @@
 <!--填充表-->
 <script>
     import { ref } from 'vue';
-    const fill = ref(true)
-    /*<!-- 留言板-->*/
+
     export default {
         data() {
             return {
+                // 图片数组
+                images: [
+                    //使用相对路径
+                    { url: './src/components/icons/1.png', alt: '挑战杯' },
+                    { url: './src/components/icons/2.png', alt: '创新创业大赛' },
+                    { url: './src/components/icons/3.png', alt: '挑战杯' }
+                    // 更多图片...
+                ],
+                // 留言板的数据
                 message: "",
                 othersMessages: [
                     { id: 1, content: "这是其他人的留言 1" },
                     { id: 2, content: "这是其他人的留言 2" },
                     { id: 3, content: "这是其他人的留言 3" },
                 ],
+            };
+        },
+        setup() {
+            const fill = ref(true); // 这里使用ref定义响应式数据
+            return {
+                fill,
             };
         },
         methods: {
@@ -22,22 +36,21 @@
             },
         },
     };
-/* <!-- 留言板-->*/
 </script>
-<!--填充表-->
 
 <template>
     <!--走马灯-->
     <el-carousel :interval="4000" type="card" height="300px">
-        <el-carousel-item v-for="item in 6" :key="item">
-            <h3 text="2xl" justify="center">{{ item }}</h3>
+        <el-carousel-item v-for="item in images" :key="item">
+           <img :src="item.url" :alt="item.alt"/>
         </el-carousel-item>
     </el-carousel>
     <!--走马灯-->
+    <hr size="2px" color="2xl" width="100%">
     <el-row>
         <el-col :span="12">
             <!--时间线-->
-            <el-timeline style="width: 400px">
+            <el-timeline style="width: 500px">
                 <el-timeline-item timestamp="2018/4/12" placement="top">
                     <el-card>
                         <h4>Update Github template</h4>
@@ -78,7 +91,7 @@
 
             <div class="message-board">
                 <h2>交流区</h2>
-                <div class="others-messages" style="overflow-y: auto;height: 400px;padding: 10px;border: 1px solid #dee2e6;border-radius: 4px;background-color: #fff;">
+                <div class="others-messages" style="overflow-y: auto;height: 550px;padding: 15px;border: 1px solid #dee2e6;border-radius: 5px;background-color: #fff;">
                     <div v-for="msg in othersMessages" :key="msg.id">
                         {{ msg.content }}
                     </div>
@@ -92,7 +105,7 @@
         <!--留言板-->
     </el-row>
 
-   
+   <hr size="2px" color="2xl">
     <!--填充表-->
     <div>
         <div style="margin-bottom: 15px">fill: <el-switch v-model="fill" /></div>
