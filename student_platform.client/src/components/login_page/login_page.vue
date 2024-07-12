@@ -51,14 +51,21 @@ export default {
         if (valid) {
           alert('提交登录信息!');
             ////测试登录,成功了，返回的是string类型json的字符串，不过axios好像可以直接解析成json对象，就是response.data
-            //axios.get('https://localhost:7201/api/Login')
-            //    .then(response => {
-            //        const a = JSON.stringify(response.data);
-            //        alert(a);
-            //    })
-            //    .catch(error => {
-            //        alert('登录失败！');
-            //    })
+            axios.post('https://localhost:7201/api/Login',this.loginForm)
+                .then(response => {
+                    const a = response.data;
+                    if (a) {
+                        alert("登录成功");
+                        //调用状态切换函数
+                        
+                    }
+                    else {
+                        alert("登陆失败");
+                    }
+                })
+                .catch(error => {
+                    alert('登录失败！');
+                })
           
         } else {
           console.log('error submit!!');

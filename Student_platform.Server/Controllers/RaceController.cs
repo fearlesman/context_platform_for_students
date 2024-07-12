@@ -70,6 +70,8 @@ namespace Student_platform.Server.Controllers
                     int t_currentMembers = reader3.GetInt32(reader3.GetOrdinal("currentMembers"));  
                     int t_totalMembers = reader3.GetInt32(reader3.GetOrdinal("totalMembers"));
                     int t_status = reader3.GetInt32(reader3.GetOrdinal("status"));
+                    string end_date = reader3["end_date"].ToString();
+                    string university = reader3["university"].ToString();
                     teams.Add(new Team());
                     teams[i] = new Team
                     {
@@ -78,6 +80,7 @@ namespace Student_platform.Server.Controllers
                         leaderid = t_leaderid,
                         leaderName = t_leaderName,
                         members = tm,
+                        university = university,
                         race = race_name,
                         description = t_description,
                         type = t_type,

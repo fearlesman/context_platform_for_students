@@ -45,6 +45,8 @@ namespace Student_platform.Server.Controllers
        
         }
 
+
+        //编辑用户信息
         // POST api/Stu_show
         [HttpPost]
         public IActionResult Post([FromBody] Stu stu)

@@ -155,7 +155,7 @@ namespace Student_platform.Server.Controllers
         {
             try { 
                 DB db = new DB();
-                string com = "insert into team_show values(@name,@leaderid,@leadername,@race,@description,@type,@currentmembers,@totalmembers,@status);";
+                string com = "insert into team_show values(@name,@leaderid,@leadername,@race,@description,@type,@currentmembers,@totalmembers,@status,@end_date,@university);";
                 db.Connection(com);
                 using (db.cmd)
                 {
@@ -168,6 +168,8 @@ namespace Student_platform.Server.Controllers
                     db.cmd.Parameters.AddWithValue("@currentmembers",tm.currentMembers );
                     db.cmd.Parameters.AddWithValue("@totalmembers", tm.totalMembers);
                     db.cmd.Parameters.AddWithValue("@status", tm.status);
+                    db.cmd.Parameters.AddWithValue("@end_date", tm.end_date);
+                    db.cmd.Parameters.AddWithValue("@university", tm.university);
                 }
                 // 执行命令并获取受影响的行数
                 //对于查询操作（例如 SELECT 语句），如果使用 ExecuteScalar()，它将返回查询结果的第一行第一列的值。如果查询没有返回任何行，ExecuteScalar() 将返回 null（对于可空类型则是 DBNull）。

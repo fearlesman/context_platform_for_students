@@ -42,7 +42,7 @@
                   password: '',
                   confirmPassword: '',
                   email: '',
-                  University: '',
+                  university:''
               },
         rules: {
           username: [

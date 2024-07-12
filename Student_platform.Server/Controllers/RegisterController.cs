@@ -32,22 +32,39 @@ namespace Student_platform.Server.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Register reg)
         {
+           
+                DB db = new DB();
+                string com = "insert into user_info(user_id,user_paw,user_email,university) values(@id,@paw,@email,@university);";
+                db.Connection(com);
+                using (db.cmd)
+                {
+                    db.cmd.Parameters.AddWithValue("@id", reg.username);
+                    db.cmd.Parameters.AddWithValue("@paw", reg.password);
+                    db.cmd.Parameters.AddWithValue("@email", reg.email);
+                    db.cmd.Parameters.AddWithValue("@university", reg.university);
+                }
 
-            DB db = new DB();
-
-
-            string com = "insert into user_info(user_id,user_paw,user_email) values(@id,@paw,@email);";
-            db.Connection(com);
-            using (db.cmd)
+            DB db2 = new DB();
+            string com2 = "insert into user_show(user_id) values(@user_id);";
+            db2.Connection(com2);
+            using (db2.cmd)
             {
-                db.cmd.Parameters.AddWithValue("@id", reg.username);
-                db.cmd.Parameters.AddWithValue("@paw", reg.password);
-                db.cmd.Parameters.AddWithValue("@email", reg.email);
+                db2.cmd.Parameters.AddWithValue("@user_id", reg.username);
             }
+
             // 执行命令并获取受影响的行数
-            try { 
-                db.cmd.ExecuteScalar();
-                return Ok("注册成功");
+            try
+            {
+
+                int rowsAffected = db.cmd.ExecuteNonQuery();
+                int rowsAffected2 = db2.cmd.ExecuteNonQuery();
+                if (rowsAffected > 0&&rowsAffected2>0)
+                {
+                    return Ok("注册成功");
+                }
+                return BadRequest("注册失败");
+            
+             
             }
             catch (SqlException ex)
             {
