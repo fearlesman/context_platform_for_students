@@ -97,13 +97,6 @@
           }
         });
       },
-      confirmPasswordValidator(rule, value, callback) {
-        if (value !== this.registerForm.password) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
-        }
-      },
       goToLoginPage() {
         this.$router.push('/login');
       }

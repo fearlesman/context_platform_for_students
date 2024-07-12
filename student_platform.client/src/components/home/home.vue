@@ -1,7 +1,5 @@
 <!--填充表-->
 <script>
-    import { ref } from 'vue';
-    const fill = ref(true)
     /*<!-- 留言板-->*/
     export default {
         data() {

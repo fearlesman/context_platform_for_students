@@ -261,7 +261,7 @@ export default {
     },
 
     showleaderProfile(leaderName) {
-      alert(`查看${leaderName}的个人简介`);
+      this.$router.push({ name: 'personal-profile', params: { userId: leaderName } });
     },
 
     addTags(tag) {
