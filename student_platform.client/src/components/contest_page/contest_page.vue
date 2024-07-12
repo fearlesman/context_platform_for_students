@@ -122,7 +122,8 @@
                       {{ tag }}
                     </el-tag>
                   </p>
-                  <el-button type="primary" @click="JoinTeam()">加入</el-button>
+                  <el-button type="primary" @click="JoinTeam(scope.row.teamid)">加入</el-button>
+                  <el-button type="danger" @click="ExitTeam(scope.row.teamid)">退出</el-button>
                 </div>
               </el-popover>
             </template>
@@ -249,8 +250,27 @@ export default {
       }
       this.filteredTeams = data;
     },
-    JoinTeam() {
-      alert('加入队伍成功!');
+    JoinTeam(teamid) {
+      axios.post('https://localhost:7201/api/Add_team',this.$store.state.userid,teamid)
+      .then(response => {
+        const a = response.data;
+        if(a === 1)
+        alert('加入队伍成功!');
+        else  if ( a === 0 )
+        alert('加入队伍失败!');
+        else alert('你已经在队伍中!');
+      })
+    },
+    ExitTeam(teamid) {
+      axios.post('https://localhost:7201/api/Quit_team',this.$store.state.userid,teamid)
+      .then(response => {
+        const a = response.data;
+        if(a === 1)
+        alert('退出队伍成功!');
+        else  if ( a === 0 )
+        alert('退出队伍失败!');
+        else alert('你不在队伍中!');
+      })
     }
   }
 }

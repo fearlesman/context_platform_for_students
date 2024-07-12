@@ -56,8 +56,8 @@ export default {
                     const a = response.data;
                     if (a) {
                         alert("登录成功");
-                        //调用状态切换函数
-                        
+                        this.$
+
                     }
                     else {
                         alert("登陆失败");
