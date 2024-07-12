@@ -215,7 +215,6 @@ export default {
       searchData() {
           axios.get('https://localhost:7201/api/Race')
               .then(response => {
-                  alert(response.data);
                   const a = JSON.stringify(response.data);
                   alert(a);
                   this.teams = JSON.parse(a);
