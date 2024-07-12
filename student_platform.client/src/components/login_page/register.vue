@@ -7,10 +7,18 @@
           <el-input v-model="registerForm.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input type="password" v-model="registerForm.password"></el-input>
+          <el-input type="password" v-model="registerForm.password" :rules="[
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 6, max: 16, message: '密码长度应该在6-16个字符之间', trigger: 'blur' },
+            { pattern:  /(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{6,16}/, 
+              message: '密码必须包含大小写字母、数字和特殊字符', trigger: 'blur' }
+          ]"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="confirmPassword">
-          <el-input type="password" v-model="registerForm.confirmPassword" rules="confirmPasswordValidator"></el-input>
+          <el-input type="password" v-model="registerForm.confirmPassword" :rules="[
+            { required: true, message: '请输入确认密码', trigger: 'blur' },
+            { validator: confirmPasswordValidator, trigger: 'blur' }
+          ]"></el-input>
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="registerForm.email"></el-input>

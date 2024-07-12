@@ -82,14 +82,24 @@
 const currentTime = new Date();
 
 export default {
+  setup() {
+    const university = this.getu(this.$route.params.id);
+    const pid = this.getpid()+1;
+    return {
+      university,
+      pid
+    }
+  },
   data() {
     return {
       teamData: {
         name: '',
         race: '',
         type: '',
+        id: this.pid,
+        leader: '',
         description: '',
-        University: this.$router.params.id,
+        University: this.university,
         totalMembers: null,
         currentMembers: 1,
         startTime: currentTime,
@@ -103,8 +113,8 @@ export default {
         race: [{ required: true, message: '请输入参加的竞赛名称', trigger: 'blur' }],
         description: [{ required: true, message: '请输入队伍介绍', trigger: 'blur' }],
         totalMembers: [{ required: true, message: '请输入需要的人员数量', trigger: 'blur' }],
-        startTime: [{ required: true, message: '请选择演练开始日期', trigger: 'change' }],
-        endTime: [{ required: true, message: '请选择演练结束日期', trigger: 'change' }],
+        startTime: [{ required: true, message: '请选择招募开始日期', trigger: 'change' }],
+        endTime: [{ required: true, message: '请选择招募结束日期', trigger: 'change' }],
         tags: [
           { required: true, message: '请至少输入一个标签', trigger: 'change' },
           { validator: (value, callback) => {
@@ -153,6 +163,12 @@ export default {
           return false;
         }
       });
+    },
+    getu(){
+      //使用用户id获取大学的接口
+    },
+    getpid(){
+      //获取pid,pid是指当前最大的用户id
     }
   }
 };
