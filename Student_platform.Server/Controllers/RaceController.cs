@@ -67,6 +67,7 @@ namespace Student_platform.Server.Controllers
                     string t_leaderName = reader3["leaderName"].ToString();
                     string t_description = reader3["description"].ToString();
                     string t_type = reader3["type"].ToString();
+                    int t_id = reader3.GetInt32(reader3.GetOrdinal("id"));
                     int t_currentMembers = reader3.GetInt32(reader3.GetOrdinal("currentMembers"));  
                     int t_totalMembers = reader3.GetInt32(reader3.GetOrdinal("totalMembers"));
                     int t_status = reader3.GetInt32(reader3.GetOrdinal("status"));
@@ -85,6 +86,7 @@ namespace Student_platform.Server.Controllers
                         description = t_description,
                         type = t_type,
                         currentMembers = t_currentMembers,
+                        id = t_id,
                         totalMembers = t_totalMembers,
                         status = t_status,
                         tags = t_tags

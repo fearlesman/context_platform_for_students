@@ -17,7 +17,7 @@ namespace Student_platform.Server.Modelclass
 
         public string stu_character { get; set; }
 
-        public bool has_team { get; set; }
+        public bool has_team { get; set; }  
 
         public string team_identity { get; set; }
 

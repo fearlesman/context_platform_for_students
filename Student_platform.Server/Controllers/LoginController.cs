@@ -13,6 +13,7 @@ namespace Student_platform.Server.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
+        //一些基础语法
         // GET: api/<LoginController>
         [HttpGet]
         public string Get()
@@ -33,7 +34,6 @@ namespace Student_platform.Server.Controllers
                 else
                 {
                     string user_id = reader["user_id"].ToString();
-                    // 继续处理其他字段
                     string user_paw = reader["user_paw"].ToString();
                     user_info.Add(user_id, user_paw);
                 }
@@ -54,7 +54,7 @@ namespace Student_platform.Server.Controllers
         {
             DB db = new DB();
             
-            string com = "select user_paw from user_info where user_id = @name;";
+            string com = "select * from user_info where user_id = @name;";
             db.Connection(com);
             using (db.cmd)
             {
@@ -63,8 +63,16 @@ namespace Student_platform.Server.Controllers
                 if (reader.Read())
                 {
                     string paw = reader["user_paw"].ToString();
-                    if (paw == user_info.password)
+                    int status = reader.GetInt32(reader.GetOrdinal("user_status"));
+                    if (paw == user_info.password&& status == 0)
                     {
+                        DB db1 = new DB();
+                        string com1 = "update user_info set user_status = 1 where user_id = @user_name;";
+                        db1.Connection(com1);
+                        using (db1.cmd)
+                        {
+                            db1.cmd.Parameters.AddWithValue("@user_name", user_info.username);
+                        }
                         return true;
                     }
                 }
