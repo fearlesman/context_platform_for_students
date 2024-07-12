@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Student_platform.Server.Modelclass;
 using System.Data.SqlClient;
+using System.Text.Json;
+using System.Data;
+using Student_platform.Server.Modelclass;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,28 +10,28 @@ namespace Student_platform.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Add_teamController : ControllerBase
+    public class AddTeamController : ControllerBase
     {
         // GET: api/<Add_teamController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //[HttpGet]
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1" };
+        //}
 
-        // GET api/<Add_teamController>/5
-        [HttpGet("{user_name}")]
-        public string Get(string  user_name)
-        {
-            return "value";
-        }
+        //// GET api/<Add_teamController>/5
+        //[HttpGet("{user_name}")]
+        //public string Get(string  user_name)
+        //{
+        //    return "value";
+        //}
 
 
 
         //加入队伍
         // POST api/Add_team
         [HttpPost]
-        public int Post([FromBody] AQ_team at)
+        public int Post( AQ_team at)
         {
             string[] teams = new string[5];
             DB db1 = new DB();
@@ -68,12 +70,6 @@ namespace Student_platform.Server.Controllers
                 }
             }
             return 0;
-
-            
-
-
-            
-           
 
 
         }

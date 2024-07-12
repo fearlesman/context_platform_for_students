@@ -79,12 +79,11 @@
 </template>
 <script setup>
 const university = this.getu(this.$route.params.id);
-const pid = this.getpid()+1;
 </script>
 
 <script>
 const currentTime = new Date();
-
+import axios from "axios";
 export default {
   setup() {
    
@@ -95,7 +94,6 @@ export default {
         name: '',
         race: '',
         type: '',
-        id: pid,
         leader: '',
         description: '',
         University: university,
@@ -165,12 +163,12 @@ export default {
     },
     getu(id){
         //使用用户id获取大学的接口
-      return "清华·大学"
+        axios.get("https://localhost:7201/api/Get_college/"+id.toString())
+       .then(response=>{{
+           return response.data;
+
+       }})
     },
-      getpid() {
-          //获取pid,pid是指当前最大的用户id
-      return 1234
-    }
   }
 };
 </script>

@@ -56,7 +56,7 @@ export default {
                     const a = response.data;
                     if (a) {
                         alert("登录成功");
-                        this.$
+                        this.$store.commit('login', this.loginForm.username);
 
                     }
                     else {

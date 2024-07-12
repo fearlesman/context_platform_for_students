@@ -63,8 +63,8 @@ namespace Student_platform.Server.Controllers
                 if (reader.Read())
                 {
                     string paw = reader["user_paw"].ToString();
-                    int status = reader.GetInt32(reader.GetOrdinal("user_status"));
-                    if (paw == user_info.password&& status == 0)
+           
+                    if (paw == user_info.password)
                     {
                         DB db1 = new DB();
                         string com1 = "update user_info set user_status = 1 where user_id = @user_name;";

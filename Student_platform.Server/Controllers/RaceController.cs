@@ -12,16 +12,16 @@ namespace Student_platform.Server.Controllers
     public class RaceController : ControllerBase
     {
         // GET: api/<RaceController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //[HttpGet]
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         //返回某一竞赛的所有队伍信息
-        // GET api/Race/race_name
-        [HttpGet("{race_name}")]
-        public string Get(string race_name)
+        // GET api/Race
+        [HttpGet]
+        public string Get()
         {
             ////选出team_name
 
@@ -48,9 +48,8 @@ namespace Student_platform.Server.Controllers
             string[] t_tags = new string[5];
             //返回对应race-name下的队伍信息
             DB db3 = new DB();
-            string com3 = "select * from team_show where race = @race_name;";
+            string com3 = "select * from team_show;";
             db3.Connection(com3);
-            db3.cmd.Parameters.AddWithValue("@race_name", race_name);
             List<Team> teams = new List<Team>();
             using (db3.cmd)
             {
@@ -67,6 +66,7 @@ namespace Student_platform.Server.Controllers
                     string t_leaderName = reader3["leaderName"].ToString();
                     string t_description = reader3["description"].ToString();
                     string t_type = reader3["type"].ToString();
+                    string race_name = reader3["race"].ToString();
                     int t_id = reader3.GetInt32(reader3.GetOrdinal("id"));
                     int t_currentMembers = reader3.GetInt32(reader3.GetOrdinal("currentMembers"));  
                     int t_totalMembers = reader3.GetInt32(reader3.GetOrdinal("totalMembers"));

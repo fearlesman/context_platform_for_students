@@ -8,7 +8,7 @@ namespace Student_platform.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Quit_teamController : ControllerBase
+    public class QuitTeamController : ControllerBase
     {
         // GET: api/<Quit_teamController>
         [HttpGet]
@@ -28,7 +28,7 @@ namespace Student_platform.Server.Controllers
         //退出队伍
         // POST api/Quit_team
         [HttpPost]
-        public int Post([FromBody] AQ_team qt)
+        public int Post(AQ_team qt)
         {
 
             string[] teams = new string[5];

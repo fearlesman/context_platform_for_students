@@ -146,6 +146,7 @@ export default {
       selectedType: '',
       filteredTeams: [],
       searchResults: []
+    
     }
   },
   computed: {
@@ -212,7 +213,7 @@ export default {
     },
     // 实时显示
       searchData() {
-          axios.get('https://localhost:7201/api/Race/acm')
+          axios.get('https://localhost:7201/api/Race')
               .then(response => {
                   alert(response.data);
                   const a = JSON.stringify(response.data);
@@ -250,8 +251,12 @@ export default {
       }
       this.filteredTeams = data;
     },
-    JoinTeam(teamid) {
-      axios.post('https://localhost:7201/api/Add_team',this.$store.state.userid,teamid)
+      JoinTeam(teamid) {
+          const add={
+      user_id: this.$store.state.userid,
+      team_id: teamid}
+  
+          axios.post('https://localhost:7201/api/AddTeam',add )
       .then(response => {
         const a = response.data;
         if(a === 1)
@@ -262,7 +267,9 @@ export default {
       })
     },
     ExitTeam(teamid) {
-      axios.post('https://localhost:7201/api/Quit_team',this.$store.state.userid,teamid)
+
+        let qwq= { user_id:this.$store.state.userid, team_id:teamid };
+        axios.post('https://localhost:7201/api/Quiteam',qwq)
       .then(response => {
         const a = response.data;
         if(a === 1)
