@@ -51,12 +51,6 @@
               <el-avatar :src="scope.row.leaderAvatar" @click="showleaderProfile(scope.row.leaderName)"></el-avatar>
             </template>
           </el-table-column>
-          <el-table-column label="所在学校" width="200">
-            <template v-slot="scope">
-              {{scope.row.University
-              }}
-            </template>
-          </el-table-column>
           <el-table-column prop="race" label="比赛名称" width="200">
             <template v-slot="scope">
               <span>{{ scope.row.race }}</span>
@@ -70,11 +64,6 @@
           <el-table-column prop="currentMembers" label="队伍人数" width="100">
             <template v-slot="scope">
               <span>{{ scope.row.currentMembers }}/{{ scope.row.totalMembers }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="status" label="状态" width="150">
-            <template v-slot="scope">
-              <el-tag :type="scope.row.status === '招募中' ? 'success' : 'danger'">{{ scope.row.status }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column prop="tags" label="标签" width="300">

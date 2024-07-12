@@ -1,11 +1,7 @@
 <!--填充表-->
 <script>
-<<<<<<< HEAD
-    /*<!-- 留言板-->*/
-=======
     import { ref } from 'vue';
 
->>>>>>> cbadddcb39130b654fa945528f1085e268eb5592
     export default {
         data() {
             return {

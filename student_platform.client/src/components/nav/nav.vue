@@ -1,15 +1,33 @@
 <script>
   import axios from 'axios';
+  import FingerprintJS from '@fingerprintjs/fingerprintjs';
   export default {
   data() {
     return {
       activeIndex: '1',
       loginstatus: false,
-      userid:'123',
-      // url='/api/loginstatus/'+account,
+      userid: '123',
+      visitorId: null, // 存储访客的唯一标识符
     };
   },
+  mounted() {
+  if (!this.visitorId) {
+    this.loadFingerprintJS();
+  }
+},
   methods: {
+    loadFingerprintJS() {
+  FingerprintJS.load()
+    .then(fp => fp.get())
+    .then(result => {
+      this.visitorId = result.visitorId;
+      console.log('唯一标识:' + this.visitorId);
+    })
+    .catch(error => {
+      console.error('FingerprintJS 加载失败:', error);
+    });
+},
+
     // handleSelect(key, keyPath) {
     //   console.log(key, keyPath);
     // },
@@ -59,7 +77,7 @@
     <el-menu-item index="0">
       <img
         style="width: 100px"
-        src=""
+        src="@/icon/"
         alt="logo"
       />
     </el-menu-item>
@@ -83,7 +101,10 @@
       登录
     </el-menu-item>
     <el-menu-item index="5" @click="navigate('/home', 'home')" v-if="getloginstatus() === true">
-      个人中心
+      <image
+        src="g"
+        mode="scaleToFill"
+      />
     </el-menu-item>
     <el-menu-item index="6" @click="changestatus()" v-if="getloginstatus() === true">
       退出登录
