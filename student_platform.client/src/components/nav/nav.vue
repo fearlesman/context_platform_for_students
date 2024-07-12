@@ -5,11 +5,12 @@
     return {
       activeIndex: '1',
       loginstatus: false,
-      userid:'123',
-      // url='/api/loginstatus/'+account,
+      userid: '123',
+      visitorId: null, // 存储访客的唯一标识符
     };
   },
   methods: {
+
     // handleSelect(key, keyPath) {
     //   console.log(key, keyPath);
     // },
@@ -17,7 +18,7 @@
       this.$router.push(path);
     },
     navigate(path,thisname) {
-      if (this.loginstatus === true){
+      if (this.$store.state.loginstatus === true){
         this.$router.push({ name: thisname, params: { id: this.userid } });
       }
       else{
@@ -26,9 +27,13 @@
       }
     },
     changestatus(){
-      this.loginstatus = this.loginstatus === false? true : false;
+      if(this.$store.state.loginstatus === false)
+      this.$store.commit('login','123');
+      else
+      this.$store.commit('logout');
+      this.$forceUpdate() ;
     },
-    getloginstatus(){ return this.loginstatus; },
+    getloginstatus(){ return this.$store.state.loginstatus; },
 
   // axios.get(url)
   //               .then(response => {

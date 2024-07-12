@@ -8,7 +8,28 @@ import './components/asserts/contest_page.css'
 import './components/asserts/login_page.css'
 import './components/asserts/register.css'
 import router from './rounter/index.js' // 引入路由实例
+import { createStore } from 'vuex'
+
+const store = createStore({
+  state () {
+    return {
+      loginstatus: false,
+      userid:null
+    }
+  },
+  mutations: {
+    login (state, userid) {
+      state.loginstatus = true;
+      state.userid = userid;
+    },
+    logout (state) {
+      state.loginstatus = false;
+      state.userid = null;
+    }
+  }
+})
 const app = createApp(App)
 app.use(router)
+app.use(store)
 app.use(ElementPlus)
 app.mount('#app')
