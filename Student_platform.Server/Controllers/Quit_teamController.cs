@@ -60,25 +60,11 @@ namespace Student_platform.Server.Controllers
                         }
 
                     }
-                    return 0;
-                    
-                            
-                            
-                            
-                            
+                                         
                 }
 
             }
-
-
-
-
-
-            return "ad";
-
-
-
-
+            return 0;
 
         }
 
