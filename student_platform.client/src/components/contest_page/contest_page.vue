@@ -136,43 +136,22 @@
 <script >
     import axios from "axios";
 export default {
-  setup(){
-      axios.get('https://localhost:7201/api/Race/acm')
-              .then(response => {
-                  alert(response.data);
-                  const a = JSON.stringify(response.data);
-                  alert(a);
-                  this.teams = JSON.parse(a);
-              })
-      let data = this.teams; 
-      // 根据状态筛选
-      if (this.selectedStatus) {
-        data = data.filter(item => item.status === this.selectedStatus);
-      }
-      // 根据搜索框内容筛选
-      if (this.searchText) {
-        const searchText = this.searchText.toLowerCase();
-        data = data.filter(team => {
-          return team.name.toLowerCase().includes(searchText)
-            || team.leaderName.toLowerCase().includes(searchText)
-            || team.tags.some(tag => tag.toLowerCase().includes(searchText));
-        });
-      }
-      // 根据标签筛选
-      if (this.selectedTags.length) {
-        data = data.filter(team => {
-          return this.selectedTags.every(tag => team.tags.includes(tag));
-        });
-      }
-      // 根据比赛类型筛选
-      if (this.selectedType) {
-        data = data.filter(item => item.type === this.selectedType);
-      }
-      this.filteredTeams = data;
-  },
+  //     setup() {
+  //     teams = [];
+  //    axios.get('https://localhost:7201/api/Race/acm')
+  //            .then(response => {
+  //                alert(response.data);
+  //                const a = JSON.stringify(response.data);
+  //                alert(a);
+  //                this.teams = JSON.parse(a);
+  //            })
+  //      return {
+  //          teams
+  //      }
+  //},
   data() {
-    return {
-      teams: [],
+      return {
+          teams:[],
       searchText: '',
       selectedStatus: '',
       selectedTags: [],
