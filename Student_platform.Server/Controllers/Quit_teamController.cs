@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Student_platform.Server.Modelclass;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,8 +25,23 @@ namespace Student_platform.Server.Controllers
 
         // POST api/<Quit_teamController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public string Post([FromBody] AQ_team qt)
         {
+
+
+
+
+
+
+
+
+
+            return "ad";
+
+
+
+
+
         }
 
         // PUT api/<Quit_teamController>/5

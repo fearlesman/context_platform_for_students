@@ -28,6 +28,8 @@ namespace Student_platform.Server.Modelclass
 
         public string leaderName { get; set; }
 
+        public int id { get; set; }
+
         //public string leaderAvatar { get; set; }
 
         public List<Team_member> members { get; set; }

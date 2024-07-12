@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Student_platform.Server.Modelclass;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,16 +17,24 @@ namespace Student_platform.Server.Controllers
         }
 
         // GET api/<Add_teamController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{user_name}")]
+        public string Get(string  user_name)
         {
             return "value";
         }
 
         // POST api/<Add_teamController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] AQ_team at)
         {
+            DB db = new DB();
+            string com = "insert into user_teams values(@user_id,@user_team1,@user_team2,@user_team3,@user_team4,@user_team5);";
+            db.Connection(com);
+            db.cmd.Parameters.AddWithValue("@user_id", at.user_id);
+            db.cmd.Parameters.AddWithValue("@user_team1", at.team_name);
+           
+
+
         }
 
         // PUT api/<Add_teamController>/5
