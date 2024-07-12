@@ -77,18 +77,17 @@
     </el-form>
   </el-card>
 </template>
+<script setup>
+const university = this.getu(this.$route.params.id);
+const pid = this.getpid()+1;
+</script>
 
 <script>
 const currentTime = new Date();
 
 export default {
   setup() {
-    const university = this.getu(this.$route.params.id);
-    const pid = this.getpid()+1;
-    return {
-      university,
-      pid
-    }
+   
   },
   data() {
     return {
@@ -96,10 +95,10 @@ export default {
         name: '',
         race: '',
         type: '',
-        id: this.pid,
+        id: pid,
         leader: '',
         description: '',
-        University: this.university,
+        University: university,
         totalMembers: 1,
         currentMembers: 1,
         startTime: currentTime,
