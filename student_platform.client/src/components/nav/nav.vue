@@ -9,10 +9,6 @@
     };
   },
   methods: {
-
-    // handleSelect(key, keyPath) {
-    //   console.log(key, keyPath);
-      // },
     navigateTo(path) {
       this.$router.push(path);
     },
