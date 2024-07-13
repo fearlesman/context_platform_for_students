@@ -11,7 +11,7 @@
             <el-tag v-for="tag in user.tags" :key="tag" class="tag" >{{ tag }}</el-tag>
           </div>
         </div>
-        <div class="profile" v-if="this.$store.state.user.id === $route.params.id">
+        <div class="profile" :v-if="show">
           <el-button type="primary" @click="downloadPdf" >
             <i class="el-icon-download"></i>
             查看简历
@@ -106,7 +106,10 @@
       },
       handleFileUpload(file) {
       this.pdfFile = file
-    },
+        },
+        show() {
+            return this.$router.params.id === this.$store.state.userid;
+        },
     handleExceed(files, fileList) {
       this.$message.warning(`最多只能上传 1 个文件`)
     },

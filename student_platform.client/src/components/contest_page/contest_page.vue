@@ -166,14 +166,19 @@
     }
   },
   created() {
-    axios.get('https://localhost:7201/api/Race/acm')
+     axios.get('https://localhost:7201/api/Race')
               .then(response => {
                   alert(response.data);
                   const a = JSON.stringify(response.data);
                   alert(a);
                   this.teams = JSON.parse(a);
+                  this.filteredTeams = this.teams;
+                  for (let i = 0; i < this.teams.length; i++) {
+                      if (this.teams[i].status === 1)
+                          this.teams[i].status = "招募中";
+                      else this.teams[i].status = "招募完成";
+                  }
               })
-    this.filteredTeams = this.teams;
   },
   methods: {
     filterTeams() {
@@ -219,7 +224,8 @@
                   alert(a);
                   this.teams = JSON.parse(a);
               })
-      let data = this.teams; 
+          let data = this.teams; 
+          console.log(data);
       for (let i = 0; i < data.length; i++) {
         if (data[i].status === 1)
         data[i].status = "招募中";
@@ -268,7 +274,7 @@
     },
     ExitTeam(teamid) {
         let qwq= { user_id:this.$store.state.userid, team_id:teamid };
-        axios.post('https://localhost:7201/api/Quiteam',qwq)
+        axios.post('https://localhost:7201/api/QuitTeam',qwq)
       .then(response => {
         const a = response.data;
         if(a === 1)
