@@ -5,7 +5,6 @@
     return {
       activeIndex: '1',
       loginstatus: false,
-      userid: '123',
       visitorId: null, // 存储访客的唯一标识符
     };
   },
@@ -13,13 +12,13 @@
 
     // handleSelect(key, keyPath) {
     //   console.log(key, keyPath);
-    // },
+      // },
     navigateTo(path) {
       this.$router.push(path);
     },
-    navigate(path,thisname) {
-      if (this.$store.state.loginstatus === true){
-        this.$router.push({ name: thisname, params: { id: this.userid } });
+      navigate(path, thisname) {
+        if (this.$store.state.loginstatus === true) {
+            this.$router.push({ name: thisname, params: { id: this.$store.state.userid } });
       }
       else{
         alert('请先登录！');
@@ -30,7 +29,7 @@
       if(this.$store.state.loginstatus === false)
       this.$store.commit('login','123');
       else
-      this.$store.commit('logout');
+            this.$store.commit('logout');
       this.$forceUpdate() ;
     },
     getloginstatus(){ return this.$store.state.loginstatus; },

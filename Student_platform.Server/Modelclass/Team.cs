@@ -50,7 +50,9 @@ namespace Student_platform.Server.Modelclass
 
         public string[] tags { get; set; }
 
-        public string end_date { get; set; }
+        public string endTime   { get; set; }
+
+        public string startTime { get; set; }
 
         
 

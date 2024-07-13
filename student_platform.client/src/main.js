@@ -14,7 +14,7 @@ const store = createStore({
   state () {
     return {
       loginstatus: false,
-      userid:null
+      userid:''
     }
   },
   mutations: {
@@ -24,7 +24,7 @@ const store = createStore({
     },
     logout (state) {
       state.loginstatus = false;
-      state.userid = null;
+      state.userid = '';
     }
   }
 })

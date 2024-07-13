@@ -57,7 +57,6 @@ export default {
                     if (a) {
                         alert("登录成功");
                         this.$store.commit('login', this.loginForm.username);
-
                     }
                     else {
                         alert("登陆失败");

@@ -77,9 +77,6 @@
     </el-form>
   </el-card>
 </template>
-<script setup>
-const university = this.getu(this.$route.params.id);
-</script>
 
 <script>
 const currentTime = new Date();
@@ -94,9 +91,10 @@ export default {
         name: '',
         race: '',
         type: '',
-        leader: '',
+        leaderName: '',
+        leaderid: this.$store.state.userid,
         description: '',
-        University: university,
+        university: '中科大',
         totalMembers: 1,
         currentMembers: 1,
         startTime: currentTime,
@@ -154,8 +152,10 @@ export default {
     submitForm() {
       this.$refs.teamForm.validate(valid => {
         if (valid) {
-          // 提交表单数据到服务器
-          console.log(this.teamData);
+            axios.post("https://localhost:7201/api/Team", this.teamData)
+                .then(response => {
+                    alert(response.data);
+                })
         } else {
           return false;
         }
