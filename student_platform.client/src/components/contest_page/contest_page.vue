@@ -167,7 +167,7 @@
   },
   created() {
      axios.get('https://localhost:7201/api/Race')
-              .then(response => {);
+              .then(response => {
                   const a = JSON.stringify(response.data);
  //                 alert(a);
                   this.teams = JSON.parse(a);

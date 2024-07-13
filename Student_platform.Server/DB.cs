@@ -15,7 +15,7 @@ namespace Student_platform.Server
 
         public SqlCommand cmd;
         public DB() {
-            this.con = "data source=.;initial catalog=smallterm;integrated security=True;";
+            this.con = "data source=.;initial catalog=smallterm;integrated security=True;Max Pool Size=1000;";
             this.conn = new SqlConnection(con);
             this.conn.Open();
            
@@ -127,7 +127,28 @@ namespace Student_platform.Server
         }
 
 
-        ~DB()
+        //检查该用户是否在该队伍中
+        public bool IsInTeam(int team_name, string user_id)
+        {
+            DB db5 = new DB();
+            string com5 = "select * from team_member where team_name = @team_name and id = @user_id;";  
+            db5.Connection(com5);
+            db5.cmd.Parameters.AddWithValue("@team_name", team_name);
+            db5.cmd.Parameters.AddWithValue("@user_id", user_id);
+            bool is_in_team = false;
+            using (db5.cmd)
+            {
+                SqlDataReader reader5 = db5.cmd.ExecuteReader();
+                if (reader5.Read())
+                {
+                    is_in_team = true;
+                }
+                reader5.Close();
+            }
+            return is_in_team;
+        }
+
+         ~DB()
         {
 
         this.conn.Close();

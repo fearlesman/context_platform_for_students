@@ -42,6 +42,11 @@ namespace Student_platform.Server.Controllers
                 db1.ChangeTeamStatus(at.team_id, 0);
                 return 0;
             }
+            bool isInTeam = db1.IsInTeam(at.team_id, at.user_id);
+            if (isInTeam)
+            {
+                return 0;
+            }
             string com1 = "select user_team1,user_team2,user_team3,user_team4,user_team5 from user_teams where user_id = @user_id;";
             db1.Connection(com1);
             db1.cmd.Parameters.AddWithValue("@user_id", at.user_id);
@@ -94,6 +99,13 @@ namespace Student_platform.Server.Controllers
                                                     int result3 = db4.cmd.ExecuteNonQuery();
                                                     if (result3 > 0)
                                                     {
+                                                        bool canJoin1 = db1.CanJoinTeam(at.team_id, at.user_id);
+                                                        if (!canJoin1)
+                                                        {
+                                                            db1.ChangeTeamStatus(at.team_id, 0);
+                                                           
+                                                        }
+
                                                         return 1;
                                                     }
                                                 }
