@@ -33,7 +33,7 @@ namespace Student_platform.Server.Controllers
 
             int[ ]teams = new int[5];
              DB db = new DB();
-            string com = "select * from user_team where user_id = @id;";
+            string com = "select * from user_teams where user_id = @id;";
             db.Connection(com);
             db.cmd.Parameters.AddWithValue("@id", qt.user_id);
             using (db.cmd)
@@ -41,19 +41,21 @@ namespace Student_platform.Server.Controllers
                 SqlDataReader reader = db.cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    teams[0] = reader.GetInt32(reader.GetOrdinal("user_team1"));
-                    teams[1] = reader.GetInt32(reader.GetOrdinal("user_team2"));
-                    teams[2] = reader.GetInt32(reader.GetOrdinal("user_team3"));
-                    teams[3] = reader.GetInt32(reader.GetOrdinal("user_team4"));
-                    teams[4] = reader.GetInt32(reader.GetOrdinal("user_team5"));
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (!reader.IsDBNull(i+1))
+                        {
+                            teams[i] = reader.GetInt32(reader.GetOrdinal("user_team"+(i+1)));
+                        }
+                    }
                     for (int i = 0; i < 5; i++)
                     {
                         if (teams[i] == qt.team_id)
                         {
                             DB db1 = new DB();
-                            string com1 = "update user_team set @user_team = '' where user_id = @id;";
+                            string com1 = $"update user_teams set user_team{i+1} = null where user_id = @id;";
                             db1.Connection(com1);
-                            db1.cmd.Parameters.AddWithValue("@user_team", "user_team" + (i + 1));
+                            
                             db1.cmd.Parameters.AddWithValue("@id", qt.user_id);
                             using (db1.cmd)
                             {
@@ -61,7 +63,7 @@ namespace Student_platform.Server.Controllers
                                 if (result > 0)
                                 {
                                     DB db2 = new DB();
-                                    string com2 = "update team_show set currentMembers = currentMembers - 1 where team_id = @team_id;";
+                                    string com2 = "update team_show set currentMembers = currentMembers - 1 where id = @team_id;";
                                     db2.Connection(com2);
                                     db2.cmd.Parameters.AddWithValue("@team_id", qt.team_id);
                                     using (db2.cmd)

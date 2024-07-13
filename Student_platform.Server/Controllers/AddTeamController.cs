@@ -52,12 +52,12 @@ namespace Student_platform.Server.Controllers
                 {
                     for (int i = 0; i < 5; i++)
                     {
-                        if (reader1.IsDBNull(i))
+                        if (reader1.IsDBNull(i+1))
                         {
                             DB db = new DB();
-                            string com = $"update user_teams set @user_team = @team_id where user_id = @user_id;";
+                            string com = $"update user_teams set user_team{i+1} = @team_id where user_id = @user_id;";
                             db.Connection(com);
-                            db.cmd.Parameters.AddWithValue("@user_team", "user_team"+(i+1));
+                          
                             db.cmd.Parameters.AddWithValue("@user_id", at.user_id);
                             db.cmd.Parameters.AddWithValue("@team_id", at.team_id);
                             using (db.cmd)
