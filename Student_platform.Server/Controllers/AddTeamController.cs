@@ -35,6 +35,12 @@ namespace Student_platform.Server.Controllers
         {
             string[] teams = new string[5];
             DB db1 = new DB();
+            bool canJoin = db1.CanJoinTeam(at.team_id, at.user_id);
+            if (!canJoin)
+            {
+                db1.ChangeTeamStatus(at.team_id, 0);
+                return 0;
+            }
             string com1 = "select user_team1,user_team2,user_team3,user_team4,user_team5 from user_teams where user_id = @user_id;";
             db1.Connection(com1);
             db1.cmd.Parameters.AddWithValue("@user_id", at.user_id);
