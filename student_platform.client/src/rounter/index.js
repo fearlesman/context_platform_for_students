@@ -13,9 +13,10 @@ const routes = [
     component: contest_page ,
     name:'join',
     beforeEnter: (to, from, next) => {
-      const profileComponent = to.matched[0].instances.default;
-      profileComponent.searchData();
-      next();
+      next(vm => {
+        const profileComponent = to.matched[0].components.default
+        profileComponent.searchData();
+      })
     }
   },
   { path: '/login', component: login_page ,name:'login'},
