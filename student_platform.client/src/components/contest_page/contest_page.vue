@@ -270,6 +270,7 @@
         else  if ( a === 0 )
         alert('加入队伍失败!');
         else alert('你已经在队伍中!');
+        this.searchData();
       })
     },
     ExitTeam(teamid) {
@@ -282,6 +283,7 @@
         else  if ( a === 0 )
         alert('退出队伍失败!');
         else alert('你不在队伍中!');
+        this.searchData();
       })
     }
   }
