@@ -4,7 +4,7 @@
     {
         public string user_id { get; set; }
 
-        public string team_id { get; set; }
+        public int team_id { get; set; }
 
     }
 }

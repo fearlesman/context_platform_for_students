@@ -26,7 +26,7 @@ namespace Student_platform.Server.Controllers
         {
             
             //选出team_name
-            string need_team_name = "  ";
+            int need_team_name =-1;
             List<Team_member> tm = new List<Team_member>();
             string[] t_tags = new string[5];
             DB db = new DB();
@@ -40,7 +40,7 @@ namespace Student_platform.Server.Controllers
                 SqlDataReader reader = db.cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    need_team_name = reader["name"].ToString();
+                    need_team_name = reader.GetInt32(reader.GetOrdinal("id"));
                     tm = db.GetTeam_members(need_team_name);
                     t_tags = db.GetTags(need_team_name);
 

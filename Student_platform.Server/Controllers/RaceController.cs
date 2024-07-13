@@ -43,7 +43,7 @@ namespace Student_platform.Server.Controllers
             //}
 
 
-            string need_team_name = "  ";
+            int need_team_name = -1;
             List<Team_member> tm = new List<Team_member>();
             string[] t_tags = new string[5];
             //返回对应race-name下的队伍信息
@@ -58,7 +58,7 @@ namespace Student_platform.Server.Controllers
                 while (reader3.Read())
                 {
                    
-                    need_team_name = reader3["name"].ToString();
+                    need_team_name = reader3.GetInt32(reader3.GetOrdinal("id"));
                     tm = db3.GetTeam_members(need_team_name);
                     t_tags = db3.GetTags(need_team_name);
                     string t_name = reader3["name"].ToString();

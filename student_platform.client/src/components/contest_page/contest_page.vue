@@ -122,8 +122,8 @@
                       {{ tag }}
                     </el-tag>
                   </p>
-                  <el-button type="primary" @click="JoinTeam(scope.row.team_id)">加入</el-button>
-                  <el-button type="danger" @click="ExitTeam(scope.row.team_id)">退出</el-button>
+                  <el-button type="primary" @click="JoinTeam(scope.row.id)">加入</el-button>
+                  <el-button type="danger" @click="ExitTeam(scope.row.id)">退出</el-button>
                 </div>
               </el-popover>
             </template>
@@ -251,7 +251,7 @@
       this.filteredTeams = data;
     },
       JoinTeam(team_id) {
-          const add={
+          let add={
       user_id: this.$store.state.userid,
       team_id: team_id
     }
@@ -269,7 +269,7 @@
     ExitTeam(teamid) {
 
         let qwq= { user_id:this.$store.state.userid, team_id:teamid };
-        axios.post('https://localhost:7201/api/Quiteam',qwq)
+        axios.post('https://localhost:7201/api/QuitTeam',qwq)
       .then(response => {
         const a = response.data;
         if(a === 1)

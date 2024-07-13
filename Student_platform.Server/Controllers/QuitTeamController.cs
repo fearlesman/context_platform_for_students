@@ -31,7 +31,7 @@ namespace Student_platform.Server.Controllers
         public int Post(AQ_team qt)
         {
 
-            string[] teams = new string[5];
+            int[ ]teams = new int[5];
              DB db = new DB();
             string com = "select * from user_team where user_id = @id;";
             db.Connection(com);
@@ -41,11 +41,11 @@ namespace Student_platform.Server.Controllers
                 SqlDataReader reader = db.cmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    teams[0] = reader["user_team1"].ToString();
-                    teams[1] = reader["user_team2"].ToString();
-                    teams[2] = reader["user_team3"].ToString();
-                    teams[3] = reader["user_team4"].ToString();
-                    teams[4] = reader["user_team5"].ToString();
+                    teams[0] = reader.GetInt32(reader.GetOrdinal("user_team1"));
+                    teams[1] = reader.GetInt32(reader.GetOrdinal("user_team2"));
+                    teams[2] = reader.GetInt32(reader.GetOrdinal("user_team3"));
+                    teams[3] = reader.GetInt32(reader.GetOrdinal("user_team4"));
+                    teams[4] = reader.GetInt32(reader.GetOrdinal("user_team5"));
                     for (int i = 0; i < 5; i++)
                     {
                         if (teams[i] == qt.team_id)

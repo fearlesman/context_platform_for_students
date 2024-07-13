@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Text.Json;
 using System.Data;
 using Student_platform.Server.Modelclass;
+using System.Net.NetworkInformation;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,7 +34,7 @@ namespace Student_platform.Server.Controllers
         [HttpPost]
         public int Post( AQ_team at)
         {
-            string[] teams = new string[5];
+            int[] teams = new int[5];
             DB db1 = new DB();
             bool canJoin = db1.CanJoinTeam(at.team_id, at.user_id);
             if (!canJoin)
@@ -49,76 +50,73 @@ namespace Student_platform.Server.Controllers
                 SqlDataReader reader1= db1.cmd.ExecuteReader();
                 if (reader1.Read())
                 {
-                    teams[0] = reader1["user_team1"].ToString();
-                    teams[1] = reader1["user_team2"].ToString();
-                    teams[2] = reader1["user_team3"].ToString();
-                    teams[3] = reader1["user_team4"].ToString();
-                    teams[4] = reader1["user_team5"].ToString();
-                }
-                reader1.Close();
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                if(teams[i] == at.team_id)
-                {
-                    return -1;
-                }
-                if (teams[i] == null)
-                {
-                    DB db = new DB();
-                    string com = $"insert into user_teams(user_id,user_team{i+1}) values(@user_id,@team_id);";
-                    db.Connection(com);
-                    db.cmd.Parameters.AddWithValue("@user_id", at.user_id);
-                    db.cmd.Parameters.AddWithValue("@team_id", at.team_id);
-                    using (db.cmd)
+                    for (int i = 0; i < 5; i++)
                     {
-                        int result = db.cmd.ExecuteNonQuery();
-                        if (result > 0)
+                        if (reader1.IsDBNull(i))
                         {
-                            
-                            DB db2 = new DB();
-                            string com2 = "update team_show set currentMembers = currentMembers + 1 where team_id = @team_id;";
-                            db2.Connection(com2);
-                            db2.cmd.Parameters.AddWithValue("@team_id", at.team_id);
-                            using (db2.cmd)
+                            DB db = new DB();
+                            string com = $"update user_teams set @user_team = @team_id where user_id = @user_id;";
+                            db.Connection(com);
+                            db.cmd.Parameters.AddWithValue("@user_team", "user_team"+(i+1));
+                            db.cmd.Parameters.AddWithValue("@user_id", at.user_id);
+                            db.cmd.Parameters.AddWithValue("@team_id", at.team_id);
+                            using (db.cmd)
                             {
-                                int result2 = db2.cmd.ExecuteNonQuery();
-                                if (result2 > 0)
+                                int result = db.cmd.ExecuteNonQuery();
+                                if (result > 0)
                                 {
-                                    DB db3 = new DB();
-                                    string com3 = "select user_name from user_show where user_id = @user_id;";
-                                    db3.Connection(com3);
-                                    db3.cmd.Parameters.AddWithValue("@user_id", at.user_id);
-                                    using (db3.cmd)
+
+                                    DB db2 = new DB();
+                                    string com2 = "update team_show set currentMembers = currentMembers + 1 where id = @team_id;";
+                                    db2.Connection(com2);
+                                    db2.cmd.Parameters.AddWithValue("@team_id", at.team_id);
+                                    using (db2.cmd)
                                     {
-                                        SqlDataReader reader = db3.cmd.ExecuteReader();
-                                        if (reader.Read())
+                                        int result2 = db2.cmd.ExecuteNonQuery();
+                                        if (result2 > 0)
                                         {
-                                            string user_name = reader["user_name"].ToString();
-                                            DB db4 = new DB();
-                                            string com4 = "insert into team_member values(@team_id,@user_name,@user_id);";
-                                            db4.Connection(com4);
-                                            db4.cmd.Parameters.AddWithValue("@team_id", at.team_id);
-                                            db4.cmd.Parameters.AddWithValue("@user_id", at.user_id);
-                                            db4.cmd.Parameters.AddWithValue("@user_name", user_name);
-                                            int result3 = db4.cmd.ExecuteNonQuery();
-                                            if (result3 > 0)
+                                            DB db3 = new DB();
+                                            string com3 = "select user_name from user_show where user_id = @user_id;";
+                                            db3.Connection(com3);
+                                            db3.cmd.Parameters.AddWithValue("@user_id", at.user_id);
+                                            using (db3.cmd)
                                             {
-                                                return 1;
+                                                SqlDataReader reader = db3.cmd.ExecuteReader();
+                                                if (reader.Read())
+                                                {
+                                                    string user_name = reader["user_name"].ToString();
+                                                    DB db4 = new DB();
+                                                    string com4 = "insert into team_member values(@team_id,@user_name,@user_id);";
+                                                    db4.Connection(com4);
+                                                    db4.cmd.Parameters.AddWithValue("@team_id", at.team_id);
+                                                    db4.cmd.Parameters.AddWithValue("@user_id", at.user_id);
+                                                    db4.cmd.Parameters.AddWithValue("@user_name", user_name);
+                                                    int result3 = db4.cmd.ExecuteNonQuery();
+                                                    if (result3 > 0)
+                                                    {
+                                                        return 1;
+                                                    }
+                                                }
+
                                             }
+
                                         }
 
-                                    }  
-                                    
+                                    }
                                 }
                             }
                         }
                     }
+                }
+                reader1.Close();
+            
+           
+               
 
 
            
                    
-                }
+                
             }
             return 0;
 

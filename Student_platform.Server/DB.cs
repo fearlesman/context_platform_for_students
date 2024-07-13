@@ -30,7 +30,7 @@ namespace Student_platform.Server
         }
 
         //选出team_member
-        public List<Team_member> GetTeam_members(string need_team_name)
+        public List<Team_member> GetTeam_members(int need_team_name)
         {
             DB db1 = new DB();
             string com1 = "select name,id from team_member where team_name = @need_team_name;";
@@ -58,7 +58,7 @@ namespace Student_platform.Server
 
         
         //选出tags
-        public string[] GetTags(string need_team_name)
+        public string[] GetTags(int need_team_name)
         {
             DB db2 = new DB();
             string com2 = "select * from team_tags where team_name = @need_team_name;";
@@ -88,10 +88,10 @@ namespace Student_platform.Server
         }
 
         //判断是否能够加入队伍
-        public bool CanJoinTeam(string team_name, string user_id)
+        public bool CanJoinTeam(int team_name, string user_id)
         {
             DB db3 = new DB();
-            string com3 = "select * from team_show where team_name = @team_name;";
+            string com3 = "select * from team_show where id = @team_name;";
             db3.Connection(com3);               
             db3.cmd.Parameters.AddWithValue("@team_name", team_name);
             bool can_join = true;
@@ -113,10 +113,10 @@ namespace Student_platform.Server
         }
 
         //改变队伍status
-        public void ChangeTeamStatus(string team_name, int status)
+        public void ChangeTeamStatus(int team_name, int status)
         {
             DB db4 = new DB();
-            string com4 = "update team_show set status = @status where team_name = @team_name;";
+            string com4 = "update team_show set status = @status where id = @team_name;";
             db4.Connection(com4);
             db4.cmd.Parameters.AddWithValue("@status", status);
             db4.cmd.Parameters.AddWithValue("@team_name", team_name);
