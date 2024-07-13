@@ -113,7 +113,7 @@ export default {
         startTime: [{ required: true, message: '请选择招募开始日期', trigger: 'change' }],
         endTime: [{ required: true, message: '请选择招募结束日期', trigger: 'change' }],
         tags: [
-          { required: true, message: '请至少输入一个标签', trigger: 'change' },
+          { required: true, message: '请至少输入一个需求标签', trigger: 'change' },
           { validator: (value, callback) => {
             if (this.tags.includes(value)) {
               callback(new Error('输入的标签不能重复'));

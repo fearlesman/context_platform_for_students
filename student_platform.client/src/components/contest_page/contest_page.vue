@@ -3,7 +3,7 @@
     <br>
     <el-row :gutter="20">
       <el-col :span="4">
-        <el-input v-model="searchText" placeholder="搜索队伍名、队长名或标签" clearable @input="filterTeams">
+        <el-input v-model="searchText" placeholder="搜索队伍名、队长名" clearable @input="filterTeams">
           <template v-slot:prefix>
               <i  class="el-input__icon el-icon-search"></i>
           </template>
@@ -29,7 +29,7 @@
         </el-select>
       </el-col>
       <el-col :span="4">
-        <el-select v-model="selectedTags" multiple placeholder="选择标签" @change="searchData()">
+        <el-select v-model="selectedTags" multiple placeholder="选择需求标签" @change="searchData()">
           <el-option v-for="tag in allTags" :key="tag" :label="tag" :value="tag"></el-option>
         </el-select>
       </el-col>
@@ -113,7 +113,7 @@
                       {{ scope.row.status }}
                     </el-tag>
                   </p>
-                  <p>标签: 
+                  <p>需求标签: 
                     <el-tag
                       v-for="tag in scope.row.tags"
                       :key="tag"
@@ -122,8 +122,8 @@
                       {{ tag }}
                     </el-tag>
                   </p>
-                  <el-button type="primary" @click="JoinTeam(scope.row.teamid)">加入</el-button>
-                  <el-button type="danger" @click="ExitTeam(scope.row.teamid)">退出</el-button>
+                  <el-button type="primary" @click="JoinTeam(scope.row.team_id)">加入</el-button>
+                  <el-button type="danger" @click="ExitTeam(scope.row.team_id)">退出</el-button>
                 </div>
               </el-popover>
             </template>
@@ -215,7 +215,6 @@ export default {
       searchData() {
           axios.get('https://localhost:7201/api/Race')
               .then(response => {
-                  alert(response.data);
                   const a = JSON.stringify(response.data);
                   alert(a);
                   this.teams = JSON.parse(a);
@@ -251,10 +250,11 @@ export default {
       }
       this.filteredTeams = data;
     },
-      JoinTeam(teamid) {
+      JoinTeam(team_id) {
           const add={
       user_id: this.$store.state.userid,
-      team_id: teamid}
+      team_id: team_id
+    }
   
           axios.post('https://localhost:7201/api/AddTeam',add )
       .then(response => {

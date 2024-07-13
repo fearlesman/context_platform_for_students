@@ -96,11 +96,27 @@
     <el-menu-item index="7" @click="changestatus()">
       状态切换
     </el-menu-item>
-  </el-menu>
+    </el-menu>
+    <footer class="footer">
+      <p>Copyright 2023 · 纵横团队 · ALL RIGHTS RESERVED</p>
+    </footer>
 </template>
 
 <style>
 .flex-grow {
   flex-grow: 1;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 20px;
+  text-align: center;
+  padding: 0px 10px 20px 10px;
+  background-color: #f8f8f8;
+  color: #333;
+  box-shadow: 0 -1px 2px rgba(0,0,0,0.1);
+  z-index: 999;
 }
 </style>
