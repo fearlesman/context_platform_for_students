@@ -3,7 +3,7 @@
     <br>
     <el-row :gutter="20">
       <el-col :span="4">
-        <el-input v-model="searchText" placeholder="搜索队伍名、队长名或标签" clearable @input="filterTeams">
+        <el-input v-model="searchText" placeholder="搜索队伍名、队长名" clearable @input="filterTeams">
           <template v-slot:prefix>
               <i  class="el-input__icon el-icon-search"></i>
           </template>
@@ -29,7 +29,7 @@
         </el-select>
       </el-col>
       <el-col :span="4">
-        <el-select v-model="selectedTags" multiple placeholder="选择标签" @change="searchData()">
+        <el-select v-model="selectedTags" multiple placeholder="选择需求标签" @change="searchData()">
           <el-option v-for="tag in allTags" :key="tag" :label="tag" :value="tag"></el-option>
         </el-select>
       </el-col>
@@ -113,7 +113,7 @@
                       {{ scope.row.status }}
                     </el-tag>
                   </p>
-                  <p>标签: 
+                  <p>需求标签: 
                     <el-tag
                       v-for="tag in scope.row.tags"
                       :key="tag"
