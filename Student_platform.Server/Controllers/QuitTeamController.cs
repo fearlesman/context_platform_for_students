@@ -51,7 +51,7 @@ namespace Student_platform.Server.Controllers
                         if (teams[i] == qt.team_id)
                         {
                             DB db1 = new DB();
-                            string com1 = "update user_team set @user_team = null where user_id = @id;";
+                            string com1 = "update user_team set @user_team = '' where user_id = @id;";
                             db1.Connection(com1);
                             db1.cmd.Parameters.AddWithValue("@user_team", "user_team" + (i + 1));
                             db1.cmd.Parameters.AddWithValue("@id", qt.user_id);
@@ -69,6 +69,7 @@ namespace Student_platform.Server.Controllers
                                         int result2 = db2.cmd.ExecuteNonQuery();
                                         if (result2 > 0)
                                         {
+                                            db2.ChangeTeamStatus(qt.team_id, 1);
                                             return 1;
                                         }
                                     }

@@ -87,6 +87,46 @@ namespace Student_platform.Server
 
         }
 
+        //判断是否能够加入队伍
+        public bool CanJoinTeam(string team_name, string user_id)
+        {
+            DB db3 = new DB();
+            string com3 = "select * from team_show where team_name = @team_name;";
+            db3.Connection(com3);               
+            db3.cmd.Parameters.AddWithValue("@team_name", team_name);
+            bool can_join = true;
+            using (db3.cmd)
+            {
+                SqlDataReader reader3 = db3.cmd.ExecuteReader();
+                if (reader3.Read())
+                {
+                    int t_currentMembers = reader3.GetInt32(reader3.GetOrdinal("currentMembers"));
+                    int t_totalMembers = reader3.GetInt32(reader3.GetOrdinal("totalMembers"));
+                    if (t_currentMembers >= t_totalMembers)
+                    {
+                        can_join = false;
+                    }
+                }
+                reader3.Close();
+            }
+            return can_join;
+        }
+
+        //改变队伍status
+        public void ChangeTeamStatus(string team_name, int status)
+        {
+            DB db4 = new DB();
+            string com4 = "update team_show set status = @status where team_name = @team_name;";
+            db4.Connection(com4);
+            db4.cmd.Parameters.AddWithValue("@status", status);
+            db4.cmd.Parameters.AddWithValue("@team_name", team_name);
+            using (db4.cmd)
+            {
+                db4.cmd.ExecuteNonQuery();
+            }
+        }
+
+
         ~DB()
         {
 
