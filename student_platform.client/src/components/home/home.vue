@@ -34,7 +34,7 @@
         methods: {
             submitMessage() {
                 // 在这里可以添加提交留言的逻辑
-                console.log("提交留言：", this.message);
+                alert("留言提交成功！");
                 this.message = ""; // 清空输入框
             },
             Goto(url){

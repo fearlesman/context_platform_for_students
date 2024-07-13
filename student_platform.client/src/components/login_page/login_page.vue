@@ -49,7 +49,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('提交登录信息!');
+          // alert('提交登录信息!');
             ////测试登录,成功了，返回的是string类型json的字符串，不过axios好像可以直接解析成json对象，就是response.data
             axios.post('https://localhost:7201/api/Login',this.loginForm)
                 .then(response => {
@@ -59,7 +59,7 @@ export default {
                         this.$store.commit('login', this.loginForm.username);
                     }
                     else {
-                        alert("登陆失败");
+                        alert("登陆失败!");
                     }
                 })
                 .catch(error => {

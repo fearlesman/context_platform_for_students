@@ -56,13 +56,11 @@
     :ellipsis="false"
     @select="handleSelect"
   >
-    <el-menu-item index="0">
       <img
-        style="width: 100px"
-        src=""
+        style="width: 100px position: absolute; top: 10px; left: 10px;"
+        src="../icons/team.png"
         alt="logo"
       />
-    </el-menu-item>
     <el-menu-item index="1" @click="navigateTo('/')">
       首页
     </el-menu-item>
@@ -75,11 +73,11 @@
         创建队伍
       </el-menu-item>
     </el-sub-menu>
-    <el-menu-item index="3" @click="navigate('/myteam','myteam')">
+    <el-menu-item index="3" @click="navigate('/myteam','myteam')" v-if="getloginstatus() === true">
       我的团队
     </el-menu-item>
     <div class="flex-grow" />
-    <el-menu-item index="4" @click="navigateTo('/login')" v-if="getloginstatus() === false">
+    <el-menu-item index="4" @click="navigateTo('/login')" v-if="getloginstatus() === false" style="float: right; width: 100px;">
       登录
     </el-menu-item>
     <el-menu-item index="5" @click="navigate('/home', 'home')" v-if="getloginstatus() === true">
@@ -88,12 +86,12 @@
     <el-menu-item index="6" @click="changestatus()" v-if="getloginstatus() === true">
       退出登录
     </el-menu-item>
-    <el-menu-item index="7" @click="changestatus()">
+    <!-- <el-menu-item index="7" @click="changestatus()">
       状态切换
-    </el-menu-item>
+    </el-menu-item> -->
     </el-menu>
     <footer class="footer">
-      <p>Copyright 2023 · 纵横团队 · ALL RIGHTS RESERVED</p>
+      <p>Copyright 2024 · 智溯团队 · ALL RIGHTS RESERVED</p>
     </footer>
 </template>
 
