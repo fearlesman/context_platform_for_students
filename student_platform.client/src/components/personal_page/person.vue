@@ -11,54 +11,57 @@
             <el-tag v-for="tag in user.tags" :key="tag" class="tag" >{{ tag }}</el-tag>
           </div>
         </div>
-        <div class="profile" >
-        <div>
-          <el-button type="primary" @click="getpdf">查看简历</el-button>
-        </div>
-        <div>
-          <el-popover
-            v-model:visible="uploadPopoverVisible"
-            placement="bottom"
-            :width="500"
-            trigger="click"
-          >
-            <template #reference>
-              <el-button type="primary">上传简历</el-button>
-            </template>
-        
-            <el-upload
-              ref="upload"
-              accept=".pdf"
-              multiple
-              :action="uploadUrl"
-              :on-exceed="handleExceed"
-              :on-success="handleUploadSuccess"
-              :on-error="handleUploadError"
-              :file-list="fileList"
-              :limit="1"
-              
+        <div class="profile">
+          <el-button type="primary" @click="downloadPdf">
+            <i class="el-icon-download"></i>
+            查看简历
+          </el-button>
+          <div>
+            <el-popover
+              v-model:visible="uploadPopoverVisible"
+              placement="bottom"
+              :width="500"
+              trigger="click"
             >
-              <el-button type="primary">选择文件</el-button>
-              <template #tip>
-                <div class="el-upload__tip">
-                  只能上传PDF文件,且不超过 5MB
-                </div>
+              <template #reference>
+                <el-button type="primary">上传简历</el-button>
               </template>
-            </el-upload>
         
-            <div class="dialog-footer">
-              <el-button @click="uploadPopoverVisible = false">取消</el-button>
-              <el-button type="primary" @click="submitUpload">上传</el-button>
-            </div>
-          </el-popover>
-        </div>
+              <el-upload
+                ref="upload"
+                accept=".pdf"
+                multiple
+                :action="uploadUrl"
+                :headers="uploadHeaders"
+                :on-exceed="handleExceed"
+                :on-success="handleUploadSuccess"
+                :on-error="handleUploadError"
+                :file-list="fileList"
+                :limit="1"
+                :auto-upload="false"
+                @change="handleFileUpload"
+              >
+                <el-button type="primary">选择文件</el-button>
+                <template #tip>
+                  <div class="el-upload__tip">
+                    只能上传PDF文件,且不超过 5MB
+                  </div>
+                </template>
+              </el-upload>
+        
+              <div class="dialog-footer">
+                <el-button @click="uploadPopoverVisible = false">取消</el-button>
+                <el-button type="primary" @click="uploadPdf" :disabled="!pdfFile">上传</el-button>
+              </div>
+            </el-popover>
+          </div>
         </div>
       </div>
   
       <div class="content">
         <div class="profile">
             <h2>个人简介</h2>
-            <el-button @click="navigateTo()">编辑简介</el-button>
+            <el-button @click="navigateTo(this.$store.state.userid)">编辑简介</el-button>
           <div class="markdown-content" v-html="compiledMarkdown"></div>
         </div>
       </div>
@@ -66,9 +69,6 @@
 </template>
   
 <script>
-import { ref } from 'vue'
-
-const upload = ref(null)
   import { marked } from 'marked';
   export default {
     data() {
@@ -84,7 +84,10 @@ const upload = ref(null)
         customizationContent: '# 欢迎来到我的个人主页!\n\n这里是您可以自定义的个性化内容区域。您可以使用 Markdown 格式进行编辑。',
         uploadPopoverVisible: false,
         uploadUrl: '/api/upload',
-        fileList: []
+        pdfSrc: '../../../../Student_platform.Server/resumes/',
+        fileList: [],
+        pdfFile: null,
+        uploadHeaders: {}
       }
     },
     computed: {
@@ -94,25 +97,35 @@ const upload = ref(null)
     },
     methods: {
       navigateTo(pid) {
-        this.$router.push({ name: 'profile', params: { id: pid } });
+        this.$router.push({ name: 'markdown', params: { id: pid } });
       },
-      handleExceed(files, fileList) {
-      this.$message.warning(`只允许上传 1 个文件,当前已有 ${fileList.length} 个文件`);
+      downloadPdf() {
+        const link = document.createElement('a');
+        link.href = this.pdfSrc;
+        link.download = this.$route.params.id+'.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      },
+      handleFileUpload(file) {
+      this.pdfFile = file
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`最多只能上传 1 个文件`)
     },
     handleUploadSuccess(response, file, fileList) {
-      this.$message.success('文件上传成功');
-      this.fileList = fileList;
+      this.fileList = fileList
+      this.$message.success('上传成功')
     },
     handleUploadError(err, file, fileList) {
-      this.$message.error('文件上传失败');
-      this.fileList = fileList;
+      this.fileList = fileList
+      this.$message.error('上传失败')
     },
-    submitUpload() {
-      this.$refs.upload.submit();
-      this.uploadPopoverVisible = false;
+    uploadPdf() {
+      
     }
-    },
-  }
+    }
+}
 </script>
   
   <style>

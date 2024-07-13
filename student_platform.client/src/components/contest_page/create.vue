@@ -166,7 +166,6 @@ export default {
         axios.get("https://localhost:7201/api/Get_college/"+id.toString())
        .then(response=>{{
            return response.data;
-
        }})
     },
   }

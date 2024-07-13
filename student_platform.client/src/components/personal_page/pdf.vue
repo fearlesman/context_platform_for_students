@@ -34,7 +34,7 @@
         });
       },
       renderPage(pageNumber) {
-        this.pdf.getPage(pageNumber).then(page => {
+          this.pdf.getPage(pageNumber).then(page => {
           const scale = 1.5;
           const viewport = page.getViewport({ scale });
   

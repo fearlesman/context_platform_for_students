@@ -71,12 +71,7 @@
         <el-col :span="12">
 
             <div class="message-board">
-                <h2>交流区</h2>
-                <div class="others-messages" style="overflow-y: auto;height: 80%;padding: 15px;border: 1px solid #dee2e6;border-radius: 5px;background-color: #fff;">
-                    <div v-for="msg in othersMessages" :key="msg.id">
-                        {{ msg.content }}
-                    </div>
-                </div>
+                <h2>留言区</h2>
                 <textarea v-model="message" placeholder="输入您的想法或问题"></textarea>
                 <button @click="submitMessage">提交</button>
             </div>
@@ -122,6 +117,7 @@
     .message-board {
         width: 400px;
         padding: 20px;
+        margin: 20px auto;
         background-color: #f8f9fa;
         border: 1px solid #dee2e6;
         border-radius: 4px;
