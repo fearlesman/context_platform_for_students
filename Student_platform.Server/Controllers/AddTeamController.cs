@@ -69,6 +69,7 @@ namespace Student_platform.Server.Controllers
                         int result = db.cmd.ExecuteNonQuery();
                         if (result > 0)
                         {
+                            
                             DB db2 = new DB();
                             string com2 = "update team_show set currentMembers = currentMembers + 1 where team_id = @team_id;";
                             db2.Connection(com2);
