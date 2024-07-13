@@ -57,6 +57,7 @@ export default {
                     if (a) {
                         alert("登录成功");
                         this.$store.commit('login', this.loginForm.username);
+                        this.$router.push('/home');
                     }
                     else {
                         alert("登陆失败!");
