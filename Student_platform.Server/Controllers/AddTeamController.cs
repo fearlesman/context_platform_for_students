@@ -78,7 +78,31 @@ namespace Student_platform.Server.Controllers
                                 int result2 = db2.cmd.ExecuteNonQuery();
                                 if (result2 > 0)
                                 {
-                                    return 1;
+                                    DB db3 = new DB();
+                                    string com3 = "select user_name from user_show where user_id = @user_id;";
+                                    db3.Connection(com3);
+                                    db3.cmd.Parameters.AddWithValue("@user_id", at.user_id);
+                                    using (db3.cmd)
+                                    {
+                                        SqlDataReader reader = db3.cmd.ExecuteReader();
+                                        if (reader.Read())
+                                        {
+                                            string user_name = reader["user_name"].ToString();
+                                            DB db4 = new DB();
+                                            string com4 = "insert into team_member values(@team_id,@user_name,@user_id);";
+                                            db4.Connection(com4);
+                                            db4.cmd.Parameters.AddWithValue("@team_id", at.team_id);
+                                            db4.cmd.Parameters.AddWithValue("@user_id", at.user_id);
+                                            db4.cmd.Parameters.AddWithValue("@user_name", user_name);
+                                            int result3 = db4.cmd.ExecuteNonQuery();
+                                            if (result3 > 0)
+                                            {
+                                                return 1;
+                                            }
+                                        }
+
+                                    }  
+                                    
                                 }
                             }
                         }

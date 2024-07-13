@@ -40,7 +40,7 @@ namespace Student_platform.Server.Controllers
                 }
             }
 
-            return "value";
+          
         }
 
         // POST api/<Get_collegeController>
