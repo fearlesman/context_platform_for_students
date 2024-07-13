@@ -52,13 +52,24 @@ namespace Student_platform.Server.Controllers
                 db2.cmd.Parameters.AddWithValue("@user_id", reg.username);
             }
 
+            DB db3 = new DB();
+            string com3 = "insert into user_teams(user_id) values(@user);";
+            db3.Connection(com3);
+            db3.cmd.Parameters.AddWithValue("@user", reg.username);
+            
+
+
+
+
+
             // 执行命令并获取受影响的行数
             try
             {
 
                 int rowsAffected = db.cmd.ExecuteNonQuery();
                 int rowsAffected2 = db2.cmd.ExecuteNonQuery();
-                if (rowsAffected > 0&&rowsAffected2>0)
+                int rowsAffected3 = db3.cmd.ExecuteNonQuery();
+                if (rowsAffected > 0&&rowsAffected2>0&&rowsAffected3>0)
                 {
                     return Ok("注册成功");
                 }

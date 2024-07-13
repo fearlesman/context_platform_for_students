@@ -55,8 +55,27 @@ namespace Student_platform.Server.Controllers
                             db1.Connection(com1);
                             db1.cmd.Parameters.AddWithValue("@user_team", "user_team" + (i + 1));
                             db1.cmd.Parameters.AddWithValue("@id", qt.user_id);
+                            using (db1.cmd)
+                            {
+                               int result = db1.cmd.ExecuteNonQuery();
+                                if (result > 0)
+                                {
+                                    DB db2 = new DB();
+                                    string com2 = "update team_show set currentMembers = currentMembers - 1 where team_id = @team_id;";
+                                    db2.Connection(com2);
+                                    db2.cmd.Parameters.AddWithValue("@team_id", qt.team_id);
+                                    using (db2.cmd)
+                                    {
+                                        int result2 = db2.cmd.ExecuteNonQuery();
+                                        if (result2 > 0)
+                                        {
+                                            return 1;
+                                        }
+                                    }
+                                }
+                            }
 
-                            return 1;
+                      
                         }
 
                     }

@@ -63,9 +63,29 @@ namespace Student_platform.Server.Controllers
                     string com = $"insert into user_teams(user_id,user_team{i+1}) values(@user_id,@team_id);";
                     db.Connection(com);
                     db.cmd.Parameters.AddWithValue("@user_id", at.user_id);
-                    db.cmd.Parameters.AddWithValue("@user_team1", at.team_id);
+                    db.cmd.Parameters.AddWithValue("@team_id", at.team_id);
+                    using (db.cmd)
+                    {
+                        int result = db.cmd.ExecuteNonQuery();
+                        if (result > 0)
+                        {
+                            DB db2 = new DB();
+                            string com2 = "update team_show set currentMembers = currentMembers + 1 where team_id = @team_id;";
+                            db2.Connection(com2);
+                            db2.cmd.Parameters.AddWithValue("@team_id", at.team_id);
+                            using (db2.cmd)
+                            {
+                                int result2 = db2.cmd.ExecuteNonQuery();
+                                if (result2 > 0)
+                                {
+                                    return 1;
+                                }
+                            }
+                        }
+                    }
 
-                    return 1;
+
+           
                    
                 }
             }
