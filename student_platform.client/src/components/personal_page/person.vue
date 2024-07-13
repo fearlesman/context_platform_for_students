@@ -11,8 +11,8 @@
             <el-tag v-for="tag in user.tags" :key="tag" class="tag" >{{ tag }}</el-tag>
           </div>
         </div>
-        <div class="profile">
-          <el-button type="primary" @click="downloadPdf">
+        <div class="profile" v-if="this.$store.state.user.id === $route.params.id">
+          <el-button type="primary" @click="downloadPdf" >
             <i class="el-icon-download"></i>
             查看简历
           </el-button>
@@ -26,7 +26,6 @@
               <template #reference>
                 <el-button type="primary">上传简历</el-button>
               </template>
-        
               <el-upload
                 ref="upload"
                 accept=".pdf"
@@ -48,7 +47,6 @@
                   </div>
                 </template>
               </el-upload>
-        
               <div class="dialog-footer">
                 <el-button @click="uploadPopoverVisible = false">取消</el-button>
                 <el-button type="primary" @click="uploadPdf" :disabled="!pdfFile">上传</el-button>
@@ -80,7 +78,6 @@
           tags: ['JavaScript', 'Vue.js', 'Web Development'],
           university: '清华大学'
         },
-        vistor: 123,
         customizationContent: '# 欢迎来到我的个人主页!\n\n这里是您可以自定义的个性化内容区域。您可以使用 Markdown 格式进行编辑。',
         uploadPopoverVisible: false,
         uploadUrl: '/api/upload',

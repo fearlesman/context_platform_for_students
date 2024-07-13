@@ -251,7 +251,7 @@
       this.filteredTeams = data;
     },
       JoinTeam(team_id) {
-          let add={
+          const add={
       user_id: this.$store.state.userid,
       team_id: team_id
     }
@@ -267,9 +267,8 @@
       })
     },
     ExitTeam(teamid) {
-
         let qwq= { user_id:this.$store.state.userid, team_id:teamid };
-        axios.post('https://localhost:7201/api/QuitTeam',qwq)
+        axios.post('https://localhost:7201/api/Quiteam',qwq)
       .then(response => {
         const a = response.data;
         if(a === 1)

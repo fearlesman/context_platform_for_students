@@ -12,6 +12,11 @@ const routes = [
   { path: '/user/:id/join', 
     component: contest_page ,
     name:'join',
+    beforeEnter: (to, from, next) => {
+      const profileComponent = to.matched[0].instances.default;
+      profileComponent.searchData();
+      next();
+    }
   },
   { path: '/login', component: login_page ,name:'login'},
   { path: '/register', component: register_page,name:'register'},
