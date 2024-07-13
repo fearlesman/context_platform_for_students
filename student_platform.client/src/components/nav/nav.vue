@@ -111,9 +111,9 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 30px;
+  height: 20px;
   text-align: center;
-  padding: 10px 0;
+  padding: 0px 10px 20px 10px;
   background-color: #f8f8f8;
   color: #333;
   box-shadow: 0 -1px 2px rgba(0,0,0,0.1);
