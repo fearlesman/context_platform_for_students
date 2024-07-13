@@ -13,10 +13,12 @@ const routes = [
     component: contest_page ,
     name:'join',
     beforeEnter: (to, from, next) => {
-      if(this.$store.state.user.id!='')
-        next()
-      else
-        next('/')
+        next(vm => {
+            if (vm.$store.state.loginstatus)
+            return true
+            else
+            return false
+        });
     }
   },
   { path: '/login', component: login_page ,name:'login'},
@@ -25,39 +27,47 @@ const routes = [
     component: markdown_page,
     name:'markdown',
     beforeEnter: (to, from, next) => {
-      if(this.$store.state.user.id!='')
-        next()
-      else
-        next('/')
+        next(vm => {
+            if (vm.$store.state.loginstatus)
+                return true
+            else
+                return false
+        });
     }},
   { path: '/user/:id/create', 
     component: create_page,
     name:'create',
     beforeEnter: (to, from, next) => {
-      if(this.$store.state.user.id!='')
-        next()
-      else
-        next('/')
+        next(vm => {
+            if (vm.$store.state.loginstatus)
+                return true
+            else
+                return false
+        });
     }
   },
   { path: '/user/:id/home', 
     component: personal_page,
     name:'home',
     beforeEnter: (to, from, next) => {
-      if(this.$store.state.user.id!='')
-        next()
-      else
-        next('/')
+        next(vm => {
+            if (vm.$store.state.loginstatus)
+                return true
+            else
+                return false
+        });
     }
   },
   { path: '/user/:id/myteam', 
     component: myteam_page,
     name:'myteam',
     beforeEnter: (to, from, next) => {
-      if(this.$store.state.user.id!='')
-        next()
-      else
-        next('/')
+        next(vm => {
+            if (vm.$store.state.loginstatus)
+                return true
+            else
+                return false
+        });
     }
   },
   { path: '/home', redirect: '/user/:id/home'}

@@ -167,10 +167,9 @@
   },
   created() {
      axios.get('https://localhost:7201/api/Race')
-              .then(response => {
-                  alert(response.data);
+              .then(response => {);
                   const a = JSON.stringify(response.data);
-                  alert(a);
+ //                 alert(a);
                   this.teams = JSON.parse(a);
                   this.filteredTeams = this.teams;
                   for (let i = 0; i < this.teams.length; i++) {
@@ -221,7 +220,7 @@
           axios.get('https://localhost:7201/api/Race')
               .then(response => {
                   const a = JSON.stringify(response.data);
-                  alert(a);
+//                  alert(a);
                   this.teams = JSON.parse(a);
               })
           let data = this.teams; 
