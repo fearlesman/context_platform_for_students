@@ -15,8 +15,7 @@
             :on-error="handleAvatarError"
             :before-upload="beforeAvatarUpload"
           >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            <img src="https://via.placeholder.com/150" class="avatar" >
           </el-upload>
           <div class="upload-tip">
             只能上传 JPG/PNG 文件,且文件大小不超过 2MB
@@ -108,12 +107,14 @@
       this.$message.error('头像上传失败');
     },
     beforeAvatarUpload(file) {
-      if (file.type === 'image/jpg')
+      console.log(file);
+      this.img_type = null;
+      if (file.type === 'image/jpeg')
       this.img_type = 'jpg';
       else if (file.type === 'image/png')
       this.img_type = 'png';
       const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!this.img_type) {
+      if (this.img_type != 'jpg'&&this.img_type != 'png') {
         this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
       }
       if (!isLt2M) {
