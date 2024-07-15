@@ -147,6 +147,25 @@ namespace Student_platform.Server
             }
             return is_in_team;
         }
+        //从team_show中选出team_id
+        public int chooseid(string name)
+        {
+            DB db  = new DB();
+            string com = "select id from team_show where name = @team_name;";
+            db.Connection(com);
+            db.cmd.Parameters.AddWithValue ("@team_name", name);
+            using (db.cmd)
+            {
+                SqlDataReader reader = db.cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    int id = 0;
+                    id = reader .GetInt32("id");
+                    return id; 
+                }
+            }
+            return -1;
+        }
 
          ~DB()
         {

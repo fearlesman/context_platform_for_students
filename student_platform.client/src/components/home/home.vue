@@ -48,7 +48,7 @@
     <!--走马灯-->
     <el-carousel :interval="4000" type="card" height="300px">
         <el-carousel-item v-for="item in images" :key="item">
-           <img :src="item.img" :alt="item.alt" style="height:300px;width:700px" @click="Goto(item.url)">
+           <img :src="item.img" :alt="item.alt" style="height:300px;width:800px" @click="Goto(item.url)">
         </el-carousel-item>
     </el-carousel>
     <!--走马灯--> 

@@ -58,7 +58,7 @@
   >
       <img
         style="width: 100px position: absolute; top: 10px; left: 10px;"
-        src="../icons/team.png"
+        src="../icons/team.jpg"
         alt="logo"
       />
     <el-menu-item index="1" @click="navigateTo('/')">

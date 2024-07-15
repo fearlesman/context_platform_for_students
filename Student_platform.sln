@@ -9,6 +9,7 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "student_platform.client", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{5DD59107-F821-48CC-96D1-A3865D67E059}"
 	ProjectSection(SolutionItems) = preProject
+		html1.txt = html1.txt
 		question_and_distribution.txt = question_and_distribution.txt
 	EndProjectSection
 EndProject

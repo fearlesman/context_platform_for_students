@@ -112,7 +112,7 @@ namespace Student_platform.Server.Controllers
                     db.cmd.Parameters.AddWithValue("@end_date", tm.endTime);
                     db.cmd.Parameters.AddWithValue("@university", tm.university);
                 int rows = db.cmd.ExecuteNonQuery();
-                    if (rows > 0)
+                if (rows > 0)
                 {
                     DB db2 = new DB();
                     string com2 = "insert into team_member values(@team_name,@member_name,@member_id);";
@@ -121,34 +121,41 @@ namespace Student_platform.Server.Controllers
                     {
                         tm.members.Insert(0, new Team_member { name = tm.leaderName, id = tm.leaderid });
                         db2.cmd.Parameters.AddWithValue("@team_name", tm.name);
-                     
+
                         for (int i = 0; i < tm.members.Count(); i++)
                         {
 
                             db2.cmd.Parameters.AddWithValue("@member_name", tm.members[i].name);
                             db2.cmd.Parameters.AddWithValue("@member_id", tm.members[i].id);
-                            
+
                         }
-                     
-                            DB db3 = new DB();
-                            string com3 = "insert into team_tags values(@team_name1,@tag1,@tag2,@tag3,@tag4,@tag5);";
-                            db3.Connection(com3);
-                            using (db3.cmd)
-                            {
-                                db3.cmd.Parameters.AddWithValue("@team_name1", tm.name);
-                                for (int i = 0; i < tm.tags.Count(); i++)
-                                {
-                                    db3.cmd.Parameters.AddWithValue($"@tag{i}", tm.tags[i]);
-                                }
 
-                                    return Ok("队伍创建成功");
-                                
-                               
-                            }
-                            }
+                    }
 
-                        
-            }
+                }
+                
+                DB db3 = new DB();
+                string com3 = "insert into team_tags values(@team_name1,@tag1,@tag2,@tag3,@tag4,@tag5);";
+                db3.Connection(com3);
+                int id = db3.chooseid(tm.name);
+                if (id == -1)
+                {
+                    return BadRequest("队伍创建失败");
+                }
+                using (db3.cmd)
+                {
+
+                    db3.cmd.Parameters.AddWithValue("@team_name1", id);
+                    for (int i = 0; i < tm.tags.Count(); i++)
+                    {
+                        db3.cmd.Parameters.AddWithValue($"@tag{i + 1}", tm.tags[i]);
+                    }
+
+                    return Ok("队伍创建成功");
+
+
+                }
+            
             // 执行命令并获取受影响的行数
             //对于查询操作（例如 SELECT 语句），如果使用 ExecuteScalar()，它将返回查询结果的第一行第一列的值。如果查询没有返回任何行，ExecuteScalar() 将返回 null（对于可空类型则是 DBNull）。
             //对于非查询操作（例如 INSERT, UPDATE, DELETE），如果使用 ExecuteNonQuery()，它将返回受影响的行数。如果返回的行数为期望的值，可以认为命令执行成功。
