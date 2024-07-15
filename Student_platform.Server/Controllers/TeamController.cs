@@ -81,6 +81,7 @@ namespace Student_platform.Server.Controllers
                 reader.Close();
 
             }
+            db.Close();
                 string json = JsonSerializer.Serialize(teams);
                 return json;
        
@@ -115,12 +116,13 @@ namespace Student_platform.Server.Controllers
                 if (rows > 0)
                 {
                     DB db2 = new DB();
+                    int id1 = db2.chooseid(tm.name);
                     string com2 = "insert into team_member values(@team_name,@member_name,@member_id);";
                     db2.Connection(com2);
                     using (db2.cmd)
                     {
                         tm.members.Insert(0, new Team_member { name = tm.leaderName, id = tm.leaderid });
-                        db2.cmd.Parameters.AddWithValue("@team_name", tm.name);
+                        db2.cmd.Parameters.AddWithValue("@team_name", id1);
 
                         for (int i = 0; i < tm.members.Count(); i++)
                         {
@@ -129,29 +131,43 @@ namespace Student_platform.Server.Controllers
                             db2.cmd.Parameters.AddWithValue("@member_id", tm.members[i].id);
 
                         }
+                        int rows2 = db2.cmd.ExecuteNonQuery();
+                        if (rows2 > 0)
+                        {
+                            DB db3 = new DB();
+                            string com3 = "insert into team_tags values(@team_name1,@tag1,@tag2,@tag3,@tag4,@tag5);";
+                            db3.Connection(com3);
+                            int id = db3.chooseid(tm.name);
+                            if (id == -1)
+                            {
+                                db3.Close();
+                                return BadRequest("队伍创建失败");
+                            }
+                            using (db3.cmd)
+                            {
 
-                    }
+                                db3.cmd.Parameters.AddWithValue("@team_name1", id);
+                                for (int i = 0; i < tm.tags.Count(); i++)
+                                {
+                                    db3.cmd.Parameters.AddWithValue($"@tag{i + 1}", tm.tags[i]);
+                                }
+                                for(int i = tm.tags.Count(); i <5; i++)
+                                {
+                                    db3.cmd.Parameters.AddWithValue($"@tag{i + 1}", "");
+                                }
+                                int rows3 = db3.cmd.ExecuteNonQuery();
+                                db3.Close();
+                                if (rows3 > 0)
+                                {
+                                    return Ok("队伍创建成功");
+                                }
+                            }
+                        }
+                    db2.Close();
 
                 }
+                db.Close();
                 
-                DB db3 = new DB();
-                string com3 = "insert into team_tags values(@team_name1,@tag1,@tag2,@tag3,@tag4,@tag5);";
-                db3.Connection(com3);
-                int id = db3.chooseid(tm.name);
-                if (id == -1)
-                {
-                    return BadRequest("队伍创建失败");
-                }
-                using (db3.cmd)
-                {
-
-                    db3.cmd.Parameters.AddWithValue("@team_name1", id);
-                    for (int i = 0; i < tm.tags.Count(); i++)
-                    {
-                        db3.cmd.Parameters.AddWithValue($"@tag{i + 1}", tm.tags[i]);
-                    }
-
-                    return Ok("队伍创建成功");
 
 
                 }

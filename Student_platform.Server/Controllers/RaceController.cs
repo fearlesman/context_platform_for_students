@@ -18,7 +18,7 @@ namespace Student_platform.Server.Controllers
         //    return new string[] { "value1", "value2" };
         //}
 
-        //返回某一竞赛的所有队伍信息
+        //返回所有队伍信息
         // GET api/Race
         [HttpGet]
         public string Get()
@@ -57,8 +57,9 @@ namespace Student_platform.Server.Controllers
                 int i = 0;
                 while (reader3.Read())
                 {
-                   
+
                     need_team_name = reader3.GetInt32(reader3.GetOrdinal("id"));
+                    //need_team_name = 4;
                     tm = db3.GetTeam_members(need_team_name);
                     t_tags = db3.GetTags(need_team_name);
                     string t_name = reader3["name"].ToString();
@@ -100,6 +101,7 @@ namespace Student_platform.Server.Controllers
             
             }
             string json = JsonSerializer.Serialize(teams);
+            db3.Close();
             return json;
 
 

@@ -73,11 +73,13 @@ namespace Student_platform.Server.Controllers
                         {
                             db1.cmd.Parameters.AddWithValue("@user_name", user_info.username);
                         }
+                        db1.Close();
+                        db.Close();
                         return true;
                     }
                 }
                 reader.Close();
-                
+                db.Close();
              
                 return false;
             }

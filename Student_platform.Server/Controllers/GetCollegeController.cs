@@ -32,10 +32,12 @@ namespace Student_platform.Server.Controllers
                 if (reader.Read())
                 {
                     string uni = reader["university"].ToString();
+                    db.Close();
                     return uni;
                 }
                 else
                 {
+                    db.Close();
                     return "Not found";
                 }
             }

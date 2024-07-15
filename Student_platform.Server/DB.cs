@@ -167,8 +167,7 @@ namespace Student_platform.Server
             return -1;
         }
 
-         ~DB()
-        {
+       public void Close() { 
 
         this.conn.Close();
         }
