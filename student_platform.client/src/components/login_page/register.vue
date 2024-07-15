@@ -7,19 +7,18 @@
           <el-input v-model="registerForm.username"></el-input>
         </el-form-item>
         <div class="avatar-upload-container">
-          <el-upload
-            class="avatar-uploader"
-            :ref="uploadref"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :on-error="handleAvatarError"
-            :before-upload="beforeAvatarUpload"
-          >
-            <img src="https://via.placeholder.com/150" class="avatar" >
-          </el-upload>
-          <div class="upload-tip">
-            只能上传 JPG/PNG 文件,且文件大小不超过 2MB
-          </div>
+            <el-upload class="avatar-uploader"
+                       :ref="uploadref"
+                       :show-file-list="false"
+                       :on-success="handleAvatarSuccess"
+                       :on-error="handleAvatarError"
+                       :before-upload="beforeAvatarUpload"
+                       auto-upload:false>
+                <img src="https://via.placeholder.com/150" class="avatar">
+            </el-upload>
+            <div class="upload-tip">
+                只能上传 JPG/PNG 文件,且文件大小不超过 2MB
+            </div>
         </div>
         <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="registerForm.password" :rules="[
