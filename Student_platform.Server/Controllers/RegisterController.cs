@@ -58,10 +58,11 @@ namespace Student_platform.Server.Controllers
             db3.cmd.Parameters.AddWithValue("@user", reg.username);
             
             DB db4 = new DB();
-            string com4 = "insert into user_show(user_id, head_img) values(@user_id,@head_img);";
+            string com4 = "insert into user_show(user_id, head_img) values(@user_id,@head_img,@img_type);";
             db4.Connection(com4);
             db4.cmd.Parameters.AddWithValue("@user_id", reg.username);
             db4.cmd.Parameters.AddWithValue("@head_img", reg.head_img);
+            db4.cmd.Parameters.AddWithValue("@img_type", reg.img_type);
 
 
 
