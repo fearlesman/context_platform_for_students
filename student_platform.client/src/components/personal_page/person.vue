@@ -67,7 +67,8 @@
 </template>
   
 <script>
-  import { marked } from 'marked';
+  import axios from 'axios';
+import { marked } from 'marked';
   export default {
     data() {
       return {
@@ -96,6 +97,18 @@
       navigateTo(pid) {
         this.$router.push({ name: 'markdown', params: { id: pid } });
       },
+      convertToArrayBuffer(file) {
+      return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+          resolve(fileReader.result);
+        };
+        fileReader.onerror = (error) => {
+          reject(error);
+        };
+        fileReader.readAsArrayBuffer(file);
+      });
+    },
       downloadPdf() {
         const link = document.createElement('a');
         link.href = this.pdfSrc;
@@ -105,11 +118,11 @@
         document.body.removeChild(link);
       },
       handleFileUpload(file) {
-      this.pdfFile = file
-        },
-        show() {
-            return this.$router.params.id === this.$store.state.userid;
-        },
+        this.pdfFile = this.convertToArrayBuffer(file.raw); // 将选择的文件转换为二进制数据
+      },
+      show() {
+          return this.$router.params.id === this.$store.state.userid;
+      },
     handleExceed(files, fileList) {
       this.$message.warning(`最多只能上传 1 个文件`)
     },
@@ -122,7 +135,7 @@
       this.$message.error('上传失败')
     },
     uploadPdf() {
-      
+      //
     }
     }
 }
