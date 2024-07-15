@@ -12,7 +12,7 @@
 
         public string university { get; set; }
 
-        public byte[] head_img { get; set; }
+        public byte[] img { get; set; }
 
         public string img_type { get; set; }
     }
