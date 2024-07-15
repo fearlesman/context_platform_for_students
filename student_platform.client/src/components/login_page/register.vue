@@ -159,7 +159,8 @@
           this.fileList = []
           return
         }
-        this.registerForm.img = file.raw  // 这个就是咱们上传图片的二进制对象
+        const blob = new Blob([file], { type: file.type })
+        this.registerForm.img = blob //转换为二进制文件
         this.registerForm.img_type = file.type
         this.fileList = [fileList[0]]
       },
