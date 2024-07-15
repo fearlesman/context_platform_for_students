@@ -6,21 +6,33 @@
         <el-form-item label="用户名" prop="username">
           <el-input v-model="registerForm.username"></el-input>
         </el-form-item>
-        <div class="avatar-upload-container">
+        <el-form-item label="选择头像" prop="img" :rules="[]">
           <el-upload
-            class="avatar-uploader"
-            :ref="uploadref"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :on-error="handleAvatarError"
-            :before-upload="beforeAvatarUpload"
-          >
-            <img src="https://via.placeholder.com/150" class="avatar" >
+              list-type="picture-card"
+              :auto-upload="false"
+              :on-change="handleChange"
+              :multiple="false"
+              :before-upload="beforeAvatarUpload"
+              :file-list="fileList"
+              :limit="1"
+              accept=".png, .jpg, .JPG, .JPEG, .jpeg, .PNG .GIF, .gif"
+            >
+              <template #default>
+                <i class="el-icon-plus" />
+              </template>
+              <template #file="{ file }">
+                <div style="width: 100%;height: 100%;">
+                  <img
+                    style="width: 100%;height: 100%;"
+                    class="el-upload-list__item-thumbnail"
+                    :src="file.url"
+                    alt=""
+                  >
+                </div>
+              </template>
           </el-upload>
-          <div class="upload-tip">
-            只能上传 JPG/PNG 文件,且文件大小不超过 2MB
-          </div>
-        </div>
+        </el-form-item>
+
         <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="registerForm.password" :rules="[
             { required: true, message: '请输入密码', trigger: 'blur' },
@@ -75,6 +87,7 @@
                   img:null,
                   img_type:null,
               },
+              fileList: [],
         rules: {
           username: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -99,29 +112,6 @@
     methods: {
       // 路由跳转
       // 上传头像
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-      this.$message.success('头像上传成功');
-    },
-    handleAvatarError(err) {
-      this.$message.error('头像上传失败');
-    },
-    beforeAvatarUpload(file) {
-      console.log(file);
-      this.img_type = null;
-      if (file.type === 'image/jpeg')
-      this.img_type = 'jpg';
-      else if (file.type === 'image/png')
-      this.img_type = 'png';
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (this.img_type != 'jpg'&&this.img_type != 'png') {
-        this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!');
-      }
-      return this.img_type && isLt2M;
-    },
     confirmPasswordValidator(rule, value, callback) {
           if (value !== this.registerForm.password) {
             callback(new Error('两次输入密码不一致!'));
@@ -144,24 +134,36 @@
       navigateTo(path) {
         this.$router.push(path);
       },
-      convertToArrayBuffer(file) {
-      return new Promise((resolve, reject) => {
-        const fileReader = new FileReader();
-        fileReader.onload = () => {
-          resolve(fileReader.result);
-        };
-        fileReader.onerror = (error) => {
-          reject(error);
-        };
-        fileReader.readAsArrayBuffer(file);
-      });
-    },
+      beforeAvatarUpload(file) {
+        const fileType = file.raw.type
+        const isJPG = fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/png'
+        const isLt20M = file.raw.size / 1024 / 1024 < 20
+        if (!isJPG) {
+          this.$message.error('上传图片的格式只能是 JPG或PNG 格式!')
+        }
+        if (!isLt20M) {
+          this.$message.error('上传图片的大小不能超过 20M!')
+        }
+        return isJPG && isLt20M
+      },
+      // 移除图片
+      handleRemove(file) {
+        const index = this.fileList.indexOf(file.url)
+        this.fileList.splice(index, 1)
+      },
+      // 上传图片
+      handleChange(file, fileList) {
+        const isFileType = this.beforeAvatarUpload(file)
+        // 如果文件类型不对，则清空表单及附件列表
+        if (!isFileType) {
+          this.fileList = []
+          return
+        }
+        this.registerForm.img = file.raw  // 这个就是咱们上传图片的二进制对象
+        this.registerForm.img_type = file.type
+        this.fileList = [fileList[0]]
+      },
       submitForm() {
-        // 将文件添加到 formData 中
-        this.uploadRef.value.files.forEach(file => {
-          this.registerForm.img = this.convertToArrayBuffer(file);
-          file.type === 'image/jpg' ? this.registerForm.img_type = 'jpg' : this.registerForm.img_type = 'png';
-        });
           alert('提交注册信息!');
           axios.post('https://localhost:7201/api/Register',this.registerForm)
               .then(response => {
