@@ -57,7 +57,11 @@ namespace Student_platform.Server.Controllers
             db3.Connection(com3);
             db3.cmd.Parameters.AddWithValue("@user", reg.username);
             
-
+            DB db4 = new DB();
+            string com4 = "insert into user_show(user_id, head_img) values(@user_id,@head_img);";
+            db4.Connection(com4);
+            db4.cmd.Parameters.AddWithValue("@user_id", reg.username);
+            db4.cmd.Parameters.AddWithValue("@head_img", reg.head_img);
 
 
 
@@ -69,10 +73,12 @@ namespace Student_platform.Server.Controllers
                 int rowsAffected = db.cmd.ExecuteNonQuery();
                 int rowsAffected2 = db2.cmd.ExecuteNonQuery();
                 int rowsAffected3 = db3.cmd.ExecuteNonQuery();
+                int rowsAffected4 = db4.cmd.ExecuteNonQuery();
                 db.Close();
                 db2.Close();
                 db3.Close();
-                if (rowsAffected > 0&&rowsAffected2>0&&rowsAffected3>0)
+                db4.Close();
+                if (rowsAffected > 0&&rowsAffected2>0&&rowsAffected3>0&&rowsAffected4> 0)
                 {
                     return Ok("注册成功");
                 }

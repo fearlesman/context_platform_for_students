@@ -11,5 +11,7 @@
         public string email {  get; set; }
 
         public string university { get; set; }
+
+        public byte[] head_img { get; set; }
     }
 }

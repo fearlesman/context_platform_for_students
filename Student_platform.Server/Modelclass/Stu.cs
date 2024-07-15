@@ -9,7 +9,9 @@ namespace Student_platform.Server.Modelclass
     {
         public string user_id { get; set; }
 
-        public string resume { get; set; }
+       // public byte[] head_img { get; set; }
+
+        public byte[] resume { get; set; }
 
         //public string stu_name { get; set; }
 
