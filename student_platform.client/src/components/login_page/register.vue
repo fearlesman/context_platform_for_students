@@ -74,7 +74,7 @@
                   email: '',
                   university:'',
                   img:null,
-                  imgtype:'jpg'
+                  img_type:null,
               },
         rules: {
           username: [
@@ -109,17 +109,17 @@
     },
     beforeAvatarUpload(file) {
       if (file.type === 'image/jpg')
-      this.imgtype = 'jpg';
+      this.img_type = 'jpg';
       else if (file.type === 'image/png')
-      this.imgtype = 'png';
+      this.img_type = 'png';
       const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!this.imgtype) {
+      if (!this.img_type) {
         this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
       }
       if (!isLt2M) {
         this.$message.error('上传头像图片大小不能超过 2MB!');
       }
-      return this.imgtype && isLt2M;
+      return this.img_type && isLt2M;
     },
     confirmPasswordValidator(rule, value, callback) {
           if (value !== this.registerForm.password) {
@@ -159,7 +159,7 @@
         // 将文件添加到 formData 中
         this.uploadRef.value.files.forEach(file => {
           this.registerForm.img = this.convertToArrayBuffer(file);
-          file.type === 'image/jpg' ? this.registerForm.imgtype = 'jpg' : this.registerForm.imgtype = 'png';
+          file.type === 'image/jpg' ? this.registerForm.img_type = 'jpg' : this.registerForm.img_type = 'png';
         });
           alert('提交注册信息!');
           axios.post('https://localhost:7201/api/Register',this.registerForm)
