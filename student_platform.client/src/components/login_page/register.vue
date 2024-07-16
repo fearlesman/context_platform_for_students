@@ -41,7 +41,7 @@
           ]"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="confirmPassword">
-          <el-input type="password" v-model="registerForm.confirmPassword" :rules="[
+          <el-input type="password" v-model="confirmPassword" :rules="[
             { required: true, message: '请输入确认密码', trigger: 'blur' },
             { validator: confirmPasswordValidator, trigger: 'submit' }
           ]"></el-input>
@@ -77,11 +77,11 @@
   },
     data() {
         return {
-           Result: null,
+            Result: null,
+            confirmPassword: '',
               registerForm: {
                   username: '',
                   password: '',
-                  confirmPassword: '',
                   email: '',
                   university:'',
                   img:null,
@@ -166,6 +166,7 @@
       },
       submitForm() {
           alert('提交注册信息!');
+          console.log(this.registerForm);
           axios.post('https://localhost:7201/api/Register',this.registerForm)
               .then(response => {
                   alert(response.data);
