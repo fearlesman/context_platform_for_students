@@ -30,19 +30,21 @@ namespace Student_platform.Server.Controllers
         //注册
         // POST api/Register
         [HttpPost]
-        public IActionResult Post([FromBody] Register reg)
+        public IActionResult Post([FromBody]Register reg)
         {
-           
-                DB db = new DB();
-                string com = "insert into user_info(user_id,user_paw,user_email,university) values(@id,@paw,@email,@university);";
-                db.Connection(com);
-                using (db.cmd)
-                {
-                    db.cmd.Parameters.AddWithValue("@id", reg.username);
-                    db.cmd.Parameters.AddWithValue("@paw", reg.password);
-                    db.cmd.Parameters.AddWithValue("@email", reg.email);
-                    db.cmd.Parameters.AddWithValue("@university", reg.university);
-                }
+
+
+
+            DB db = new DB();
+            string com = "insert into user_info(user_id,user_paw,user_email,university) values(@id,@paw,@email,@university);";
+            db.Connection(com);
+            using (db.cmd)
+            {
+                db.cmd.Parameters.AddWithValue("@id", reg.username);
+                db.cmd.Parameters.AddWithValue("@paw", reg.password);
+                db.cmd.Parameters.AddWithValue("@email", reg.email);
+                db.cmd.Parameters.AddWithValue("@university", reg.university);
+            }
 
             DB db2 = new DB();
             string com2 = "insert into user_show(user_id) values(@user_id);";
@@ -56,7 +58,7 @@ namespace Student_platform.Server.Controllers
             string com3 = "insert into user_teams(user_id) values(@user);";
             db3.Connection(com3);
             db3.cmd.Parameters.AddWithValue("@user", reg.username);
-            
+
             DB db4 = new DB();
             string com4 = "insert into user_show(user_id, head_img) values(@user_id,@head_img,@img_type);";
             db4.Connection(com4);
@@ -79,22 +81,22 @@ namespace Student_platform.Server.Controllers
                 db2.Close();
                 db3.Close();
                 db4.Close();
-                if (rowsAffected > 0&&rowsAffected2>0&&rowsAffected3>0&&rowsAffected4> 0)
+                if (rowsAffected > 0 && rowsAffected2 > 0 && rowsAffected3 > 0 && rowsAffected4 > 0)
                 {
                     return Ok("注册成功");
                 }
                 return BadRequest("注册失败");
-            
-             
+
+
             }
             catch (SqlException ex)
             {
-                return BadRequest( "用户名已存在。");
+                return BadRequest("用户名已存在。");
             }
 
 
 
-}
+        }
     //int rowsAffected = db.cmd.ExecuteNonQuery();
 
     //        // 检查受影响的行数

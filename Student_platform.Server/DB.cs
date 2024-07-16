@@ -171,6 +171,15 @@ namespace Student_platform.Server
 
         this.conn.Close();
         }
+
+
+        ~DB()
+        {
+            if (conn.State == ConnectionState.Open)
+            {
+                this.conn.Close();
+            }
+        }
     
     }
 }
