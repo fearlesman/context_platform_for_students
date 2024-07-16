@@ -81,7 +81,7 @@
       登录
     </el-menu-item>
     <el-menu-item index="5" @click="navigate('/home', 'home')" v-if="getloginstatus() === true">
-      个人中心
+      <img src="../icons/cat.png" style="width: 20px; height: 20px; margin-right: 10px;" alt="">
     </el-menu-item>
     <el-menu-item index="6" @click="changestatus()" v-if="getloginstatus() === true">
       退出登录

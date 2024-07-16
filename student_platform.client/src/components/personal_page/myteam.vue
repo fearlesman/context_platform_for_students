@@ -91,7 +91,7 @@
                   <img :src="leaderAvatar">
                   <div class="member-images">
                     <div v-for="member in scope.row.members.slice(0,6)" :key="member.name">
-                      <img :src="member.avatar" @click="showMemberProfile(member.id)">
+                      <img src="../icons/cat.png" @click="showMemberProfile(member.id)">
                     </div>
                     <el-button v-if="scope.row.members.length > 5" @click="showMoreMembers">
                       查看更多
