@@ -44,7 +44,7 @@
           ]"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="confirmPassword">
-          <el-input type="password" v-model="confirmPassword" :rules="[
+          <el-input type="password" v-model="registerForm.confirmPassword" :rules="[
             { required: true, message: '请输入确认密码', trigger: 'blur' },
             { validator: confirmPasswordValidator, trigger: 'submit' }
           ]"></el-input>
@@ -138,15 +138,28 @@
         this.fileList = [fileList[0]]
       },
       submitForm() {
-          alert('提交注册信息!');
-          axios.post('https://localhost:7201/api/Register',this.registerForm)
-              .then(response => {
-                  alert(response.data);
-                  this.$router.push('/login');
-              })
-              .catch(error => {
-                  alert(error.response.data);
-              })
+          // 创建FormData对象
+          const formData = new FormData();
+          formData.append('username', this.registerForm.username);
+          formData.append('password', this.registerForm.password);
+          //formData.append('confirmPassword', this.registerForm.confirmPassword);
+          formData.append('email', this.registerForm.email);
+          formData.append('university', this.registerForm.university);
+          formData.append('img', this.registerForm.img);
+          formData.append('img_type', this.registerForm.img_type);
+
+          axios.post('https://localhost:7201/api/Register', formData, {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          })
+          .then(response => {
+              alert(response.data);
+              this.$router.push('/login');
+          })
+          .catch(error => {
+              alert(error.response.data);
+          })
       },
     },
     data() {
