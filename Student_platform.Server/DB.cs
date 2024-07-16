@@ -167,7 +167,7 @@ namespace Student_platform.Server
             return -1;
         }
 
-       public void Close() { 
+       public void DB_Close() { 
 
         this.conn.Close();
         }

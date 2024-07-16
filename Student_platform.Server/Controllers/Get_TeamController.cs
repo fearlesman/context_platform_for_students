@@ -49,7 +49,7 @@ namespace Student_platform.Server.Controllers
                 }
 
             }
-            db.Close();
+            db.DB_Close();
             List<Team> teams = new List<Team>();
             for (int j = 0; j < 5 && team_name[j] != 0; j++)
             {

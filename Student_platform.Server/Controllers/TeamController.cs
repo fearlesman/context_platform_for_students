@@ -81,7 +81,7 @@ namespace Student_platform.Server.Controllers
                 reader.Close();
 
             }
-            db.Close();
+            db.DB_Close();
                 string json = JsonSerializer.Serialize(teams);
                 return json;
        
@@ -140,7 +140,7 @@ namespace Student_platform.Server.Controllers
                             int id = db3.chooseid(tm.name);
                             if (id == -1)
                             {
-                                db3.Close();
+                                db3.DB_Close();
                                 return BadRequest("队伍创建失败");
                             }
                             using (db3.cmd)
@@ -156,17 +156,17 @@ namespace Student_platform.Server.Controllers
                                     db3.cmd.Parameters.AddWithValue($"@tag{i + 1}", "");
                                 }
                                 int rows3 = db3.cmd.ExecuteNonQuery();
-                                db3.Close();
+                                db3.DB_Close();
                                 if (rows3 > 0)
                                 {
                                     return Ok("队伍创建成功");
                                 }
                             }
                         }
-                    db2.Close();
+                    db2.DB_Close();
 
                 }
-                db.Close();
+                db.DB_Close();
                 
 
 

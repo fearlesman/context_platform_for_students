@@ -77,10 +77,10 @@ namespace Student_platform.Server.Controllers
                 int rowsAffected2 = db2.cmd.ExecuteNonQuery();
                 int rowsAffected3 = db3.cmd.ExecuteNonQuery();
                 int rowsAffected4 = db4.cmd.ExecuteNonQuery();
-                db.Close();
-                db2.Close();
-                db3.Close();
-                db4.Close();
+                db.DB_Close();
+                db2.DB_Close();
+                db3.DB_Close();
+                db4.DB_Close();
                 if (rowsAffected > 0 && rowsAffected2 > 0 && rowsAffected3 > 0 && rowsAffected4 > 0)
                 {
                     return Ok("注册成功");

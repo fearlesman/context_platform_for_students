@@ -101,7 +101,7 @@ namespace Student_platform.Server.Controllers
             
             }
             string json = JsonSerializer.Serialize(teams);
-            db3.Close();
+            db3.DB_Close();
             return json;
 
 

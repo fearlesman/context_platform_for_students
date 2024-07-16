@@ -72,16 +72,16 @@ namespace Student_platform.Server.Controllers
                                         if (result2 > 0)
                                         {
                                             db2.ChangeTeamStatus(qt.team_id, 1);
-                                            db.Close();
-                                            db1.Close();
-                                            db2.Close();
+                                            db.DB_Close();
+                                            db1.DB_Close();
+                                            db2.DB_Close();
                                             return 1;
                                         }
                                     }
-                                    db2.Close ();
+                                    db2.DB_Close ();
                                 }
                             }
-                            db1.Close();
+                            db1.DB_Close();
 
                       
                         }
@@ -91,7 +91,7 @@ namespace Student_platform.Server.Controllers
                 }
 
             }
-            db.Close();
+            db.DB_Close();
             return 0;
 
         }

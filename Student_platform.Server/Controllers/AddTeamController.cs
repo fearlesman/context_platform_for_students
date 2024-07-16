@@ -105,24 +105,24 @@ namespace Student_platform.Server.Controllers
                                                             db1.ChangeTeamStatus(at.team_id, 0);
                                                            
                                                         }
-                                                        db.Close();
-                                                        db2.Close();
-                                                        db3.Close();
-                                                        db4.Close();
+                                                        db.DB_Close();
+                                                        db2.DB_Close();
+                                                        db3.DB_Close();
+                                                        db4.DB_Close();
                                                         return 1;
                                                     }
                                                 }
 
                                             }
-                                            db3.Close();
+                                            db3.DB_Close();
 
                                         }
 
                                     }
-                                    db2.Close();
+                                    db2.DB_Close();
                                 }
                             }
-                            db.Close();
+                            db.DB_Close();
                         }
                     }
                 }
@@ -136,7 +136,7 @@ namespace Student_platform.Server.Controllers
                    
                 
             }
-            db1.Close();
+            db1.DB_Close();
             return 0;
 
 
