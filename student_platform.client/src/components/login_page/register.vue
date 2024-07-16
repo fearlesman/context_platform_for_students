@@ -1,6 +1,121 @@
 <script setup>
   import University from '../files/university.vue';
 </script>
+<script>
+  import axios from 'axios';
+  import { ref } from 'vue';
+  export default {
+    setup() {
+      const uploadRef = ref(null)
+    return {
+      uploadRef,
+    }
+  },
+
+    methods: {
+      // 路由跳转
+      // 上传头像
+    confirmPasswordValidator(rule, value, callback) {
+          if (value !== this.registerForm.password) {
+            callback(new Error('两次输入密码不一致!'));
+          } else {
+            callback();
+          }
+        },
+
+      passwordValidator(rule, value, callback) {
+        const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z]).{6,16}$/;
+        if (!passwordRegex.test(value)) {
+          callback(new Error('密码应该包含数字、字母'));
+        } else {
+          callback();
+        }
+      },
+      goToLoginPage() {
+        this.$router.push('/login');
+      },
+      navigateTo(path) {
+        this.$router.push(path);
+      },
+      beforeAvatarUpload(file) {
+        const fileType = file.raw.type
+        const isJPG = fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/png'
+        const isLt20M = file.raw.size / 1024 / 1024 < 20
+        if (!isJPG) {
+          this.$message.error('上传图片的格式只能是 JPG或PNG 格式!')
+        }
+        if (!isLt20M) {
+          this.$message.error('上传图片的大小不能超过 20M!')
+        }
+        return isJPG && isLt20M
+      },
+      // 移除图片
+      handleRemove(file) {
+        const index = this.fileList.indexOf(file.url)
+        this.fileList.splice(index, 1)
+      },
+      // 上传图片
+      handleChange(file, fileList) {
+        const isFileType = this.beforeAvatarUpload(file)
+        // 如果文件类型不对，则清空表单及附件列表
+        if (!isFileType) {
+          this.fileList = []
+          return
+        }
+        const blob = new Blob([file], { type: file.type })
+        this.registerForm.img = blob //转换为二进制文件
+        this.registerForm.img_type = file.type
+        this.fileList = [fileList[0]]
+      },
+      submitForm() {
+          alert('提交注册信息!');
+          axios.post('https://localhost:7201/api/Register',this.registerForm)
+              .then(response => {
+                  alert(response.data);
+                  this.$router.push('/login');
+              })
+              .catch(error => {
+                  alert(error.response.data);
+              })
+      },
+    },
+    data() {
+        return {
+           Result: null,
+              registerForm: {
+                  username: '',
+                  password: '',
+                  confirmPassword: '',
+                  email: '',
+                  university:'',
+                  img:null,
+                  img_type:null,
+              },
+              fileList: [],
+        rules: {
+          username: [
+            { required: true, message: '请输入用户名', trigger: 'blur' },
+            { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
+          ],
+          password: [
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 6, message: '密码长度不能少于6位', trigger: 'blur' }
+          ],
+          confirmPassword: [
+            { required: true, message: '请确认密码', trigger: 'blur' },
+            { validator: this.confirmPasswordValidator, trigger: 'blur' }
+          ],
+          email: [
+            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+            { type: 'email', message: '请输入有效的邮箱地址', trigger: 'blur' }
+          ],
+          universities: []
+        }
+      };
+    },
+
+  };
+  </script>
 <template>
     <!-- 注册表单 -->
     <el-card class="register-card">
@@ -75,127 +190,5 @@
       </el-form>
     </el-card>
   </template>
-  <script>
-  import axios from 'axios';
-  import { ref } from 'vue';
-  export default {
-    setup() {
-      const uploadRef = ref(null)
-    return {
-      uploadRef,
-    }
-  },
-    methods: {
-      // 路由跳转
-      // 上传头像
-    confirmPasswordValidator(rule, value, callback) {
-          if (value !== this.registerForm.password) {
-            callback(new Error('两次输入密码不一致!'));
-          } else {
-            callback();
-          }
-        },
-
-      passwordValidator(rule, value, callback) {
-        const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z]).{6,16}$/;
-        if (!passwordRegex.test(value)) {
-          callback(new Error('密码应该包含数字、字母'));
-        } else {
-          callback();
-        }
-      },
-      goToLoginPage() {
-        this.$router.push('/login');
-      },
-      navigateTo(path) {
-        this.$router.push(path);
-      },
-      beforeAvatarUpload(file) {
-        const fileType = file.raw.type
-        const isJPG = fileType === 'image/jpg' || fileType === 'image/jpeg' || fileType === 'image/png'
-        const isLt20M = file.raw.size / 1024 / 1024 < 20
-        if (!isJPG) {
-          this.$message.error('上传图片的格式只能是 JPG或PNG 格式!')
-        }
-        if (!isLt20M) {
-          this.$message.error('上传图片的大小不能超过 20M!')
-        }
-        return isJPG && isLt20M
-      },
-      // 移除图片
-      handleRemove(file) {
-        const index = this.fileList.indexOf(file.url)
-        this.fileList.splice(index, 1)
-      },
-      // 上传图片
-      handleChange(file, fileList) {
-        const isFileType = this.beforeAvatarUpload(file)
-        // 如果文件类型不对，则清空表单及附件列表
-        if (!isFileType) {
-          this.fileList = []
-          return
-        }
-        this.fileList = [fileList[0]]
-      },
-      submitForm() {
-          // 创建FormData对象
-          const formData = new FormData();
-          formData.append('username', this.registerForm.username);
-          formData.append('password', this.registerForm.password);
-          //formData.append('confirmPassword', this.registerForm.confirmPassword);
-          formData.append('email', this.registerForm.email);
-          formData.append('university', this.registerForm.university);
-          formData.append('img', this.registerForm.img);
-          formData.append('img_type', this.registerForm.img_type);
-
-          axios.post('https://localhost:7201/api/Register', formData, {
-              headers: {
-                  'Content-Type': 'multipart/form-data'
-              }
-          })
-          .then(response => {
-              alert(response.data);
-              this.$router.push('/login');
-          })
-          .catch(error => {
-              alert(error.response.data);
-          })
-      },
-    },
-    data() {
-        return {
-           Result: null,
-              registerForm: {
-                  username: '',
-                  password: '',
-                  confirmPassword: '',
-                  email: '',
-                  university:'',
-                  img:null,
-                  img_type:null,
-              },
-              fileList: [],
-        rules: {
-          username: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
-          ],
-          password: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 6, message: '密码长度不能少于6位', trigger: 'blur' }
-          ],
-          confirmPassword: [
-            { required: true, message: '请确认密码', trigger: 'blur' },
-            { validator: this.confirmPasswordValidator, trigger: 'blur' }
-          ],
-          email: [
-            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-            { type: 'email', message: '请输入有效的邮箱地址', trigger: 'blur' }
-          ],
-          universities: []
-        }
-      };
-    },
-
-  };
-</script>
+  
+  
