@@ -1,3 +1,6 @@
+<script setup>
+  import University from '../files/university.vue';
+</script>
 <template>
     <!-- 注册表单 -->
     <el-card class="register-card">
@@ -49,11 +52,19 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="registerForm.email"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-select v-model="registerForm.university" placeholder="请选择大学">
-            <el-option v-for="university in universities" :key="university.value" :label="university.label" :value="university.value">
-              {{ university.label }}
-            </el-option>
+        <el-form-item label="学校">
+            <el-select
+            v-model="registerForm.university"
+            filterable
+            placeholder="Select"
+            style="width: 240px"
+          >
+            <el-option
+              v-for="item in universities"
+              :key="item.university"
+              :label="item.university"
+              :value="item.university"
+            />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -64,7 +75,6 @@
       </el-form>
     </el-card>
   </template>
-  
   <script>
   import axios from 'axios';
   import { ref } from 'vue';
@@ -75,40 +85,6 @@
       uploadRef,
     }
   },
-    data() {
-        return {
-            Result: null,
-            confirmPassword: '',
-              registerForm: {
-                  username: '',
-                  password: '',
-                  email: '',
-                  university:'',
-                  img:null,
-                  img_type:null,
-              },
-              fileList: [],
-        rules: {
-          username: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
-          ],
-          password: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-            { min: 6, message: '密码长度不能少于6位', trigger: 'blur' }
-          ],
-          confirmPassword: [
-            { required: true, message: '请确认密码', trigger: 'blur' },
-            { validator: this.confirmPasswordValidator, trigger: 'blur' }
-          ],
-          email: [
-            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-            { type: 'email', message: '请输入有效的邮箱地址', trigger: 'blur' }
-          ],
-          universities: []
-        }
-      };
-    },
     methods: {
       // 路由跳转
       // 上传头像
@@ -159,14 +135,10 @@
           this.fileList = []
           return
         }
-        const blob = new Blob([file], { type: file.type })
-        this.registerForm.img = blob //转换为二进制文件
-        this.registerForm.img_type = file.type
         this.fileList = [fileList[0]]
       },
       submitForm() {
           alert('提交注册信息!');
-          console.log(this.registerForm);
           axios.post('https://localhost:7201/api/Register',this.registerForm)
               .then(response => {
                   alert(response.data);
@@ -176,6 +148,41 @@
                   alert(error.response.data);
               })
       },
-    }
+    },
+    data() {
+        return {
+           Result: null,
+              registerForm: {
+                  username: '',
+                  password: '',
+                  confirmPassword: '',
+                  email: '',
+                  university:'',
+                  img:null,
+                  img_type:null,
+              },
+              fileList: [],
+        rules: {
+          username: [
+            { required: true, message: '请输入用户名', trigger: 'blur' },
+            { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
+          ],
+          password: [
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 6, message: '密码长度不能少于6位', trigger: 'blur' }
+          ],
+          confirmPassword: [
+            { required: true, message: '请确认密码', trigger: 'blur' },
+            { validator: this.confirmPasswordValidator, trigger: 'blur' }
+          ],
+          email: [
+            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+            { type: 'email', message: '请输入有效的邮箱地址', trigger: 'blur' }
+          ],
+          universities: []
+        }
+      };
+    },
+
   };
-  </script>
+</script>
